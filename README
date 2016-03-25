@@ -14,6 +14,6 @@ GITWEB:
         https://github.com/bus1/documentation
 
 ABOUT:
-        This is the repository is the source of the web pages
-        of the http://bus1.org/ web site. It is automatically
+        This the repository is the source of the web pages
+        published at http://www.bus1.org/. It is automatically
         updated from the Documentation repository.
