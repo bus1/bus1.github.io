@@ -1,0 +1,19 @@
+bus1 - Web Site
+
+DETAILS:
+        https://github.com/bus1/documentation
+
+BUG REPORTS:
+        https://github.com/bus1/documentation/issues
+
+GIT:
+        git@github.com:bus1/documentation.git
+        https://github.com/bus1/documentation.git
+
+GITWEB:
+        https://github.com/bus1/documentation
+
+ABOUT:
+        This is the repository is the source of the web pages
+        of the http://bus1.org/ web site. It is automatically
+        updated from the Documentation repository.
