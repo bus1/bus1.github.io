@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>bus1.node</title><link rel="stylesheet" type="text/css" href="bus1.css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></meta></head><body><header xmlns=""><a href="/"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="refentry"><a id="bus1.node"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.node — bus1 node</p></div><div class="refsect1"><a id="id-1.4"></a><h2>Description</h2><p>
+      A node is first and foremost a destination for messages. A peer may own
+      several nodes, and messages destined for a node will be received by the
+      peer that owns the node.
+    </p><p>
+      A handle is a reference to a node, and there is no other way to refer to a
+      node than by one of its handles. A handle is local to its holder, and is
+      how the holder of a handle is connected to the owner of the corresponding
+      node. When sending a message, the (possibly remote) destination nodes of
+      the message are represented by (local) handles referring to the node.
+    </p><p>
+      A handle may be passed from one peer to another, just like
+      file-descriptors are passed over UDS (or bus1 for that matter). When
+      passing a handle a copy of it is installed in the destination peer which
+      references the same underlying node. There is otherwise no relation
+      between the original and the passed handle.
+    </p></div><div class="refsect1"><a id="id-1.5"></a><h2>Handle ids</h2><p>
+      Handles are referred to in userspace by their handle ids, like
+      file-descriptors are referenced by file-descriptor number. The handle id
+      namespace is local to a given peer (not a process), and has no meaning
+      outside of it. Handle ids are allocated in the order the handles are
+      received as a contiguous sequence of odd numbers starting with
+      <code class="constant">1</code>. A handle only ever has one handle id associated
+      with it, and a handle id is never reused to refer to two handles. In
+      particular, if a handle is fully released and a new handle is received to
+      the same node, it is guaranteed to be assigned a fresh handle id.
+    </p></div><div class="refsect1"><a id="id-1.6"></a><h2>Node ids</h2><p>
+      Nodes can not be referenced directly, but only through their handles. The
+      owner of a node will initially also hold a handle to that node. However,
+      the handle can be released, and the owner of a node does not need to own
+      a handle to it. Even after the handle has potentially been released the
+      handle id will be used whenever referring to the underlying node. This is
+      also the case if the owner holds a new handle to the same node with a
+      different handle id.
+    </p></div><div class="refsect1"><a id="id-1.7"></a><h2>On-the-fly node creation</h2><p>
+      Nodes can be created on-the-fly by passing the special handle id
+      <code class="constant">BUS1_HANDLE_INVALID</code> along with a message. In this
+      case a new node owned by the sending peer is created as well as a new
+      handle held by the sending peer. This handle is sent along with the
+      message and its handle id returned to userspace.
+    </p></div><div class="refsect1"><a id="id-1.8"></a><h2>Reachability</h2><p>
+      A peer can only send a message to another peer if it holds a hanlde to one
+      of its nodes. A handle to a node can be obtained from another peer who
+      holds such a handle by passing it with a message. It follows that two
+      peers that are disconnected (i.e., there are no path of handles, nodes and
+      peers from one to the other) can never become connected and can never
+      communicate. In order to make it possible for any peers to communicate at
+      all, the <code class="constant">BUS1_CMD_PEER_CLONE</code> ioctl allows a new peer
+      to be created from an existing one in such a way that they are connected
+      at creation.
+    </p></div><div class="refsect1"><a id="id-1.9"></a><h2>Handle lifetime and scope</h2><p>
+      A peer can hold at most one handle to a given node at a time, though the
+      handle is reference counted. A handle first becomes valid when the peer
+      receives it with a message, and the peer gains additional references to
+      the handle each time it receives it. The handle remains valid until the
+      peer either drops the last reference to it or receives a destruction
+      notification for the handle.
+    </p></div><div class="refsect1"><a id="id-1.10"></a><h2>Releasing a handle</h2><p>
+      A reference to a handle can be released by calling the
+      <code class="constant">BUS1_CMD_HANDLE_RELEASE</code> ioctl. The ioctl takes an
+      <span class="type">__u64</span> as argument, which is the handle id of the handle to be
+      released. When the last reference to a handle is released the handle id is
+      no longer valid, and any future handle to the same node will be assigned
+      a new handle id. Moreover, when the last reference to the last handle to a
+      given node is released, a destruction notification is sent to the node and
+      and the node is destroyed. This notification is ordered as if the release
+      ioctl was a unicast send to the node. Any message ordered before the
+      destruction notification is guaranteed to be unaffected by it, no message
+      ordered after the destruction notification may be delivered to the node.
+    </p><p>
+      It is worth noting that a handle may be in-flight, i.e., it has been sent
+      from one peer to another without the destination peer receiving it yet.
+      This may cause a situation where no peer holds a handle to a node, but the
+      node is not destroyed as there are in-flight handles still pinning it.
+    </p></div><div class="refsect1"><a id="id-1.11"></a><h2>Destroying a node</h2><p>
+      The owner of a node can destroy the node explicitly by calling the
+      <code class="constant">BUS1_CMD_NODE_DESTROY</code> ioctl. The ioctl takes an
+      <span class="type">__u64</span> as argument, which is the original handle id associated
+      with the node to be destroyed. A destruction notification is sent to all
+      peers that hold a handle to the node. The destruction notification is
+      ordered as if it were a multicast message from the owner of the node to
+      all the holders of the handles. Any message to the node that is ordered
+      before the destruction notification is guaranteed to be delivered, and any
+      handle that is passed before the destruction notification is guaranteed to
+      be delivered (and the peer that receives it to receive a destruction
+      notification). No message may be delivered to the node ordered after the
+      destruction notification and any handle passed after the destruction
+      notification is replaced by <code class="constant">BUS1_HANDLE_INVALID</code>. A
+      local handle to a node is valid until its destruction notification is
+      received though actual operations on it may fail.
+      
+    </p></div><div class="refsect1"><a id="id-1.12"></a><h2>Return value</h2><p>
+      On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
+      on error, <span class="errorcode">-1</span> is returned, and
+      <code class="varname">errno</code> is set to indicate the error.
+      If the issued ioctl is illegal for the file descriptor used,
+      <code class="varname">errno</code> will be set to <code class="constant">ENOTTY</code>.
+    </p></div><div class="refsect1"><a id="id-1.13"></a><h2>See Also</h2><span class="simplelist">
+        <a xmlns="" href="bus1.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
+      , 
+        <a xmlns="" href="bus1.peer.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
+      , 
+        <a xmlns="" href="bus1.message.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1.message</span>(7)</span></a>
+      </span></div></div></body></html>
