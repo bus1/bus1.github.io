@@ -6,7 +6,7 @@
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-75729104-1', 'auto');
       ga('send', 'pageview');
-    </script></head><body><header xmlns=""><a href="/"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="refentry"><a id="bus1.message"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.message — bus1.message</p></div><div class="refsect1"><a id="id-1.4"></a><h2>Description</h2><p>
+    </script></head><body><header xmlns=""><a href="/"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="refentry"><a id="bus1.message"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.message — Bus Message</p></div><div class="refsect1"><a id="id-1.4"></a><h2>Description</h2><p>
       A bus1 message is used to send data or notifications between peers. A data
       message consists of payload of a logical byte stream of arbitrary size,
       potentially along with handles and file descriptors. No restriction is
@@ -26,7 +26,7 @@
       be received the moment it has been sent. That said, the time between send
       and receive is guaranteed to be finite and in practice will be very brief.
     </p></div><div class="refsect1"><a id="id-1.6"></a><h2>Metadata</h2><p>
-      The kernel ammends all data messages with the <code class="varname">uid</code>,
+      The kernel amends all data messages with the <code class="varname">uid</code>,
       <code class="varname">gid</code>, <code class="varname">pid</code> and <code class="varname">tid</code>
       of the sending peer. The two former were collected when the sending peer
       was created and the two latter were collected from the sending peer when
@@ -84,7 +84,7 @@ struct bus1_cmd_send {
     </pre><p>The fields in this struct are described below.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>Flags for message delivery</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">BUS1_SEND_FLAG_CONTINUE</code></span></dt><dd><p>
                   Continue delivering messages even if delivery to one peer
                   failed. Report the dropped message to the receiver, but do not
-                  retrun an error to the sender. This flag must be set for
+                  return an error to the sender. This flag must be set for
                   multicast messages.
                 </p></dd><dt><span class="term"><code class="constant">BUS1_SEND_FLAG_SILENT</code></span></dt><dd><p>
                   Do not wake up the destination peers. See below.
