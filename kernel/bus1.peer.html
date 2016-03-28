@@ -1,13 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>bus1.peer</title><link rel="stylesheet" type="text/css" href="bus1.css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></meta><link xmlns="" rel="icon" href="bus1.png" type="image/png"><script xmlns="">
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-75729104-1', 'auto');
-      ga('send', 'pageview');
-    </script></head><body><header xmlns=""><a href="/"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="refentry"><a id="bus1.peer"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.peer — bus1 peer</p></div><div class="refsect1"><a id="id-1.4"></a><h2>Description</h2><p>
-    </p></div><div class="refsect1"><a id="id-1.5"></a><h2>Initializing a peer</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>bus1.peer</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><a href="/"><img src="/bus1.png" alt="bus1" style="width:48px;height:48px;"></a><span style="float:right">Version 1</span><hr><div class="refentry"><a name="bus1.peer"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>bus1.peer — bus1 peer</p></div><div class="refsect1"><a name="id-1.4"></a><h2>Description</h2><p>
+    </p></div><div class="refsect1"><a name="id-1.5"></a><h2>Initializing a peer</h2><p>
       A peer created by calling <code class="function">open()</code> on
       <code class="filename">/dev/bus1</code> needs to be initialized using the
       <code class="constant">BUS1_CMD_PEER_INIT</code> ioctl. The ioctl takes a
@@ -22,7 +14,7 @@ struct bus1_cmd_peer_init {
           <code class="constant">0</code>.
         </p></dd><dt><span class="term"><code class="varname">pool_size</code></span></dt><dd><p>
           The size of the pool in bytes to create for this peer.
-        </p></dd></dl></div></div><div class="refsect1"><a id="id-1.6"></a><h2>Querying a peer</h2><p>
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6"></a><h2>Querying a peer</h2><p>
       The parameters of an existing peer can be queried by calling the
       <code class="constant">BUS1_CMD_PEER_QUERY</code> ioctl. The ioctl takes a
       <span class="type">struct bus1_cmd_peer_init</span> struct as argument.
@@ -38,7 +30,7 @@ struct bus1_cmd_peer_init {
           The size of the pool in bytes to create for this peer. This must be
           set to <code class="constant">0</code> and is set to the existing pool size on
           return.
-        </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7"></a><h2>Resetting a peer</h2><p>
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7"></a><h2>Resetting a peer</h2><p>
       An existing peer can be reset to a pristine state by calling the
       <code class="constant">BUS1_CMD_PEER_RESET</code> ioctl. All slices, handles, nodes
       and pending messages are dropped. The ioctl takes a
@@ -55,7 +47,7 @@ struct bus1_cmd_peer_reset {
           The handle to a node to preserve during reset. This may be set to
           <code class="constant">BUS1_HANDLE_INVALID</code> if all handles should be
           dropped.
-        </p></dd></dl></div></div><div class="refsect1"><a id="id-1.8"></a><h2>Cloning a peer</h2><p>
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8"></a><h2>Cloning a peer</h2><p>
       A new peer can be created from an existing one by calling the
       <code class="constant">BUS1_CMD_PEER_CLONE</code> ioctl on a file-descriptor
       representing the existing peer. A root node is created for the new peer
@@ -82,20 +74,20 @@ struct bus1_cmd_peer_clone {
           The file-descriptor representing the new peer. This must be set to
           <code class="constant">-1</code> and is set to the new file-descriptor on
           return.
-        </p></dd></dl></div></div><div class="refsect1"><a id="id-1.9"></a><h2>Return value</h2><p>
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and
       <code class="varname">errno</code> is set to indicate the error.
       If the issued ioctl is illegal for the file descriptor used,
       <code class="varname">errno</code> will be set to <code class="constant">ENOTTY</code>.
-    </p></div><div class="refsect1"><a id="id-1.10"></a><h2>See Also</h2><span class="simplelist">
-        <a xmlns="" href="bus1.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
+    </p></div><div class="refsect1"><a name="id-1.10"></a><h2>See Also</h2><span class="simplelist">
+        <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       , 
-        <a xmlns="" href="bus1.peer.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
+        <a href="bus1.peer.html"><span class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
       , 
-        <a xmlns="" href="bus1.message.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1.message</span>(7)</span></a>
+        <a href="bus1.message.html"><span class="citerefentry"><span class="refentrytitle">bus1.message</span>(7)</span></a>
       , 
-        <a xmlns="" href="http://linux.die.net/man/2/mmap"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
+        <a href="mmap.html"><span class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
         , 
-        <a xmlns="" href="http://linux.die.net/man/2/munmap"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">munmap</span>(2)</span></a>
+        <a href="munmap.html"><span class="citerefentry"><span class="refentrytitle">munmap</span>(2)</span></a>
       </span></div></div></body></html>
