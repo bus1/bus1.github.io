@@ -27,10 +27,10 @@
       and receive is guaranteed to be finite and in practice will be very brief.
     </p></div><div class="refsect1"><a id="id-1.6"></a><h2>Metadata</h2><p>
       The kernel amends all data messages with the <code class="varname">uid</code>,
-      <code class="varname">gid</code>, <code class="varname">pid</code> and <code class="varname">tid</code>
-      of the sending peer. The two former were collected when the sending peer
-      was created and the two latter were collected from the sending peer when
-      the message was sent.
+      <code class="varname">gid</code>, <code class="varname">pid</code>, and <code class="varname">tid</code>
+      of the sending peer. The information is collected from the sending peer
+      when the message is sent and translated into the namespaces of the
+      receiving peer (which was pinned when the peer was initialized).
     </p></div><div class="refsect1"><a id="id-1.7"></a><h2>Quotas</h2><p>
       Any resources used by in-flight messages are subject to per-user quotas,
       accounted on the sending user. The number of in-flight file descriptors
@@ -172,10 +172,10 @@ struct bus1_msg_data {
                   node, even if that has since been released.
                 </p></dd><dt><span class="term"><code class="varname">uid</code></span></dt><dd><p>
                   The <code class="varname">uid</code> of the sending peer, at the time of
-                  creation.
+                  sending.
                 </p></dd><dt><span class="term"><code class="varname">gid</code></span></dt><dd><p>
                   The <code class="varname">gid</code> of the sending peer, at the time of
-                  creation.
+                  sending.
                 </p></dd><dt><span class="term"><code class="varname">pid</code></span></dt><dd><p>
                   The <code class="varname">pid</code> of the sending peer, at the time of
                   sending.
