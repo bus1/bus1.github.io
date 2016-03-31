@@ -1,17 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>bus1.message</title><link rel="stylesheet" type="text/css" href="bus1.css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></meta><link xmlns="" rel="icon" href="bus1.png" type="image/png"><script xmlns="">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>bus1.message</title><link rel="stylesheet" type="text/css" href="bus1.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="icon" href="bus1.png" type="image/png"><script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-75729104-1', 'auto');
       ga('send', 'pageview');
-    </script></head><body><header xmlns=""><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="refentry"><a id="bus1.message"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.message — Bus Message</p></div><div class="refsect1"><a id="id-1.4"></a><h2>Description</h2><p>
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="refentry"><a name="bus1.message"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.message — Bus Message</p></div><div class="refsect1"><a name="id-1.4"></a><h2>Description</h2><p>
       A bus1 message is used to send data or notifications between peers. A data
       message consists of payload of a logical byte stream of arbitrary size,
       potentially along with handles and file descriptors. No restriction is
       placed on the format of the payload.
-    </p></div><div class="refsect1"><a id="id-1.5"></a><h2>Message order</h2><p>
+    </p></div><div class="refsect1"><a name="id-1.5"></a><h2>Message order</h2><p>
       Messages are globally ordered to ensure that the order of received
       messages are consistent between peers and that causality is respected.
       Consistency means that any two peers that receive any pair of the same two
@@ -25,13 +24,13 @@
       delivered instantaneously. I.e., there is no guarantee that a message can
       be received the moment it has been sent. That said, the time between send
       and receive is guaranteed to be finite and in practice will be very brief.
-    </p></div><div class="refsect1"><a id="id-1.6"></a><h2>Metadata</h2><p>
+    </p></div><div class="refsect1"><a name="id-1.6"></a><h2>Metadata</h2><p>
       The kernel amends all data messages with the <code class="varname">uid</code>,
       <code class="varname">gid</code>, <code class="varname">pid</code>, and <code class="varname">tid</code>
       of the sending peer. The information is collected from the sending peer
       when the message is sent and translated into the namespaces of the
       receiving peer (which was pinned when the peer was initialized).
-    </p></div><div class="refsect1"><a id="id-1.7"></a><h2>Quotas</h2><p>
+    </p></div><div class="refsect1"><a name="id-1.7"></a><h2>Quotas</h2><p>
       Any resources used by in-flight messages are subject to per-user quotas,
       accounted on the sending user. The number of in-flight file descriptors
       are subject to a global per-user quota, irrespective of the destination,
@@ -58,7 +57,7 @@
       a message is guaranteed to be allowed to send a 128kB message, it is not
       the case that each user is guaranteed the same (in this example that would
       require more space than the pool has available).
-    </p></div><div class="refsect1"><a id="id-1.8"></a><h2>Sending messages</h2><p>
+    </p></div><div class="refsect1"><a name="id-1.8"></a><h2>Sending messages</h2><p>
       Messages are passed to the kernel with the
       <code class="constant">BUS1_CMD_SEND</code> ioctl. The kernel delivers the message
       to the owners of the nodes referenced by the destination handles. Sending
@@ -111,7 +110,7 @@ struct bus1_cmd_send {
             number of elements. Each file descriptor number must refer to an
             open file descriptor. Each of these file descriptors will be passed
             to each destination peer.
-          </p></dd></dl></div></div><div class="refsect1"><a id="id-1.9"></a><h2>Receiving messages</h2><p>
+          </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9"></a><h2>Receiving messages</h2><p>
       Messages are received by the peer with the
       <code class="constant">BUS1_CMD_RECV</code> ioctl. The bus file descriptor supports
       <code class="function">poll()/epoll()/select()</code>; when new messages
@@ -210,20 +209,20 @@ struct bus1_msg_data {
 struct bus1_msg_node_destroy {
   __u64 handle;
 };
-          </pre></dd></dl></div></div><div class="refsect1"><a id="id-1.10"></a><h2>Return value</h2><p>
+          </pre></dd></dl></div></div><div class="refsect1"><a name="id-1.10"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and
       <code class="varname">errno</code> is set to indicate the error.
       If the issued ioctl is illegal for the file descriptor used,
       <code class="varname">errno</code> will be set to <code class="constant">ENOTTY</code>.
-    </p></div><div class="refsect1"><a id="id-1.11"></a><h2>See Also</h2><span class="simplelist">
-        <a xmlns="" href="bus1.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
+    </p></div><div class="refsect1"><a name="id-1.11"></a><h2>See Also</h2><span class="simplelist">
+        <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       , 
-        <a xmlns="" href="bus1.peer.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
+        <a href="bus1.peer.html"><span class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
       , 
-        <a xmlns="" href="bus1.message.html"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">bus1.message</span>(7)</span></a>
+        <a href="bus1.message.html"><span class="citerefentry"><span class="refentrytitle">bus1.message</span>(7)</span></a>
       , 
-        <a xmlns="" href="http://linux.die.net/man/2/mmap"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
+        <a href="http://linux.die.net/man/2/mmap"><span class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
         , 
-        <a xmlns="" href="http://linux.die.net/man/2/munmap"><span xmlns="http://www.w3.org/1999/xhtml" class="citerefentry"><span class="refentrytitle">munmap</span>(2)</span></a>
+        <a href="http://linux.die.net/man/2/munmap"><span class="citerefentry"><span class="refentrytitle">munmap</span>(2)</span></a>
       </span></div></div></body></html>
