@@ -41,7 +41,7 @@
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-deallocate-locked"><span class="phrase">bus1_message_deallocate_locked</span></a></span><span class="refpurpose"> — 
      deallocate pool slice for message payload
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-install-handles"><span class="phrase">bus1_message_install_handles</span></a></span><span class="refpurpose"> — 
-     install handles into destination peer
+     write handle ids to destination pool
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-install-fds"><span class="phrase">bus1_message_install_fds</span></a></span><span class="refpurpose"> — 
      install fds into destination peer
  </span></dt></dl></dd><dt><span class="chapter"><a href="#transaction">4. Bus1 Transaction</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#id-1.6.4">
@@ -351,8 +351,8 @@ struct bus1_peer {
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.10.6"></a><h2>Description</h2><p>
    </p><p>
 
-   Allocate a new peer handle. The handle is *not* activated, nor linked into
-   any context. The caller owns the only pointer to the new peer.
+   Allocate a new peer. The peer is *not* activated, nor linked into any
+   context. The caller owns the only pointer to the new peer.
 </p></div><div class="refsect1"><a id="id-1.4.10.7"></a><h2>Return</h2><p>
    Pointer to peer, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-free"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_free — 
@@ -373,9 +373,9 @@ struct bus1_peer {
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_peer_disconnect </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.12.6"></a><h2>Description</h2><p>
-   This tears down a peer synchronously. It first marks the peer as
-   deactivated, waits for all outstanding operations to finish, and eventually
-   releases the linked peer_info object.
+   This tears down a peer synchronously. It first marks the peer as deactivated,
+   waits for all outstanding operations to finish, and eventually releases the
+   linked peer_info object.
    </p><p>
 
    It is perfectly safe to call this function multiple times, even in parallel.
@@ -390,7 +390,8 @@ struct bus1_peer {
     </p></dd><dt><span class="term"><em class="parameter"><code>arg</code></em></span></dt><dd><p>
      ioctl argument
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.13.6"></a><h2>Description</h2><p>
-   This initializes a peer that was created by an <code class="function">open</code> call.
+   This initializes a peer that was created by an <code class="function">open</code> call, by creating a
+   peer_info object and linking it into the peer.
    </p><p>
 
    The caller must not hold any active reference to the peer.
@@ -431,7 +432,7 @@ struct bus1_peer {
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-deallocate-locked"><span class="phrase">bus1_message_deallocate_locked</span></a></span><span class="refpurpose"> — 
      deallocate pool slice for message payload
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-install-handles"><span class="phrase">bus1_message_install_handles</span></a></span><span class="refpurpose"> — 
-     install handles into destination peer
+     write handle ids to destination pool
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-install-fds"><span class="phrase">bus1_message_install_fds</span></a></span><span class="refpurpose"> — 
      install fds into destination peer
  </span></dt></dl></div><p>
@@ -483,7 +484,9 @@ passed handles
      is this a silent message?
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.5.6.6"></a><h2>Description</h2><p>
    This allocates a new, unused message for free use to the caller. Storage for
-   files and handles is (partially) pre-allocated.
+   files and handles is (partially) pre-allocated. The number of embedded
+   handles is capped, so in case many handles are passed more memory will have
+   to be allocated later.
 </p></div><div class="refsect1"><a id="id-1.5.6.7"></a><h2>Return</h2><p>
    Pointer to new message, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-free"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_free — 
@@ -507,7 +510,8 @@ passed handles
      user to account in-flight resources on
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.5.8.6"></a><h2>Description</h2><p>
    Allocate a pool slice for the given message, and charge the quota of the
-   given user for all the associated in-flight resources.
+   given user for all the associated in-flight resources. The peer_info lock
+   must be held.
 </p></div><div class="refsect1"><a id="id-1.5.8.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-deallocate-locked"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_deallocate_locked — 
@@ -518,9 +522,9 @@ passed handles
      destination peer
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.5.9.6"></a><h2>Description</h2><p>
    If allocated, deallocate a slice for the given peer and discharge the
-   associated user quota.
+   associated user quota. The peer_info lock must be held.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-install-handles"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_install_handles — 
-     install handles into destination peer
+     write handle ids to destination pool
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_message_install_handles </strong>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
      message carrying handles
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
@@ -596,9 +600,9 @@ passed handles
    Note that the transaction object relies on being local to the current task.
    That is, its lifetime must be limited to your own function lifetime. You
    must not pass pointers to transaction objects to contexts outside of this
-   lifetime.
-   This allows to optimize access to 'current' (and its properties like creds
-   and pids), and to place the transaction on the stack, if possible.
+   lifetime. This makes it possible to optimize access to 'current' (and its
+   properties like creds and pids), and to place the transaction on the stack,
+   when it fits.
 </p></div><div class="refsect1"><a id="id-1.6.5.7"></a><h2>Return</h2><p>
    Pointer to transaction object, or ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-transaction-free"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_free — 
@@ -624,10 +628,10 @@ passed handles
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      sending user
     </p></dd><dt><span class="term"><em class="parameter"><code>destination</code></em></span></dt><dd><p>
-     destination
+     destination handle id
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.6.7.6"></a><h2>Description</h2><p>
-   Instantiate the message from the given transaction for the peer given as
-   <em class="parameter"><code>peer_id</code></em>. A new pool-slice is allocated, a queue entry is created and the
+   Instantiate the message from the given transaction for the handle id
+   <em class="parameter"><code>destination</code></em>. A new pool-slice is allocated, a queue entry is created and the
    message is queued as in-flight message on the transaction object. The
    message is not linked on the destination, yet. You need to commit the
    transaction to actually link it on the destination queue.
@@ -643,7 +647,7 @@ passed handles
    respective destination queues and committed. This function makes sure to
    adhere to global-order restrictions, hence, the caller *must* instantiate
    the message for each destination before committing the whole transaction.
-   Otherwise, ordering might not be guaranteed.
+   Otherwise, ordering would not be guaranteed.
    </p><p>
 
    This function flushes the entire transaction. Technically, you can
@@ -665,7 +669,7 @@ passed handles
      destination ID
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.6.9.6"></a><h2>Description</h2><p>
    This is a fast-path for unicast messages. It is equivalent to calling
-   <code class="function">bus1_transaction_instantiate_for_id</code>, followed by a commit.
+   <code class="function">bus1_transaction_instantiate_for_id</code>, followed by <code class="function">bus1_transaction_commit</code>.
 </p></div><div class="refsect1"><a id="id-1.6.9.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="handle"></a>Chapter 5. Bus1 Handle</h1></div></div></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-BUS1-HANDLE-BATCH-SIZE"><span class="phrase">BUS1_HANDLE_BATCH_SIZE</span></a></span><span class="refpurpose"> — 
@@ -1583,13 +1587,13 @@ struct bus1_pool {
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.9.10.6"></a><h2>Description</h2><p>
    Initialize a new pool object. This allocates a backing shmem object with the
    given name and size.
-</p></div><div class="refsect1"><a id="id-1.9.10.7"></a><h2>NOTE</h2><p>
-   All pools must be embedded into a parent bus1_peer_info object. The
+   </p><p>
+
+   Note that all pools must be embedded into a parent bus1_peer_info object. The
    code works fine, if you don't, but the lockdep-annotations will fail
-   horribly. They rely on <code class="function">container_of</code> to be valid on every pool. Use
-   the <code class="function">bus1_pool_create_for_peer</code> macro to make sure you never violate
-   this rule.
-</p></div><div class="refsect1"><a id="id-1.9.10.8"></a><h2>Return</h2><p>
+   horribly. They rely on <code class="function">container_of</code> to be valid on every pool. Use the
+   <code class="function">bus1_pool_create_for_peer</code> macro to make sure you never violate this rule.
+</p></div><div class="refsect1"><a id="id-1.9.10.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_destroy — 
      pool to destroy
@@ -1952,12 +1956,12 @@ struct bus1_queue_node {
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.24.6"></a><h2>Description</h2><p>
    This initializes a new queue. The queue memory is considered uninitialized,
    any previous content is lost unrecoverably.
-</p></div><div class="refsect1"><a id="id-1.10.24.7"></a><h2>NOTE</h2><p>
-   All queues must be embedded into a parent bus1_peer_info object. The
-   code works fine, if you don't, but the lockdep-annotations will fail
-   horribly. They rely on <code class="function">container_of</code> to be valid on every queue. Use
-   the <code class="function">bus1_queue_init_for_peer</code> macro to make sure you never violate
-   this rule.
+   </p><p>
+
+   Note that all queues must be embedded into a parent bus1_peer_info object.
+   The code works fine, if you don't, but the lockdep-annotations will fail
+   horribly. They rely on <code class="function">container_of</code> to be valid on every queue. Use the
+   <code class="function">bus1_queue_init_for_peer</code> macro to make sure you never violate this rule.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_destroy — 
      destroy queue
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_queue_destroy </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
