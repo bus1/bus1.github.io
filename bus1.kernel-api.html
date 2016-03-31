@@ -6,7 +6,7 @@
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-75729104-1', 'auto');
       ga('send', 'pageview');
-    </script></head><body><header xmlns=""><a href="/"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="book"><div class="titlepage"><div><div><h1 class="title"><a id="BUS1-API"></a>The Internal Bus1 API</h1></div></div><hr></hr></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="chapter"><a href="#intro">1. Bus1 Overview</a></span></dt><dt><span class="chapter"><a href="#peer">2. Bus1 Peer</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-peer-info"><span class="phrase">struct bus1_peer_info</span></a></span><span class="refpurpose"> — 
+    </script></head><body><header xmlns=""><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:48px;height:48px;"></a><span class="version">Version 1</span></header><div class="book"><div class="titlepage"><div><div><h1 class="title"><a id="BUS1-API"></a>The Internal Bus1 API</h1></div></div><hr></hr></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="chapter"><a href="#intro">1. Bus1 Overview</a></span></dt><dt><span class="chapter"><a href="#peer">2. Bus1 Peer</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-peer-info"><span class="phrase">struct bus1_peer_info</span></a></span><span class="refpurpose"> — 
   peer specific runtime information
  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-peer"><span class="phrase">struct bus1_peer</span></a></span><span class="refpurpose"> — 
      peer handle
@@ -299,7 +299,7 @@ struct bus1_peer {
    underlying peer information
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-acquire"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_acquire — 
      acquire active reference to peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * <strong>fsfuncbus1_peer_acquire </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * bus1_peer_acquire (</code>struct bus1_peer * <code>peer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to operate on, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.6.6"></a><h2>Description</h2><p>
    Acquire a new active reference to the given peer. If the peer was not
@@ -311,7 +311,7 @@ struct bus1_peer {
    Pointer to peer, NULL on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-release"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_release — 
      release an active reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * <strong>fsfuncbus1_peer_release </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * bus1_peer_release (</code>struct bus1_peer * <code>peer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      handle to release, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.7.6"></a><h2>Description</h2><p>
    This releases an active reference to a peer, acquired previously via one
@@ -323,7 +323,7 @@ struct bus1_peer {
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-dereference"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_dereference — 
      dereference a peer handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer_info * <strong>fsfuncbus1_peer_dereference </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer_info * bus1_peer_dereference (</code>struct bus1_peer * <code>peer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      handle to dereference
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.8.6"></a><h2>Description</h2><p>
    Dereference a peer handle to get access to the underlying peer object. This
@@ -340,13 +340,13 @@ struct bus1_peer {
    Pointer to the underlying peer information object is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-wake"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_wake — 
      wake up peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_peer_wake </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_peer_wake (</code>struct bus1_peer * <code>peer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to wake up
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.9.6"></a><h2>Description</h2><p>
    This wakes up a peer and notifies user-space about <code class="function">poll</code> events.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-new"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_new — 
   allocate new peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * <strong>fsfuncbus1_peer_new </strong>(</code> <var class="pdparam">void</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>void</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * bus1_peer_new (</code> <code>void</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>void</code></em></span></dt><dd><p>
      no arguments
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.10.6"></a><h2>Description</h2><p>
    </p><p>
@@ -357,7 +357,7 @@ struct bus1_peer {
    Pointer to peer, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-free"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_free — 
      destroy peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * <strong>fsfuncbus1_peer_free </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * bus1_peer_free (</code>struct bus1_peer * <code>peer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to destroy, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.11.6"></a><h2>Description</h2><p>
    Destroy a peer object that was previously allocated via <code class="function">bus1_peer_new</code>. If
@@ -370,7 +370,7 @@ struct bus1_peer {
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-disconnect"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_disconnect — 
      disconnect peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_peer_disconnect </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_peer_disconnect (</code>struct bus1_peer * <code>peer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.4.12.6"></a><h2>Description</h2><p>
    This tears down a peer synchronously. It first marks the peer as deactivated,
@@ -385,7 +385,7 @@ struct bus1_peer {
    0 on success, negative error code if already torn down.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-ioctl-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_ioctl_init — 
      initialize peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_peer_ioctl_init </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var>, unsigned long <var class="pdparam">arg</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_peer_ioctl_init (</code>struct bus1_peer * <code>peer</code>, unsigned long <code>arg</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>arg</code></em></span></dt><dd><p>
      ioctl argument
@@ -399,7 +399,7 @@ struct bus1_peer {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-peer-ioctl"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_ioctl — 
      handle peer ioctl
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_peer_ioctl </strong>(</code>struct bus1_peer * <var class="pdparam">peer</var>, struct file * <var class="pdparam">peer_file</var>, unsigned int <var class="pdparam">cmd</var>, unsigned long <var class="pdparam">arg</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_peer_ioctl (</code>struct bus1_peer * <code>peer</code>, struct file * <code>peer_file</code>, unsigned int <code>cmd</code>, unsigned long <code>arg</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.4.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to work on
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_file</code></em></span></dt><dd><p>
      underlying file of <em class="parameter"><code>peer</code></em>
@@ -465,7 +465,7 @@ passed file descriptors
 passed handles
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-from-node"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_from_node — 
      get parent message of a queue node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * <strong>fsfuncbus1_message_from_node </strong>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.5.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * bus1_message_from_node (</code>struct bus1_queue_node * <code>node</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.5.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to get parent of
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.5.5.6"></a><h2>Description</h2><p>
    This turns a queue node into a message. The caller must verify that the
@@ -474,7 +474,7 @@ passed handles
    Pointer to message is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-new"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_new — 
   allocate new message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * <strong>fsfuncbus1_message_new </strong>(</code>size_t <var class="pdparam">n_bytes</var>, size_t <var class="pdparam">n_files</var>, size_t <var class="pdparam">n_handles</var>, bool <var class="pdparam">silent</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n_bytes</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * bus1_message_new (</code>size_t <code>n_bytes</code>, size_t <code>n_files</code>, size_t <code>n_handles</code>, bool <code>silent</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n_bytes</code></em></span></dt><dd><p>
      number of bytes to transmit
     </p></dd><dt><span class="term"><em class="parameter"><code>n_files</code></em></span></dt><dd><p>
      number of files to pre-allocate
@@ -491,7 +491,7 @@ passed handles
    Pointer to new message, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-free"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_free — 
      destroy a message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * <strong>fsfuncbus1_message_free </strong>(</code>struct bus1_message * <var class="pdparam">message</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * bus1_message_free (</code>struct bus1_message * <code>message</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
      message to destroy, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.5.7.6"></a><h2>Description</h2><p>
    This deallocates, destroys, and frees a message that was previously created
@@ -502,7 +502,7 @@ passed handles
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-allocate-locked"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_allocate_locked — 
      allocate pool slice for message payload
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_message_allocate_locked </strong>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_message_allocate_locked (</code>struct bus1_message * <code>message</code>, struct bus1_peer_info * <code>peer_info</code>, struct bus1_user * <code>user</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
      message to allocate slice for
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      destination peer
@@ -516,7 +516,7 @@ passed handles
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-deallocate-locked"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_deallocate_locked — 
      deallocate pool slice for message payload
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_message_deallocate_locked </strong>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_message_deallocate_locked (</code>struct bus1_message * <code>message</code>, struct bus1_peer_info * <code>peer_info</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
      message to deallocate slice for
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      destination peer
@@ -525,7 +525,7 @@ passed handles
    associated user quota. The peer_info lock must be held.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-install-handles"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_install_handles — 
      write handle ids to destination pool
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_message_install_handles </strong>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_message_install_handles (</code>struct bus1_message * <code>message</code>, struct bus1_peer_info * <code>peer_info</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
      message carrying handles
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      destination peer
@@ -536,7 +536,7 @@ passed handles
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-message-install-fds"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_install_fds — 
      install fds into destination peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_message_install_fds </strong>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_message_install_fds (</code>struct bus1_message * <code>message</code>, struct bus1_peer_info * <code>peer_info</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.5.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
      message carrying fds
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      destination peer
@@ -577,7 +577,7 @@ passed handles
     generation to continue.
    </p></div></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-transaction-new-from-user"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_new_from_user — 
   create new transaction
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_transaction * <strong>fsfuncbus1_transaction_new_from_user </strong>(</code>u8 * <var class="pdparam">stack_buffer</var>, size_t <var class="pdparam">stack_size</var>, struct bus1_peer * <var class="pdparam">peer</var>, struct bus1_cmd_send * <var class="pdparam">param</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.5.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>stack_buffer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_transaction * bus1_transaction_new_from_user (</code>u8 * <code>stack_buffer</code>, size_t <code>stack_size</code>, struct bus1_peer * <code>peer</code>, struct bus1_cmd_send * <code>param</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.5.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>stack_buffer</code></em></span></dt><dd><p>
      stack buffer to use as backing memory
     </p></dd><dt><span class="term"><em class="parameter"><code>stack_size</code></em></span></dt><dd><p>
      size of <em class="parameter"><code>stack_buffer</code></em> in bytes
@@ -607,7 +607,7 @@ passed handles
    Pointer to transaction object, or ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-transaction-free"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_free — 
      free transaction
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_transaction * <strong>fsfuncbus1_transaction_free </strong>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u8 * <var class="pdparam">stack_buffer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_transaction * bus1_transaction_free (</code>struct bus1_transaction * <code>transaction</code>, u8 * <code>stack_buffer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to free, or NULL
     </p></dd><dt><span class="term"><em class="parameter"><code>stack_buffer</code></em></span></dt><dd><p>
      stack buffer passed to constructor
@@ -623,7 +623,7 @@ passed handles
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-transaction-instantiate-for-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_instantiate_for_id — 
      instantiate a message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_transaction_instantiate_for_id </strong>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, struct bus1_user * <var class="pdparam">user</var>, u64 <var class="pdparam">destination</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_transaction_instantiate_for_id (</code>struct bus1_transaction * <code>transaction</code>, struct bus1_user * <code>user</code>, u64 <code>destination</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to work with
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      sending user
@@ -639,7 +639,7 @@ passed handles
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-transaction-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit — 
      commit a transaction
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_transaction_commit </strong>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_transaction_commit (</code>struct bus1_transaction * <code>transaction</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to commit
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.6.8.6"></a><h2>Description</h2><p>
    This performs the final commit of this transaction. All instances of the
@@ -661,7 +661,7 @@ passed handles
    entries, they will always be correctly committed without failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-transaction-commit-for-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit_for_id — 
      instantiate and commit unicast
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_transaction_commit_for_id </strong>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, struct bus1_user * <var class="pdparam">user</var>, u64 <var class="pdparam">destination</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_transaction_commit_for_id (</code>struct bus1_transaction * <code>transaction</code>, struct bus1_user * <code>user</code>, u64 <code>destination</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to use
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      sending user
@@ -803,7 +803,7 @@ passed handles
    cannot be predicted by the sender, but only by one of the receivers.
 </p><div class="refentry"><a id="API-BUS1-HANDLE-BATCH-SIZE"></a><div class="titlepage"></div><div class="refnamediv"><p>BUS1_HANDLE_BATCH_SIZE — 
   number of handles per set in a batch
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef"> <strong>fsfuncBUS1_HANDLE_BATCH_SIZE </strong>(</code><code>void)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.11.5"></a><h2>Arguments</h2><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef"> BUS1_HANDLE_BATCH_SIZE (</code><code>void)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.11.5"></a><h2>Arguments</h2><p>
   None
  </p></div><div class="refsect1"><a id="id-1.7.11.6"></a><h2>Handles</h2><p>
    </p><p>
@@ -906,7 +906,7 @@ struct bus1_handle_inflight {
    first handle-set of <em class="parameter"><code>batch</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-batch-inline-size"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_batch_inline_size — 
      calculate required inline size
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <strong>fsfuncbus1_handle_batch_inline_size </strong>(</code>size_t <var class="pdparam">n_entries</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n_entries</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t bus1_handle_batch_inline_size (</code>size_t <code>n_entries</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n_entries</code></em></span></dt><dd><p>
      size of batch
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.16.6"></a><h2>Description</h2><p>
    This calculates the size of the trailing entries array that is to be
@@ -924,7 +924,7 @@ struct bus1_handle_inflight {
    Size of required trailing bytes of a batch structure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-new-copy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_new_copy — 
   allocate new handle for existing node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_new_copy </strong>(</code>struct bus1_handle * <var class="pdparam">existing</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>existing</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_new_copy (</code>struct bus1_handle * <code>existing</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>existing</code></em></span></dt><dd><p>
      already linked handle
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.17.6"></a><h2>Description</h2><p>
    This allocates a new, unlinked, detached handle for the same underlying node
@@ -933,7 +933,7 @@ struct bus1_handle_inflight {
    Pointer to new handle, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-new"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_new — 
      allocate new handle for new node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_new </strong>(</code> <var class="pdparam">void</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.18.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>void</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_new (</code> <code>void</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.18.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>void</code></em></span></dt><dd><p>
      no arguments
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.18.6"></a><h2>Description</h2><p>
    </p><p>
@@ -945,7 +945,7 @@ struct bus1_handle_inflight {
    Pointer to new handle, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-ref"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_ref — 
      acquire reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_ref </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.19.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_ref (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.19.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to acquire reference to, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.19.6"></a><h2>Description</h2><p>
    Acquire a new reference to the passed handle. The caller must already own a
@@ -957,7 +957,7 @@ struct bus1_handle_inflight {
    <em class="parameter"><code>handle</code></em> is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-unref"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_unref — 
      release reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_unref </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.20.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_unref (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.20.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to release reference of, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.20.6"></a><h2>Description</h2><p>
    Release a reference that was previously acquired via <code class="function">bus1_handle_ref</code>.
@@ -968,7 +968,7 @@ struct bus1_handle_inflight {
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-find-by-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_find_by_id — 
      find handle by its ID
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_find_by_id </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, u64 <var class="pdparam">id</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_find_by_id (</code>struct bus1_peer_info * <code>peer_info</code>, u64 <code>id</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>id</code></em></span></dt><dd><p>
      ID to search for
@@ -984,7 +984,7 @@ struct bus1_handle_inflight {
    Pointer to referenced handle, or NULL if none found.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-is-public"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_is_public — 
      check whether a handle is public
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <strong>fsfuncbus1_handle_is_public </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.22.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool bus1_handle_is_public (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.22.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to check, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.22.6"></a><h2>Description</h2><p>
    A handle is considered public as soon as it was attached to its node. It
@@ -993,7 +993,7 @@ struct bus1_handle_inflight {
    True if the node is public, false if not (or if NULL is passed).
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-get-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_get_id — 
      get id of handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <strong>fsfuncbus1_handle_get_id </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 bus1_handle_get_id (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to query
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.23.6"></a><h2>Description</h2><p>
    This returns the ID of the handle <em class="parameter"><code>handle</code></em>.
@@ -1001,7 +1001,7 @@ struct bus1_handle_inflight {
    ID of <em class="parameter"><code>handle</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-get-owner-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_get_owner_id — 
      get id of node owner
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <strong>fsfuncbus1_handle_get_owner_id </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 bus1_handle_get_owner_id (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to query
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.24.6"></a><h2>Description</h2><p>
    This returns the ID of the owner of the underlying node that <em class="parameter"><code>handle</code></em> is
@@ -1011,7 +1011,7 @@ struct bus1_handle_inflight {
    ID of node owner <em class="parameter"><code>handle</code></em> is linked to.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-get-inorder-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_get_inorder_id — 
      get handle ID based on global order
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <strong>fsfuncbus1_handle_get_inorder_id </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 bus1_handle_get_inorder_id (</code>struct bus1_handle * <code>handle</code>, u64 <code>timestamp</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to query
     </p></dd><dt><span class="term"><em class="parameter"><code>timestamp</code></em></span></dt><dd><p>
      timestamp to order against
@@ -1035,7 +1035,7 @@ struct bus1_handle_inflight {
    Handle ID of <em class="parameter"><code>handle</code></em>, or BUS1_HANDLE_INVALID if already destroyed.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-release"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_release — 
      release an acquired handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_release </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.26.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_release (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.26.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to release, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.26.6"></a><h2>Description</h2><p>
    This releases a handle that was previously acquired via
@@ -1048,7 +1048,7 @@ struct bus1_handle_inflight {
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-release-pinned"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_release_pinned — 
      release an acquired handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_release_pinned </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.27.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_release_pinned (</code>struct bus1_handle * <code>handle</code>, struct bus1_peer_info * <code>peer_info</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.27.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to release, or NULL
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      pinned holder of <em class="parameter"><code>handle</code></em>
@@ -1063,7 +1063,7 @@ struct bus1_handle_inflight {
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-release-to-inflight"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_release_to_inflight — 
      turn inflight ref into user ref
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <strong>fsfuncbus1_handle_release_to_inflight </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.28.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 bus1_handle_release_to_inflight (</code>struct bus1_handle * <code>handle</code>, u64 <code>timestamp</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.28.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>timestamp</code></em></span></dt><dd><p>
      timestamp to order with, or 0
@@ -1088,7 +1088,7 @@ struct bus1_handle_inflight {
    Handle ID of <em class="parameter"><code>handle</code></em>, or BUS1_HANDLE_INVALID if already destroyed.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-pin"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_pin — 
      pin a handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * <strong>fsfuncbus1_handle_pin </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.29.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * bus1_handle_pin (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.29.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to pin
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.29.6"></a><h2>Description</h2><p>
    This tries to acquire a handle plus its owning peer. If either cannot be
@@ -1100,7 +1100,7 @@ struct bus1_handle_inflight {
    Pointer to acquired peer, NULL on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-attach-unlocked"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_attach_unlocked — 
      attach a handle to its node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <strong>fsfuncbus1_handle_attach_unlocked </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var>, struct bus1_peer * <var class="pdparam">holder</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.30.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool bus1_handle_attach_unlocked (</code>struct bus1_handle * <code>handle</code>, struct bus1_peer * <code>holder</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.30.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to attach
     </p></dd><dt><span class="term"><em class="parameter"><code>holder</code></em></span></dt><dd><p>
      holder of the handle
@@ -1121,7 +1121,7 @@ struct bus1_handle_inflight {
    True if the handle was attached, false if the node is already gone.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-install-unlocked"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_install_unlocked — 
      install a handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * <strong>fsfuncbus1_handle_install_unlocked </strong>(</code>struct bus1_handle * <var class="pdparam">handle</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.31.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_handle * bus1_handle_install_unlocked (</code>struct bus1_handle * <code>handle</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.31.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>handle</code></em></span></dt><dd><p>
      handle to install
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.31.6"></a><h2>Description</h2><p>
    This installs the passed handle in its holding peer. The caller must hold
@@ -1150,7 +1150,7 @@ struct bus1_handle_inflight {
    to conflicting handle otherwise.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-release-by-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_release_by_id — 
      release a user handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_handle_release_by_id </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, u64 <var class="pdparam">id</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.32.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_handle_release_by_id (</code>struct bus1_peer_info * <code>peer_info</code>, u64 <code>id</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.32.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>id</code></em></span></dt><dd><p>
      handle ID
@@ -1160,7 +1160,7 @@ struct bus1_handle_inflight {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-destroy-by-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_destroy_by_id — 
      destroy a user handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_handle_destroy_by_id </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, u64 <var class="pdparam">id</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.33.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_handle_destroy_by_id (</code>struct bus1_peer_info * <code>peer_info</code>, u64 <code>id</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.33.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>id</code></em></span></dt><dd><p>
      handle ID
@@ -1170,7 +1170,7 @@ struct bus1_handle_inflight {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-flush-all"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_flush_all — 
      flush all owned handles
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_flush_all </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct rb_root * <var class="pdparam">map</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.34.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_flush_all (</code>struct bus1_peer_info * <code>peer_info</code>, struct rb_root * <code>map</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.34.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>map</code></em></span></dt><dd><p>
      rb-tree to push handles into
@@ -1182,7 +1182,7 @@ struct bus1_handle_inflight {
    The caller must hold the peer lock of <em class="parameter"><code>peer_info</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-finish-all"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_finish_all — 
      finish set of handles
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_finish_all </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct rb_root * <var class="pdparam">map</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.35.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_finish_all (</code>struct bus1_peer_info * <code>peer_info</code>, struct rb_root * <code>map</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.35.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>map</code></em></span></dt><dd><p>
      map of handles
@@ -1194,7 +1194,7 @@ struct bus1_handle_inflight {
    This must be called *without* the peer lock held.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-transfer-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_transfer_init — 
      initialize handle transfer context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_transfer_init </strong>(</code>struct bus1_handle_transfer * <var class="pdparam">transfer</var>, size_t <var class="pdparam">n_entries</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.36.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_transfer_init (</code>struct bus1_handle_transfer * <code>transfer</code>, size_t <code>n_entries</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.36.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
      transfer context to initialize
     </p></dd><dt><span class="term"><em class="parameter"><code>n_entries</code></em></span></dt><dd><p>
      number of handles that are transferred
@@ -1214,7 +1214,7 @@ struct bus1_handle_inflight {
    pre-allocated via <code class="function">bus1_handle_batch_inline_size</code>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-transfer-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_transfer_destroy — 
      destroy handle transfer context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_transfer_destroy </strong>(</code>struct bus1_handle_transfer * <var class="pdparam">transfer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.37.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_transfer_destroy (</code>struct bus1_handle_transfer * <code>transfer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.37.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
      transfer context to destroy, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.37.6"></a><h2>Description</h2><p>
    This releases all data allocated, or pinned by a handle-transfer context. If
@@ -1222,7 +1222,7 @@ struct bus1_handle_inflight {
    nothing is done.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-transfer-instantiate"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_transfer_instantiate — 
      instantiate handles for transfer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_handle_transfer_instantiate </strong>(</code>struct bus1_handle_transfer * <var class="pdparam">transfer</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, const u64 __user * <var class="pdparam">ids</var>, size_t <var class="pdparam">n_ids</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.38.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_handle_transfer_instantiate (</code>struct bus1_handle_transfer * <code>transfer</code>, struct bus1_peer_info * <code>peer_info</code>, const u64 __user * <code>ids</code>, size_t <code>n_ids</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.38.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
      transfer context
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to import handles of
@@ -1242,7 +1242,7 @@ struct bus1_handle_inflight {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-inflight-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_init — 
      initialize inflight context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_inflight_init </strong>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, size_t <var class="pdparam">n_entries</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.39.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_inflight_init (</code>struct bus1_handle_inflight * <code>inflight</code>, size_t <code>n_entries</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.39.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to initialize
     </p></dd><dt><span class="term"><em class="parameter"><code>n_entries</code></em></span></dt><dd><p>
      number of entries to store in this context
@@ -1258,7 +1258,7 @@ struct bus1_handle_inflight {
    via <code class="function">bus1_handle_batch_inline_size</code>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-inflight-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_destroy — 
      destroy inflight-context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_inflight_destroy </strong>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.40.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_inflight_destroy (</code>struct bus1_handle_inflight * <code>inflight</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.40.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to destroy, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.7.40.6"></a><h2>Description</h2><p>
    This releases all data allocated, or pinned by an inflight-context. If NULL
@@ -1266,7 +1266,7 @@ struct bus1_handle_inflight {
    done.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-inflight-instantiate"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_instantiate — 
      instantiate inflight context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_handle_inflight_instantiate </strong>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_handle_transfer * <var class="pdparam">transfer</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.41.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_handle_inflight_instantiate (</code>struct bus1_handle_inflight * <code>inflight</code>, struct bus1_peer_info * <code>peer_info</code>, struct bus1_handle_transfer * <code>transfer</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.41.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to instantiate
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer info to instantiate for
@@ -1285,7 +1285,7 @@ struct bus1_handle_inflight {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-inflight-install"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_install — 
      install inflight handles
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_inflight_install </strong>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer * <var class="pdparam">dst</var>, struct bus1_handle_transfer * <var class="pdparam">transfer</var>, struct bus1_peer * <var class="pdparam">src</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.42.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_inflight_install (</code>struct bus1_handle_inflight * <code>inflight</code>, struct bus1_peer * <code>dst</code>, struct bus1_handle_transfer * <code>transfer</code>, struct bus1_peer * <code>src</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.42.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      instantiated inflight context
     </p></dd><dt><span class="term"><em class="parameter"><code>dst</code></em></span></dt><dd><p>
      peer <em class="parameter"><code>inflight</code></em> is for
@@ -1299,7 +1299,7 @@ struct bus1_handle_inflight {
    context and the origin peer as <em class="parameter"><code>transfer</code></em> and <em class="parameter"><code>src</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-inflight-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_commit — 
      commit inflight context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_handle_inflight_commit </strong>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, u64 <var class="pdparam">seq</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.43.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_handle_inflight_commit (</code>struct bus1_handle_inflight * <code>inflight</code>, u64 <code>seq</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.43.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to commit
     </p></dd><dt><span class="term"><em class="parameter"><code>seq</code></em></span></dt><dd><p>
      sequence number of transaction
@@ -1309,7 +1309,7 @@ struct bus1_handle_inflight {
    if it is ordered *before* the handle destruction.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-handle-inflight-walk"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_walk — 
      walk all handle IDs
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <strong>fsfuncbus1_handle_inflight_walk </strong>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, size_t * <var class="pdparam">pos</var>, u64 ** <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.44.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t bus1_handle_inflight_walk (</code>struct bus1_handle_inflight * <code>inflight</code>, size_t * <code>pos</code>, u64 ** <code>idp</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.7.44.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to walk
     </p></dd><dt><span class="term"><em class="parameter"><code>pos</code></em></span></dt><dd><p>
      current iterator position
@@ -1386,7 +1386,7 @@ struct bus1_user_quota {
    user entries
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-ref-by-uid"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_ref_by_uid — 
   get a user object for a uid
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <strong>fsfuncbus1_user_ref_by_uid </strong>(</code>kuid_t <var class="pdparam">uid</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>uid</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * bus1_user_ref_by_uid (</code>kuid_t <code>uid</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>uid</code></em></span></dt><dd><p>
      uid of the user
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.8.7.6"></a><h2>Description</h2><p>
    Find and return the user object for the uid if it exists, otherwise create
@@ -1395,7 +1395,7 @@ struct bus1_user_quota {
    A user object for the given uid, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-ref"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_ref — 
      acquire reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <strong>fsfuncbus1_user_ref </strong>(</code>struct bus1_user * <var class="pdparam">user</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * bus1_user_ref (</code>struct bus1_user * <code>user</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to acquire, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.8.8.6"></a><h2>Description</h2><p>
    Acquire an additional reference to a user-object. The caller must already
@@ -1407,7 +1407,7 @@ struct bus1_user_quota {
    <em class="parameter"><code>user</code></em> is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-unref"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_unref — 
      release reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <strong>fsfuncbus1_user_unref </strong>(</code>struct bus1_user * <var class="pdparam">user</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * bus1_user_unref (</code>struct bus1_user * <code>user</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to release, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.8.9.6"></a><h2>Description</h2><p>
    Release a reference to a user-object.
@@ -1418,13 +1418,13 @@ struct bus1_user_quota {
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-quota-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_init — 
      initialize quota object
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_user_quota_init </strong>(</code>struct bus1_user_quota * <var class="pdparam">quota</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_user_quota_init (</code>struct bus1_user_quota * <code>quota</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
      quota object to initialize
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.8.10.6"></a><h2>Description</h2><p>
    Initialize all fields of a quota object.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-quota-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_destroy — 
      destroy quota object
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_user_quota_destroy </strong>(</code>struct bus1_user_quota * <var class="pdparam">quota</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_user_quota_destroy (</code>struct bus1_user_quota * <code>quota</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
      quota object to destroy, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.8.11.6"></a><h2>Description</h2><p>
    Destroy and deallocate a quota object. All linked resources are freed, and
@@ -1434,7 +1434,7 @@ struct bus1_user_quota {
    If NULL is passed, this is a no-op.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-quota-charge"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_charge — 
      try charging a user
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_user_quota_charge </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">size</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_user_quota_charge (</code>struct bus1_peer_info * <code>peer_info</code>, struct bus1_user * <code>user</code>, size_t <code>size</code>, size_t <code>n_handles</code>, size_t <code>n_fds</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer with quota to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to charge
@@ -1456,7 +1456,7 @@ struct bus1_user_quota {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-quota-discharge"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_discharge — 
      discharge a user
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_user_quota_discharge </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">size</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_user_quota_discharge (</code>struct bus1_peer_info * <code>peer_info</code>, struct bus1_user * <code>user</code>, size_t <code>size</code>, size_t <code>n_handles</code>, size_t <code>n_fds</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer with quota to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to discharge
@@ -1472,7 +1472,7 @@ struct bus1_user_quota {
    and <em class="parameter"><code>n_fds</code></em> file-descriptors.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-user-quota-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_commit — 
      commit a quota charge
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_user_quota_commit </strong>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">size</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_user_quota_commit (</code>struct bus1_peer_info * <code>peer_info</code>, struct bus1_user * <code>user</code>, size_t <code>size</code>, size_t <code>n_handles</code>, size_t <code>n_fds</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.8.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer with quota to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to commit for
@@ -1580,7 +1580,7 @@ struct bus1_pool {
    tree of free slices
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-create-internal"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_create_internal — 
   create memory pool
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_pool_create_internal </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">size</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_pool_create_internal (</code>struct bus1_pool * <code>pool</code>, size_t <code>size</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      (uninitialized) pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>size</code></em></span></dt><dd><p>
      size of the pool
@@ -1597,7 +1597,7 @@ struct bus1_pool {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_destroy — 
      pool to destroy
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_pool_destroy </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_pool_destroy (</code>struct bus1_pool * <code>pool</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to destroy, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.9.11.6"></a><h2>Description</h2><p>
    This destroys a pool that was previously create via <code class="function">bus1_pool_create</code>. If
@@ -1609,7 +1609,7 @@ struct bus1_pool {
    pending user-space reference to any slice is dropped by this function.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-alloc"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_alloc — 
      allocate memory
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * <strong>fsfuncbus1_pool_alloc </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">size</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * bus1_pool_alloc (</code>struct bus1_pool * <code>pool</code>, size_t <code>size</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to allocate memory from
     </p></dd><dt><span class="term"><em class="parameter"><code>size</code></em></span></dt><dd><p>
      number of bytes to allocate
@@ -1635,7 +1635,7 @@ struct bus1_pool {
    Pointer to new slice, or ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-release-kernel"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_release_kernel — 
      release kernel-owned slice reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * <strong>fsfuncbus1_pool_release_kernel </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * bus1_pool_release_kernel (</code>struct bus1_pool * <code>pool</code>, struct bus1_pool_slice * <code>slice</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to free memory on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to release
@@ -1648,7 +1648,7 @@ struct bus1_pool {
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-publish"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_publish — 
      publish a slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_pool_publish </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_pool_publish (</code>struct bus1_pool * <code>pool</code>, struct bus1_pool_slice * <code>slice</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to publish
@@ -1659,7 +1659,7 @@ struct bus1_pool {
    the user-space reference *and* kernel-space reference are released.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-release-user"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_release_user — 
      release a public slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <strong>fsfuncbus1_pool_release_user </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">offset</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.15.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int bus1_pool_release_user (</code>struct bus1_pool * <code>pool</code>, size_t <code>offset</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.15.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>offset</code></em></span></dt><dd><p>
      offset of slice to release
@@ -1675,14 +1675,14 @@ struct bus1_pool {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-flush"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_flush — 
      flush all user references
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_pool_flush </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_pool_flush (</code>struct bus1_pool * <code>pool</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to flush
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.9.16.6"></a><h2>Description</h2><p>
    This flushes all user-references to any slice in <em class="parameter"><code>pool</code></em>. Kernel references
    are left untouched.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-write-iovec"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_write_iovec — 
      copy user memory to a slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t <strong>fsfuncbus1_pool_write_iovec </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var>, loff_t <var class="pdparam">offset</var>, struct iovec * <var class="pdparam">iov</var>, size_t <var class="pdparam">n_iov</var>, size_t <var class="pdparam">total_len</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t bus1_pool_write_iovec (</code>struct bus1_pool * <code>pool</code>, struct bus1_pool_slice * <code>slice</code>, loff_t <code>offset</code>, struct iovec * <code>iov</code>, size_t <code>n_iov</code>, size_t <code>total_len</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to write to
@@ -1701,7 +1701,7 @@ struct bus1_pool {
    Numbers of bytes copied, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-pool-write-kvec"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_write_kvec — 
      copy kernel memory to a slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t <strong>fsfuncbus1_pool_write_kvec </strong>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var>, loff_t <var class="pdparam">offset</var>, struct kvec * <var class="pdparam">iov</var>, size_t <var class="pdparam">n_iov</var>, size_t <var class="pdparam">total_len</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.18.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t bus1_pool_write_kvec (</code>struct bus1_pool * <code>pool</code>, struct bus1_pool_slice * <code>slice</code>, loff_t <code>offset</code>, struct kvec * <code>iov</code>, size_t <code>n_iov</code>, size_t <code>total_len</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.9.18.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to write to
@@ -1859,7 +1859,7 @@ struct bus1_queue_node {
    message timestamp and type of parent object
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-tick"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_tick — 
      increment queue clock
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <strong>fsfuncbus1_queue_tick </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.19.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 bus1_queue_tick (</code>struct bus1_queue * <code>queue</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.19.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.19.6"></a><h2>Description</h2><p>
    This performs a clock-tick on <em class="parameter"><code>queue</code></em>. The clock is incremented by a full
@@ -1873,7 +1873,7 @@ struct bus1_queue_node {
    New clock value is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-sync"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_sync — 
      sync queue clock
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <strong>fsfuncbus1_queue_sync </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.20.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 bus1_queue_sync (</code>struct bus1_queue * <code>queue</code>, u64 <code>timestamp</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.20.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>timestamp</code></em></span></dt><dd><p>
      timestamp to sync on
@@ -1892,7 +1892,7 @@ struct bus1_queue_node {
    New clock value is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-peek-rcu"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_peek_rcu — 
      peek first available entry
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_queue_node * <strong>fsfuncbus1_queue_peek_rcu </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_queue_node * bus1_queue_peek_rcu (</code>struct bus1_queue * <code>queue</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.21.6"></a><h2>Description</h2><p>
    This returns a pointer to the first available entry in the given queue, or
@@ -1913,7 +1913,7 @@ struct bus1_queue_node {
    Pointer to first available entry, NULL if none available.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-is-readable"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_is_readable — 
      check whether a queue is readable
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <strong>fsfuncbus1_queue_is_readable </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.22.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool bus1_queue_is_readable (</code>struct bus1_queue * <code>queue</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.22.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.22.6"></a><h2>Description</h2><p>
    This checks whether the given queue is readable. It is similar to
@@ -1942,7 +1942,7 @@ struct bus1_queue_node {
    True if the queue is readable, false if not.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-node-get-type"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_get_type — 
   query node type
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">unsigned int <strong>fsfuncbus1_queue_node_get_type </strong>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">unsigned int bus1_queue_node_get_type (</code>struct bus1_queue_node * <code>node</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to query
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.23.6"></a><h2>Description</h2><p>
    This queries the node type that was provided via the node constructor. A
@@ -1951,7 +1951,7 @@ struct bus1_queue_node {
    Type of <em class="parameter"><code>node</code></em> is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-init-internal"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_init_internal — 
      initialize queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_queue_init_internal </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_queue_init_internal (</code>struct bus1_queue * <code>queue</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to initialize
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.24.6"></a><h2>Description</h2><p>
    This initializes a new queue. The queue memory is considered uninitialized,
@@ -1964,7 +1964,7 @@ struct bus1_queue_node {
    <code class="function">bus1_queue_init_for_peer</code> macro to make sure you never violate this rule.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_destroy — 
      destroy queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_queue_destroy </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_queue_destroy (</code>struct bus1_queue * <code>queue</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to destroy
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.25.6"></a><h2>Description</h2><p>
    This destroys a queue that was previously initialized via <code class="function">bus1_queue_init</code>.
@@ -1979,7 +1979,7 @@ struct bus1_queue_node {
    rcu-delayed manner.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-post-flush"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_post_flush — 
      flush queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_queue_post_flush </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.26.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_queue_post_flush (</code>struct bus1_queue * <code>queue</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.26.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to flush
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.26.6"></a><h2>Description</h2><p>
    To flush an entire queue, callers should lock the peer and iterate the
@@ -1994,7 +1994,7 @@ struct bus1_queue_node {
    hence we decided to force callers to traverse the tree themselves.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-stage"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_stage — 
      stage queue entry with new timestamp
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <strong>fsfuncbus1_queue_stage </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.27.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool bus1_queue_stage (</code>struct bus1_queue * <code>queue</code>, struct bus1_queue_node * <code>node</code>, u64 <code>timestamp</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.27.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      queue entry to stage
@@ -2019,7 +2019,7 @@ struct bus1_queue_node {
    True if this call turned the queue readable, false otherwise.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-remove"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_remove — 
      remove entry from queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <strong>fsfuncbus1_queue_remove </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.28.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool bus1_queue_remove (</code>struct bus1_queue * <code>queue</code>, struct bus1_queue_node * <code>node</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.28.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      queue entry to remove
@@ -2035,7 +2035,7 @@ struct bus1_queue_node {
    True if this call turned the queue readable, false otherwise.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-peek"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_peek — 
      peek first available entry
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_queue_node * <strong>fsfuncbus1_queue_peek </strong>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.29.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_queue_node * bus1_queue_peek (</code>struct bus1_queue * <code>queue</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.29.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.29.6"></a><h2>Description</h2><p>
    This returns a pointer to the first available entry in the given queue, or
@@ -2052,7 +2052,7 @@ struct bus1_queue_node {
    Pointer to first available entry, NULL if none available.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-node-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_init — 
      initialize queue node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_queue_node_init </strong>(</code>struct bus1_queue_node * <var class="pdparam">node</var>, unsigned int <var class="pdparam">type</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.30.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_queue_node_init (</code>struct bus1_queue_node * <code>node</code>, unsigned int <code>type</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.30.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to initialize
     </p></dd><dt><span class="term"><em class="parameter"><code>type</code></em></span></dt><dd><p>
      message type
@@ -2061,14 +2061,14 @@ struct bus1_queue_node {
    message queue.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-node-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_destroy — 
      destroy queue node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <strong>fsfuncbus1_queue_node_destroy </strong>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.31.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void bus1_queue_node_destroy (</code>struct bus1_queue_node * <code>node</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.31.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to destroy, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.31.6"></a><h2>Description</h2><p>
    This destroys a previously initialized queue node. This is a no-op and only
    serves as debugger, testing whether the node was properly unqueued before.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-node-is-queued"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_is_queued — 
      check whether a node is queued
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <strong>fsfuncbus1_queue_node_is_queued </strong>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.32.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool bus1_queue_node_is_queued (</code>struct bus1_queue_node * <code>node</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.32.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to query, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.32.6"></a><h2>Description</h2><p>
    This checks whether a node is currently queued in a message queue. That is,
@@ -2078,7 +2078,7 @@ struct bus1_queue_node {
    True if <em class="parameter"><code>node</code></em> is currently queued.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></hr></div><a id="API-bus1-queue-node-is-committed"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_is_committed — 
      check whether a node is committed
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <strong>fsfuncbus1_queue_node_is_committed </strong>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.33.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool bus1_queue_node_is_committed (</code>struct bus1_queue_node * <code>node</code><code>)</code>;</p></div></div><div class="refsect1"><a id="id-1.10.33.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to query, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a id="id-1.10.33.6"></a><h2>Description</h2><p>
    This checks whether a given node was already committed. In this case, the
