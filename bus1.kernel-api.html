@@ -438,6 +438,7 @@ message data
 <em class="parameter"><code>transaction</code></em>.next:		message list (during transactions)
 <em class="parameter"><code>transaction</code></em>.handle:		pinned handle (during transactions)
 <em class="parameter"><code>transaction</code></em>.raw_peer:	pinned destination (during transactions)
+<em class="parameter"><code>transaction</code></em>.userid:		address to store handle id (during transactions)
       </p></dd><dt><span class="term">user</span></dt><dd><p>
 sending user
       </p></dd><dt><span class="term">slice</span></dt><dd><p>
@@ -595,15 +596,13 @@ passed handles
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-instantiate-for-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_instantiate_for_id — 
      instantiate a message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_instantiate_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, struct bus1_user * <var class="pdparam">user</var>, u64 <var class="pdparam">destination</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_instantiate_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u64 __user * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to work with
-    </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
-     sending user
-    </p></dd><dt><span class="term"><em class="parameter"><code>destination</code></em></span></dt><dd><p>
-     destination handle id
+    </p></dd><dt><span class="term"><em class="parameter"><code>idp</code></em></span></dt><dd><p>
+     user-space pointer with destination ID
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.7.6"></a><h2>Description</h2><p>
    Instantiate the message from the given transaction for the handle id
-   <em class="parameter"><code>destination</code></em>. A new pool-slice is allocated, a queue entry is created and the
+   in <em class="parameter"><code>idp</code></em>. A new pool-slice is allocated, a queue entry is created and the
    message is queued as in-flight message on the transaction object. The
    message is not linked on the destination, yet. You need to commit the
    transaction to actually link it on the destination queue.
@@ -611,7 +610,7 @@ passed handles
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit — 
      commit a transaction
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_transaction_commit </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to commit
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.8.6"></a><h2>Description</h2><p>
    This performs the final commit of this transaction. All instances of the
@@ -629,16 +628,17 @@ passed handles
    that might be triggered multiple times (like peer notifications).
    </p><p>
 
-   This function never fails. If you successfully instantiated all your
-   entries, they will always be correctly committed without failure.
+   This function may fail if the handle id of newly allocated nodes cannot be
+   written back to the caller. Errors due to racing node destructions are
+   silently ignored.
+</p></div><div class="refsect1"><a name="id-1.6.8.7"></a><h2>Return</h2><p>
+   0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-commit-for-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit_for_id — 
      instantiate and commit unicast
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, struct bus1_user * <var class="pdparam">user</var>, u64 <var class="pdparam">destination</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u64 __user * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to use
-    </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
-     sending user
-    </p></dd><dt><span class="term"><em class="parameter"><code>destination</code></em></span></dt><dd><p>
-     destination ID
+    </p></dd><dt><span class="term"><em class="parameter"><code>idp</code></em></span></dt><dd><p>
+     user-space pointer with destination ID
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.9.6"></a><h2>Description</h2><p>
    This is a fast-path for unicast messages. It is equivalent to calling
    <code class="function">bus1_transaction_instantiate_for_id</code>, followed by <code class="function">bus1_transaction_commit</code>.
