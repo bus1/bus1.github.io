@@ -95,14 +95,19 @@
       notification is replaced by <code class="constant">BUS1_HANDLE_INVALID</code>. A
       local handle to a node is valid until its destruction notification is
       received though actual operations on it may fail.
-      
     </p></div><div class="refsect1"><a name="id-1.12"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and
-      <code class="varname">errno</code> is set to indicate the error.
-      If the issued ioctl is illegal for the file descriptor used,
-      <code class="varname">errno</code> will be set to <code class="constant">ENOTTY</code>.
-    </p></div><div class="refsect1"><a name="id-1.13"></a><h2>See Also</h2><span class="simplelist">
+      <code class="varname">errno</code> is set to indicate the error. See
+      <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
+      for a list of possible error codes, in addition to the ones listed below.
+    </p><div class="refsect2"><a name="id-1.12.3"></a><h3>
+        <code class="constant">BUS1_CMD_NODE_DESTROY</code> and
+        <code class="constant">BUS1_CMD_HANDLE_RELEASE</code> may fail with the following
+        errors
+      </h3><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">ENXIO</code></span></dt><dd><p>
+            The handle id is invalid.
+          </p></dd></dl></div></div></div><div class="refsect1"><a name="id-1.13"></a><h2>See Also</h2><span class="simplelist">
         <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       , 
         <a href="bus1.peer.html"><span class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>

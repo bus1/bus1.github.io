@@ -212,17 +212,38 @@ struct bus1_msg_node_destroy {
           </pre></dd></dl></div></div><div class="refsect1"><a name="id-1.10"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and
-      <code class="varname">errno</code> is set to indicate the error.
-      If the issued ioctl is illegal for the file descriptor used,
-      <code class="varname">errno</code> will be set to <code class="constant">ENOTTY</code>.
-    </p></div><div class="refsect1"><a name="id-1.11"></a><h2>See Also</h2><span class="simplelist">
+      <code class="varname">errno</code> is set to indicate the error. See
+      <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
+      for a list of possible error codes, in addition to the ones listed below.
+    </p><div class="refsect2"><a name="id-1.10.3"></a><h3>
+        <code class="constant">BUS1_CMD_RECV</code> may fail with the following
+        errors
+      </h3><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">EAGAIN</code></span></dt><dd><p>
+            No message is ready to be dequeued.
+          </p></dd></dl></div></div><div class="refsect2"><a name="id-1.10.4"></a><h3>
+        <code class="constant">BUS1_CMD_SEND</code> may fail with the following
+        errors
+      </h3><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">EHOSTUNREACH</code></span></dt><dd><p>
+            The destination node has been destroyed. In particular, the message
+            being sent would be received after the destruction notification
+            for the destination node.
+          </p></dd><dt><span class="term"><code class="constant">EDQUOT</code></span></dt><dd><p>
+            User exceeded their quota for destination peer.
+          </p></dd><dt><span class="term"><code class="constant">ETOOMANYREFS</code></span></dt><dd><p>
+            User has too many in-flight file-descriptors.
+          </p></dd><dt><span class="term"><code class="constant">EXFULL</code></span></dt><dd><p>
+            Target memory pool is full.
+          </p></dd><dt><span class="term"><code class="constant">ENXIO</code></span></dt><dd><p>
+            Destination or passed handle id invalid.
+          </p></dd><dt><span class="term"><code class="constant">EBADF</code></span></dt><dd><p>
+            Passed file-descriptor is invalid.
+          </p></dd><dt><span class="term"><code class="constant">EOPNOTSUPP</code></span></dt><dd><p>
+            Passed file-descriptor has unsupported type. Passing bus1 or UDS
+            file-descriptors is not supported.
+          </p></dd></dl></div></div></div><div class="refsect1"><a name="id-1.11"></a><h2>See Also</h2><span class="simplelist">
         <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       , 
         <a href="bus1.peer.html"><span class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
       , 
         <a href="bus1.message.html"><span class="citerefentry"><span class="refentrytitle">bus1.message</span>(7)</span></a>
-      , 
-        <a href="http://linux.die.net/man/2/mmap"><span class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
-        , 
-        <a href="http://linux.die.net/man/2/munmap"><span class="citerefentry"><span class="refentrytitle">munmap</span>(2)</span></a>
       </span></div></div></body></html>

@@ -45,15 +45,10 @@ struct bus1_cmd_peer_init {
     </p><pre class="programlisting">
 struct bus1_cmd_peer_reset {
   __u64 flags;
-  __u64 handle;
 };
     </pre><p>The fields in this structure are described below</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>
           Flags to apply to this peer. This must be set to
           <code class="constant">0</code>.
-        </p></dd><dt><span class="term"><code class="varname">handle</code></span></dt><dd><p>
-          The handle to a node to preserve during reset. This may be set to
-          <code class="constant">BUS1_HANDLE_INVALID</code> if all handles should be
-          dropped.
         </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8"></a><h2>Cloning a peer</h2><p>
       A new peer can be created from an existing one by calling the
       <code class="constant">BUS1_CMD_PEER_CLONE</code> ioctl on a file-descriptor
@@ -90,9 +85,9 @@ struct bus1_cmd_peer_clone {
         </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and
-      <code class="varname">errno</code> is set to indicate the error.
-      If the issued ioctl is illegal for the file descriptor used,
-      <code class="varname">errno</code> will be set to <code class="constant">ENOTTY</code>.
+      <code class="varname">errno</code> is set to indicate the error. See
+      <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
+      for a list of possible error codes.
     </p></div><div class="refsect1"><a name="id-1.10"></a><h2>See Also</h2><span class="simplelist">
         <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       , 
