@@ -898,7 +898,7 @@ struct bus1_handle {
 object ref-count
       </p></dd><dt><span class="term">n_inflight</span></dt><dd><p>
 number of inflight references; initially -1 if
-unattached; 1-n if live; 0 if about to be detached
+unattached; &gt;0 if live; 0 if about to be detached
       </p></dd><dt><span class="term">n_user</span></dt><dd><p>
 number of user-visible references (shifted by -1)
       </p></dd><dt><span class="term">rb_id</span></dt><dd><p>
@@ -1156,9 +1156,10 @@ struct bus1_node {
      timestamp of the transaction
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.36.6"></a><h2>Description</h2><p>
    This walks over all stored handles of <em class="parameter"><code>inflight</code></em>, returning their IDs in
-   blocks to the caller. The caller must initialize <em class="parameter"><code>pos</code></em> to 0 and pre-allocate
-   <em class="parameter"><code>ids</code></em> large enough to hold IDs of all stored handles, but at most
-   BUS1_HANDLE_BATCH_SIZE.
+   blocks to the caller, instantiating them if necessary. If a given handle will
+   be invalid at <em class="parameter"><code>timestamp</code></em>, BUS1_HANDLE_INVALID is returned instead. The caller
+   must initialize <em class="parameter"><code>pos</code></em> to 0 and pre-allocate <em class="parameter"><code>ids</code></em> large enough to hold IDs of
+   all stored handles, but at most BUS1_HANDLE_BATCH_SIZE.
    </p><p>
 
    On each call, this function advances <em class="parameter"><code>pos</code></em> and <em class="parameter"><code>iter</code></em> to keep track of the
