@@ -49,6 +49,8 @@
   create new transaction
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-free"><span class="phrase">bus1_transaction_free</span></a></span><span class="refpurpose"> — 
      free transaction
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-instantiate-message"><span class="phrase">bus1_transaction_instantiate_message</span></a></span><span class="refpurpose"> — 
+     instantiate message
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-instantiate-for-id"><span class="phrase">bus1_transaction_instantiate_for_id</span></a></span><span class="refpurpose"> — 
      instantiate a message
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit"><span class="phrase">bus1_transaction_commit</span></a></span><span class="refpurpose"> — 
@@ -263,6 +265,7 @@ struct bus1_peer_info {
   const struct cred * cred;
   struct pid_namespace * pid_ns;
   struct bus1_user * user;
+  struct bus1_message * seed;
   struct bus1_user_quota quota;
   struct bus1_pool pool;
   struct bus1_queue queue;
@@ -283,6 +286,8 @@ user creds
 user pid namespace
       </p></dd><dt><span class="term">user</span></dt><dd><p>
 object owner
+      </p></dd><dt><span class="term">seed</span></dt><dd><p>
+seed message
       </p></dd><dt><span class="term">quota</span></dt><dd><p>
 quota handling
       </p></dd><dt><span class="term">pool</span></dt><dd><p>
@@ -567,6 +572,8 @@ passed handles
   create new transaction
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-free"><span class="phrase">bus1_transaction_free</span></a></span><span class="refpurpose"> — 
      free transaction
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-instantiate-message"><span class="phrase">bus1_transaction_instantiate_message</span></a></span><span class="refpurpose"> — 
+     instantiate message
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-instantiate-for-id"><span class="phrase">bus1_transaction_instantiate_for_id</span></a></span><span class="refpurpose"> — 
      instantiate a message
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit"><span class="phrase">bus1_transaction_commit</span></a></span><span class="refpurpose"> — 
@@ -635,25 +642,37 @@ passed handles
    If NULL is passed, this is a no-op.
 </p></div><div class="refsect1"><a name="id-1.6.6.7"></a><h2>Return</h2><p>
    NULL is returned.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-instantiate-message"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_instantiate_message — 
+     instantiate message
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * <b class="fsfunc">bus1_transaction_instantiate_message </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+     transaction to operate on
+    </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+     destination peer to instantiate message for
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.7.6"></a><h2>Description</h2><p>
+   This instantiates a single bus1_message object for <em class="parameter"><code>peer_info</code></em>. It is not
+   linked into any queue or parent context. It is exclusively owned by the
+   caller.
+</p></div><div class="refsect1"><a name="id-1.6.7.7"></a><h2>Return</h2><p>
+   Message on success, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-instantiate-for-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_instantiate_for_id — 
      instantiate a message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_instantiate_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u64 __user * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_instantiate_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u64 __user * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to work with
     </p></dd><dt><span class="term"><em class="parameter"><code>idp</code></em></span></dt><dd><p>
      user-space pointer with destination ID
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.7.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.8.6"></a><h2>Description</h2><p>
    Instantiate the message from the given transaction for the handle id
    in <em class="parameter"><code>idp</code></em>. A new pool-slice is allocated, a queue entry is created and the
    message is queued as in-flight message on the transaction object. The
    message is not linked on the destination, yet. You need to commit the
    transaction to actually link it on the destination queue.
-</p></div><div class="refsect1"><a name="id-1.6.7.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.6.8.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit — 
      commit a transaction
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to commit
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.8.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.9.6"></a><h2>Description</h2><p>
    This performs the final commit of this transaction. All instances of the
    message that have been created on this transaction are staged on their
    respective destination queues and committed. This function makes sure to
@@ -672,18 +691,18 @@ passed handles
    This function may fail if the handle id of newly allocated nodes cannot be
    written back to the caller. Errors due to racing node destructions are
    silently ignored.
-</p></div><div class="refsect1"><a name="id-1.6.8.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.6.9.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-commit-for-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit_for_id — 
      instantiate and commit unicast
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u64 __user * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u64 __user * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to use
     </p></dd><dt><span class="term"><em class="parameter"><code>idp</code></em></span></dt><dd><p>
      user-space pointer with destination ID
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.9.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.10.6"></a><h2>Description</h2><p>
    This is a fast-path for unicast messages. It is equivalent to calling
    <code class="function">bus1_transaction_instantiate_for_id</code>, followed by <code class="function">bus1_transaction_commit</code>.
-</p></div><div class="refsect1"><a name="id-1.6.9.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.6.10.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="handle"></a>Chapter 5. Bus1 Handle</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-handle-dest"><span class="phrase">struct bus1_handle_dest</span></a></span><span class="refpurpose"> — 
   destination context
