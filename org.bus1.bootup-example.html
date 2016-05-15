@@ -7,13 +7,13 @@
       ga('send', 'pageview');
     </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:64px;height:64px;"></a><span class="version">Version 1</span></header><div class="refentry"><a name="org.bus1.bootup-example"></a><div class="titlepage"></div><div class="refnamediv"><p>org.bus1.bootup-example — Bootup</p></div><div class="refsect1"><a name="id-1.3"></a><h2>A running bus1 system.</h2><pre class="screen">
 # download and install /usr tree
-$ sudo make system
-
-# build a UEFI bootable disk image and run it with QEMU (needs QEMU UEFI firmware image):
 $ sudo make efi
 
+# build a UEFI bootable disk image and run it with QEMU (needs QEMU UEFI firmware image):
+$ sudo make test-efi
+
 # run the kernel and initrd directly in QEMU:
-$ sudo make qemu
+$ sudo make test-qemu
 /usr/bin/qemu-system-x86_64 -machine accel=kvm -m 1024 -kernel vmlinuz -initrd initrd -serial stdio \
 	-append "quiet disk=$(blkid -p -s PTUUID -o value efi-disk.img) loader=/EFI/org.bus1/$(cat system/usr/lib/org.bus1/release).efi console=ttyS0 console=tty0" \
 	-drive format=raw,file=efi-disk.img
