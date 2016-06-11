@@ -997,6 +997,7 @@ struct bus1_node {
   u64 timestamp;
   struct list_head list_handles;
   struct completion completion;
+  bool persistent:1;
   struct bus1_handle owner;
 };  </pre></div><div class="refsect1"><a name="id-1.7.19.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">ref</span></dt><dd><p>
    object ref-count
@@ -1008,6 +1009,8 @@ struct bus1_node {
    linked list of registered handles
       </p></dd><dt><span class="term">completion</span></dt><dd><p>
    destruction wait-queue
+      </p></dd><dt><span class="term">persistent</span></dt><dd><p>
+   whether node survives RESETs
       </p></dd><dt><span class="term">owner</span></dt><dd><p>
    embedded handle of node owner
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-from-queue"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_from_queue — 
@@ -1029,9 +1032,9 @@ struct bus1_node {
    Handle ID, or BUS1_HANDLE_INVALID if unknown to the user.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-pair"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_pair — 
      XXX
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_pair </b>(</code>struct bus1_peer * <var class="pdparam">clone</var>, struct bus1_peer * <var class="pdparam">peer</var>, u64 * <var class="pdparam">node_idp</var>, u64 * <var class="pdparam">handle_idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>clone</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_pair </b>(</code>struct bus1_peer * <var class="pdparam">peer</var>, struct bus1_peer * <var class="pdparam">clone</var>, u64 * <var class="pdparam">node_idp</var>, u64 * <var class="pdparam">handle_idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      -- undescribed --
-    </p></dd><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+    </p></dd><dt><span class="term"><em class="parameter"><code>clone</code></em></span></dt><dd><p>
      -- undescribed --
     </p></dd><dt><span class="term"><em class="parameter"><code>node_idp</code></em></span></dt><dd><p>
      -- undescribed --
@@ -1059,7 +1062,9 @@ struct bus1_node {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-flush-all"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_flush_all — 
      XXX
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_flush_all </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_flush_all </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, bool <var class="pdparam">final</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+     -- undescribed --
+    </p></dd><dt><span class="term"><em class="parameter"><code>final</code></em></span></dt><dd><p>
      -- undescribed --
     </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-dest-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_dest_init — 
      XXX
