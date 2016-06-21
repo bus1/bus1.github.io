@@ -57,6 +57,8 @@
      commit a transaction
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-for-id"><span class="phrase">bus1_transaction_commit_for_id</span></a></span><span class="refpurpose"> — 
      instantiate and commit unicast
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-seed"><span class="phrase">bus1_transaction_commit_seed</span></a></span><span class="refpurpose"> — 
+     instantiate and commit seed
  </span></dt></dl></dd><dt><span class="chapter"><a href="#handle">5. Bus1 Handle</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-handle-dest"><span class="phrase">struct bus1_handle_dest</span></a></span><span class="refpurpose"> — 
   destination context
  </span></dt><dt><span class="refentrytitle"><a href="#API-BUS1-HANDLE-BATCH-SIZE"><span class="phrase">BUS1_HANDLE_BATCH_SIZE</span></a></span><span class="refpurpose"> — 
@@ -78,7 +80,7 @@
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-from-queue"><span class="phrase">bus1_handle_from_queue</span></a></span><span class="refpurpose"> — 
      peek or dequeue at queued handle
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-pair"><span class="phrase">bus1_handle_pair</span></a></span><span class="refpurpose"> — 
-     XXX
+     import handle manually into a peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-release-by-id"><span class="phrase">bus1_handle_release_by_id</span></a></span><span class="refpurpose"> — 
      release a user handle
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-destroy-by-id"><span class="phrase">bus1_handle_destroy_by_id</span></a></span><span class="refpurpose"> — 
@@ -580,6 +582,8 @@ passed handles
      commit a transaction
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-for-id"><span class="phrase">bus1_transaction_commit_for_id</span></a></span><span class="refpurpose"> — 
      instantiate and commit unicast
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-seed"><span class="phrase">bus1_transaction_commit_seed</span></a></span><span class="refpurpose"> — 
+     instantiate and commit seed
  </span></dt></dl></div><p>
    </p><p>
    XXX
@@ -704,6 +708,15 @@ passed handles
    <code class="function">bus1_transaction_instantiate_for_id</code>, followed by <code class="function">bus1_transaction_commit</code>.
 </p></div><div class="refsect1"><a name="id-1.6.10.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-commit-seed"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit_seed — 
+     instantiate and commit seed
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_seed </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+     transaction to use
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.11.6"></a><h2>Description</h2><p>
+   This instantiates a new message with the given transaction, and commits it
+   as new seed on the owner-peer of the transaction.
+</p></div><div class="refsect1"><a name="id-1.6.11.7"></a><h2>Return</h2><p>
+   0 on success, negative error code on failure.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="handle"></a>Chapter 5. Bus1 Handle</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-handle-dest"><span class="phrase">struct bus1_handle_dest</span></a></span><span class="refpurpose"> — 
   destination context
  </span></dt><dt><span class="refentrytitle"><a href="#API-BUS1-HANDLE-BATCH-SIZE"><span class="phrase">BUS1_HANDLE_BATCH_SIZE</span></a></span><span class="refpurpose"> — 
@@ -725,7 +738,7 @@ passed handles
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-from-queue"><span class="phrase">bus1_handle_from_queue</span></a></span><span class="refpurpose"> — 
      peek or dequeue at queued handle
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-pair"><span class="phrase">bus1_handle_pair</span></a></span><span class="refpurpose"> — 
-     XXX
+     import handle manually into a peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-release-by-id"><span class="phrase">bus1_handle_release_by_id</span></a></span><span class="refpurpose"> — 
      release a user handle
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-destroy-by-id"><span class="phrase">bus1_handle_destroy_by_id</span></a></span><span class="refpurpose"> — 
@@ -996,6 +1009,7 @@ struct bus1_node {
   struct kref ref;
   u64 timestamp;
   struct list_head list_handles;
+  struct bus1_queue_node qnode;
   struct completion completion;
   bool persistent:1;
   struct bus1_handle owner;
@@ -1007,6 +1021,8 @@ struct bus1_node {
    destruction is committed
       </p></dd><dt><span class="term">list_handles</span></dt><dd><p>
    linked list of registered handles
+      </p></dd><dt><span class="term">qnode</span></dt><dd><p>
+   queue entry for release notification
       </p></dd><dt><span class="term">completion</span></dt><dd><p>
    destruction wait-queue
       </p></dd><dt><span class="term">persistent</span></dt><dd><p>
@@ -1031,16 +1047,23 @@ struct bus1_node {
 </p></div><div class="refsect1"><a name="id-1.7.20.7"></a><h2>Return</h2><p>
    Handle ID, or BUS1_HANDLE_INVALID if unknown to the user.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-pair"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_pair — 
-     XXX
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_pair </b>(</code>struct bus1_peer * <var class="pdparam">peer</var>, struct bus1_peer * <var class="pdparam">clone</var>, u64 * <var class="pdparam">node_idp</var>, u64 * <var class="pdparam">handle_idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
-     -- undescribed --
+     import handle manually into a peer
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_pair </b>(</code>struct bus1_peer * <var class="pdparam">peer</var>, struct bus1_peer * <var class="pdparam">clone</var>, u64 * <var class="pdparam">peer_idp</var>, u64 * <var class="pdparam">clone_idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.21.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+     node owner
     </p></dd><dt><span class="term"><em class="parameter"><code>clone</code></em></span></dt><dd><p>
-     -- undescribed --
-    </p></dd><dt><span class="term"><em class="parameter"><code>node_idp</code></em></span></dt><dd><p>
-     -- undescribed --
-    </p></dd><dt><span class="term"><em class="parameter"><code>handle_idp</code></em></span></dt><dd><p>
-     -- undescribed --
-    </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-release-by-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_release_by_id — 
+     peer to import handle to
+    </p></dd><dt><span class="term"><em class="parameter"><code>peer_idp</code></em></span></dt><dd><p>
+     ID of node to create handle for
+    </p></dd><dt><span class="term"><em class="parameter"><code>clone_idp</code></em></span></dt><dd><p>
+     output for newly created handle ID
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.21.6"></a><h2>Description</h2><p>
+   This imports a handle into the peer <em class="parameter"><code>clone</code></em> and returns its new ID via
+   <em class="parameter"><code>clone_idp</code></em>. The node that is linked to must be given via <em class="parameter"><code>peer_idp</code></em> (and
+   <em class="parameter"><code>peer</code></em> must be its owner). If BUS1_NODE_FLAG_ALLOCATE is given, a new node is
+   allocated in <em class="parameter"><code>peer</code></em> and returned in <em class="parameter"><code>peer_idp</code></em>.
+</p></div><div class="refsect1"><a name="id-1.7.21.7"></a><h2>Return</h2><p>
+   0 on success, negative error code on failure.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-release-by-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_release_by_id — 
      release a user handle
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_release_by_id </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, u64 <var class="pdparam">id</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.22.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to operate on
