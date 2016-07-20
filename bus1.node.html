@@ -6,8 +6,8 @@
       ga('create', 'UA-75729104-1', 'auto');
       ga('send', 'pageview');
     </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:64px;height:64px;"></a><span class="version">Version 1</span></header><div class="refentry"><a name="bus1.node"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.node — Bus Node</p></div><div class="refsect1"><a name="id-1.4"></a><h2>Description</h2><p>
-      A node is first and foremost a destination for messages. A peer may own
-      several nodes, and messages destined for a node will be received by the
+      Messages are sent to <span class="emphasis"><em>nodes</em></span>. A node is a kernel object
+      owned by a peer, and messages destined for a node will be received by the
       peer that owns the node.
     </p><p>
       A handle is a reference to a node, and there is no other way to refer to a
@@ -20,31 +20,41 @@
       file-descriptors are passed over UDS (or bus1 for that matter). When
       passing a handle a copy of it is installed in the destination peer which
       references the same underlying node. There is otherwise no relation
-      between the original and the passed handle.
+      between the original and the passed handle. Handles are reference counted,
+      so the kernel keeps track of how many times a peer holds a given handle.
     </p></div><div class="refsect1"><a name="id-1.5"></a><h2>Handle ids</h2><p>
       Handles are referred to in userspace by their handle ids, like
       file-descriptors are referenced by file-descriptor number. The handle id
-      namespace is local to a given peer (not a process), and has no meaning
-      outside of it. Handle ids are allocated in the order the handles are
-      received as a contiguous sequence of odd numbers starting with
-      <code class="constant">1</code>. A handle only ever has one handle id associated
+      namespace is local to a given peer (rather than a given process), and has
+      no meaning outside of it. A handle only ever has one handle id associated
       with it, and a handle id is never reused to refer to two handles. In
-      particular, if a handle is fully released and a new handle is received to
-      the same node, it is guaranteed to be assigned a fresh handle id.
+      particular, if all the references to a handle are released and a new
+      handle is received to the same node, it is guaranteed to be assigned a
+      fresh handle id, unless the peer owns the underlying node (see below).
     </p></div><div class="refsect1"><a name="id-1.6"></a><h2>Node ids</h2><p>
       Nodes can not be referenced directly, but only through their handles. The
       owner of a node will initially also hold a handle to that node. However,
       the handle can be released, and the owner of a node does not need to own
       a handle to it. Even after the handle has potentially been released the
-      handle id will be used whenever referring to the underlying node. This is
-      also the case if the owner holds a new handle to the same node with a
-      different handle id.
-    </p></div><div class="refsect1"><a name="id-1.7"></a><h2>On-the-fly node creation</h2><p>
-      Nodes can be created on-the-fly by passing the special handle id
-      <code class="constant">BUS1_HANDLE_INVALID</code> along with a message. In this
-      case a new node owned by the sending peer is created as well as a new
-      handle held by the sending peer. This handle is sent along with the
-      message and its handle id returned to userspace.
+      handle id will be used whenever referring to the underlying node, and if
+      a peer receives a handle to a node it owns the original handle id will
+      always be reused.
+    </p></div><div class="refsect1"><a name="id-1.7"></a><h2>Node creation</h2><p>
+      Nodes can be created on-the-fly by setting the
+      <code class="constant">BUS1_NODE_FLAG_ALLOCATE</code> flag in any handle ID passed
+      to the kernel. In this case a new node owned by the sending peer is
+      created as well as a new handle held by the sending peer. The newly
+      allocated handle ID is returned to userspace by overwriting the passed in
+      handle ID.
+    </p><p>
+      The <code class="constant">BUS1_NODE_FLAG_MANAGED</code> flag must be set when
+      creating a node on-the-fly, this indicates that the kernel should allocate
+      the next available handle ID in its namespace. No other allocation scheme
+      is currently supported, so this flag must be set when allocating a new
+      node. This may change in the future.
+    </p><p>
+      The optional <code class="constant">BUS1_NODE_FLAG_PERSISTENT</code> flag indicates
+      that the created node should not be destroyed in case the peer is reset.
     </p></div><div class="refsect1"><a name="id-1.8"></a><h2>Reachability</h2><p>
       A peer can only send a message to another peer if it holds a handle to one
       of its nodes. A handle to a node can be obtained from another peer who
@@ -53,15 +63,15 @@
       peers from one to the other) can never become connected and can never
       communicate. In order to make it possible for any peers to communicate at
       all, the <code class="constant">BUS1_CMD_PEER_CLONE</code> ioctl allows a new peer
-      to be created from an existing one in such a way that they are connected
-      at creation.
+      to be created from an existing one and a handle to be passed from the
+      origina to the new peer in such a way that they are connected at creation.
     </p></div><div class="refsect1"><a name="id-1.9"></a><h2>Handle lifetime and scope</h2><p>
       A peer can hold at most one handle to a given node at a time, though the
       handle is reference counted. A handle first becomes valid when the peer
-      receives it with a message, and the peer gains additional references to
-      the handle each time it receives it. The handle remains valid until the
-      peer either drops the last reference to it or receives a destruction
-      notification for the handle.
+      receives it with a message or creates it, and the peer gains additional
+      references to the handle each time it receives it. The handle remains
+      valid until the peer either drops the last reference to it or receives a
+      destruction notification for the handle.
     </p></div><div class="refsect1"><a name="id-1.10"></a><h2>Releasing a handle</h2><p>
       A reference to a handle can be released by calling the
       <code class="constant">BUS1_CMD_HANDLE_RELEASE</code> ioctl. The ioctl takes an
@@ -69,16 +79,19 @@
       released. When the last reference to a handle is released the handle id is
       no longer valid, and any future handle to the same node will be assigned
       a new handle id. Moreover, when the last reference to the last handle to a
-      given node is released, a destruction notification is sent to the node and
-      and the node is destroyed. This notification is ordered as if the release
-      ioctl was a unicast send to the node. Any message ordered before the
-      destruction notification is guaranteed to be unaffected by it, no message
-      ordered after the destruction notification may be delivered to the node.
+      given node is released, a release notification is sent to the node.
+      The notification is ordered as if the release ioctl was a unicast message
+      sent from the holder of the hanlde to the owner of the node. Any message
+      ordered before the release notification is unaffected by it, and once a
+      peer receives a release notification it is guaranteed that nobody holds
+      a handle to the node, and hence no future messages can be sent to it,
+      unless the owner of the node hands out a fresh handle to it.
     </p><p>
       It is worth noting that a handle may be in-flight, i.e., it has been sent
       from one peer to another without the destination peer receiving it yet.
-      This may cause a situation where no peer holds a handle to a node, but the
-      node is not destroyed as there are in-flight handles still pinning it.
+      This may cause a situation where no peer holds a handle to a node, but no
+      release notification has been queued as there are in-flight handles still
+      pinning it.
     </p></div><div class="refsect1"><a name="id-1.11"></a><h2>Destroying a node</h2><p>
       The owner of a node can destroy the node explicitly by calling the
       <code class="constant">BUS1_CMD_NODE_DESTROY</code> ioctl. The ioctl takes an
@@ -87,14 +100,14 @@
       peers that hold a handle to the node. The destruction notification is
       ordered as if it were a multicast message from the owner of the node to
       all the holders of the handles. Any message to the node that is ordered
-      before the destruction notification is guaranteed to be delivered, and any
-      handle that is passed before the destruction notification is guaranteed to
-      be delivered (and the peer that receives it to receive a destruction
-      notification). No message may be delivered to the node ordered after the
-      destruction notification and any handle passed after the destruction
-      notification is replaced by <code class="constant">BUS1_HANDLE_INVALID</code>. A
-      local handle to a node is valid until its destruction notification is
-      received though actual operations on it may fail.
+      before the destruction notification is guaranteed to be delivered, and so
+      is any handle that is passed along with a message delivered before the
+      destruction notification it. No message may be delivered to the node
+      ordered after the destruction notification and any handle passed after the
+      destruction notification is replaced by
+      <code class="constant">BUS1_HANDLE_INVALID</code>. A local handle to a node is
+      valid until its destruction notification is received though actual
+      operations on it may fail.
     </p></div><div class="refsect1"><a name="id-1.12"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and

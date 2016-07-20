@@ -6,38 +6,97 @@
       ga('create', 'UA-75729104-1', 'auto');
       ga('send', 'pageview');
     </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:64px;height:64px;"></a><span class="version">Version 1</span></header><div class="refentry"><a name="bus1.peer"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1.peer — Bus Peer</p></div><div class="refsect1"><a name="id-1.4"></a><h2>Description</h2><p>
-    </p></div><div class="refsect1"><a name="id-1.5"></a><h2>Initializing a peer</h2><p>
-      A peer created by calling <code class="function">open()</code> on
-      <code class="filename">/dev/bus1</code> needs to be initialized using the
+    </p></div><div class="refsect1"><a name="id-1.5"></a><h2>Creating a new peer</h2><p>
+      A new peer can be created by calling
+      <a href="http://linux.die.net/man/2/open"><span class="citerefentry"><span class="refentrytitle">open</span>(2)</span></a>
+      on <code class="filename">/dev/bus1</code>. The returned file-descriptor represents
+      a new peer disconnected from all existing peers.
+    </p></div><div class="refsect1"><a name="id-1.6"></a><h2>Cloning an existing peer</h2><p>
+      A new peer can be created from an existing one by calling the
+      <code class="constant">BUS1_CMD_PEER_CLONE</code> ioctl on a file-descriptor
+      representing the existing peer. A handle from the parent is passed in and
+      installed in the child. The ioctl takes a
+      <span class="type">struct bus1_cmd_peer_clone</span> struct as argument.
+    </p><pre class="programlisting">
+struct bus1_cmd_peer_clone {
+  __u64 flags;
+  __u64 parent_handle;
+  __u64 child_handle;
+  __u64 fd;
+};
+    </pre><p>The fields in this structure are described below</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>
+          Flags to apply to the new peer. This must be set to
+          <code class="constant">0</code>.
+        </p></dd><dt><span class="term"><code class="varname">parent_handle</code></span></dt><dd><p>
+          A handle from the parent peer to be passed to the child.
+        </p></dd><dt><span class="term"><code class="varname">child_handle</code></span></dt><dd><p>
+          The handle installed in the new peer. This must be set to
+          <code class="constant">BUS1_HANDLE_INVALID</code> and is set to the new handle
+          on return.
+        </p></dd><dt><span class="term"><code class="varname">fd</code></span></dt><dd><p>
+          The file-descriptor representing the new peer. This must be set to
+          <code class="constant">-1</code> and is set to the new file-descriptor on
+          return.
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7"></a><h2>Initializing a peer</h2><p>
+      A peer can be initialized and reinitalized at any time by using the
       <code class="constant">BUS1_CMD_PEER_INIT</code> ioctl. The ioctl takes a
-      <span class="type">struct bus1_cmd_peer_init</span> struct as argument.
+      <span class="type">struct bus1_cmd_peer_init</span> struct as argument. If the ioctl is
+      never called, the values are left at their defaults indicated below.
     </p><pre class="programlisting">
 struct bus1_cmd_peer_init {
   __u64 flags;
-  __u64 pool_size;
+  __u64 max_bytes;
+  __u64 max_slices;
+  __u64 max_handles;
+  __u64 max_fds;
 };
     </pre><p>The fields in this structure are described below</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>
           Flags to apply to this peer. This must be set to
           <code class="constant">0</code>.
-        </p></dd><dt><span class="term"><code class="varname">pool_size</code></span></dt><dd><p>
-          The size of the pool in bytes to create for this peer.
-        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6"></a><h2>Querying a peer</h2><p>
+        </p></dd><dt><span class="term"><code class="varname">max_bytes</code></span></dt><dd><p>
+          The size of the pool in bytes to create for this peer. This defaults
+          to <code class="constant">-1</code>.
+        </p></dd><dt><span class="term"><code class="varname">max_slices</code></span></dt><dd><p>
+          The maximum number of slices in the pool to create for the new peer.
+          This defaults to <code class="constant">-1</code>.
+        </p></dd><dt><span class="term"><code class="varname">max_handles</code></span></dt><dd><p>
+          The maximum number of handles the new peer can hold, in-flight or
+          received. This defaults to <code class="constant">-1</code>.
+        </p></dd><dt><span class="term"><code class="varname">max_fds</code></span></dt><dd><p>
+          The maximum number of in-flight file-descriptors destined for this
+          peer. This defaults to <code class="constant">-1</code>.
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8"></a><h2>Querying a peer</h2><p>
       The parameters of an existing peer can be queried by calling the
       <code class="constant">BUS1_CMD_PEER_QUERY</code> ioctl. The ioctl takes a
       <span class="type">struct bus1_cmd_peer_init</span> struct as argument.
     </p><pre class="programlisting">
 struct bus1_cmd_peer_init {
   __u64 flags;
-  __u64 pool_size;
+  __u64 max_bytes;
+  __u64 max_slices;
+  __u64 max_handles;
+  __u64 max_fds;
 };
     </pre><p>The fields in this structure are described below</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>
           Flags to apply to this peer. This must be set to
           <code class="constant">0</code>.
-        </p></dd><dt><span class="term"><code class="varname">pool_size</code></span></dt><dd><p>
-          The size of the pool in bytes to create for this peer. This must be
-          set to <code class="constant">0</code> and is set to the existing pool size on
-          return.
-        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7"></a><h2>Resetting a peer</h2><p>
+        </p></dd><dt><span class="term"><code class="varname">max_bytes</code></span></dt><dd><p>
+          The maximum number of in-flight bytes that can be destined for this
+          peer. This must be set to <code class="constant">0</code> and is set to the
+          existing limit on return.
+        </p></dd><dt><span class="term"><code class="varname">max_slices</code></span></dt><dd><p>
+          The maximum number of slices that can be accounted on this peer. Both
+          in-flight and dequeued. This must be set to <code class="constant">0</code> and
+          is set to the existing limit on return.
+        </p></dd><dt><span class="term"><code class="varname">max_handles</code></span></dt><dd><p>
+          The maximum number of handles that can be accounted on this peer. Both
+          in-flight and dequeued. This must be set to <code class="constant">0</code> and
+          is set to the existing limit on return.
+        </p></dd><dt><span class="term"><code class="varname">max_fds</code></span></dt><dd><p>
+          The maximum number of in-flight file-descriptors that can be destined
+          for this peer. This must be set to <code class="constant">0</code> and is set
+          to the existing limit on return.
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9"></a><h2>Resetting a peer</h2><p>
       An existing peer can be reset to a pristine state by calling the
       <code class="constant">BUS1_CMD_PEER_RESET</code> ioctl. All slices are
       simultaneously destroyed, all messages up-to and including each of the
@@ -51,51 +110,13 @@ struct bus1_cmd_peer_reset {
     </pre><p>The fields in this structure are described below</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>
           Flags to apply to this peer. This must be set to
           <code class="constant">0</code>.
-        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8"></a><h2>Cloning a peer</h2><p>
-      A new peer can be created from an existing one by calling the
-      <code class="constant">BUS1_CMD_PEER_CLONE</code> ioctl on a file-descriptor
-      representing the existing peer. A root node is created for the new peer
-      and a handle to this node is installed in both the new and the existing
-      peer. The ioctl takes a <span class="type">struct bus1_cmd_peer_clone</span> struct as
-      argument.
-    </p><pre class="programlisting">
-struct bus1_cmd_peer_clone {
-  __u64 flags;
-  __u64 pool_size;
-  __u64 node;
-  __u64 handle;
-  __u64 fd;
-};
-    </pre><p>The fields in this structure are described below</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>
-          Flags to apply to the new peer. This must be set to
-          <code class="constant">0</code>.
-        </p></dd><dt><span class="term"><code class="varname">pool_size</code></span></dt><dd><p>
-          The size of the pool in bytes to create for the new peer.
-        </p></dd><dt><span class="term"><code class="varname">node</code></span></dt><dd><p>
-          The handle installed in the new peer, pointing to a newly allocated
-          node there. This must be set to
-          <code class="constant">BUS1_HANDLE_INVALID</code> and is set to the new handle
-          on return.
-        </p></dd><dt><span class="term"><code class="varname">handle</code></span></dt><dd><p>
-          The handle installed in the existing peer for the root node in the new
-          peer. This must be set to <code class="constant">BUS1_HANDLE_INVALID</code> and
-          is set to the new handle on return.
-        </p></dd><dt><span class="term"><code class="varname">fd</code></span></dt><dd><p>
-          The file-descriptor representing the new peer. This must be set to
-          <code class="constant">-1</code> and is set to the new file-descriptor on
-          return.
-        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9"></a><h2>Return value</h2><p>
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and
       <code class="varname">errno</code> is set to indicate the error. See
       <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
-      for a list of possible error codes, in addition to the ones listed below.
-    </p><div class="refsect2"><a name="id-1.9.3"></a><h3>
-        <code class="constant">BUS1_CMD_PEER_INIT</code> may fail with the following
-        errors
-      </h3><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">EISCONN</code></span></dt><dd><p>
-            Local peer is already initialized.
-          </p></dd></dl></div></div></div><div class="refsect1"><a name="id-1.10"></a><h2>See Also</h2><span class="simplelist">
+      for a list of possible error codes.
+    </p></div><div class="refsect1"><a name="id-1.11"></a><h2>See Also</h2><span class="simplelist">
         <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       , 
         <a href="bus1.node.html"><span class="citerefentry"><span class="refentrytitle">bus1.node</span>(7)</span></a>

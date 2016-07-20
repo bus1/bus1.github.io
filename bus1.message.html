@@ -57,7 +57,10 @@
       a message is guaranteed to be allowed to send a 128kB message, it is not
       the case that each user is guaranteed the same (in this example that would
       require more space than the pool has available).
-    </p></div><div class="refsect1"><a name="id-1.8"></a><h2>Sending messages</h2><p>
+    </p></div><div class="refsect1"><a name="id-1.8"></a><h2>Seed message</h2><p>
+      Every peer may pin at most one message for itself. This is called the
+      seed, and can be retrieved directly without going through the queue.
+    </p></div><div class="refsect1"><a name="id-1.9"></a><h2>Sending messages</h2><p>
       Messages are passed to the kernel with the
       <code class="constant">BUS1_CMD_SEND</code> ioctl. The kernel delivers the message
       to the owners of the nodes referenced by the destination handles. Sending
@@ -85,8 +88,8 @@ struct bus1_cmd_send {
                   failed. Report the dropped message to the receiver, but do not
                   return an error to the sender. This flag must be set for
                   multicast messages.
-                </p></dd><dt><span class="term"><code class="constant">BUS1_SEND_FLAG_SILENT</code></span></dt><dd><p>
-                  Do not wake up the destination peers. See below.
+                </p></dd><dt><span class="term"><code class="constant">BUS1_SEND_FLAG_SEED</code></span></dt><dd><p>
+                  Replace the current seed of the peer. See below.
                 </p></dd></dl></div></dd><dt><span class="term">
           <code class="varname">ptr_destinations</code> and
           <code class="varname">n_destinations</code>
@@ -110,12 +113,11 @@ struct bus1_cmd_send {
             number of elements. Each file descriptor number must refer to an
             open file descriptor. Each of these file descriptors will be passed
             to each destination peer.
-          </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9"></a><h2>Receiving messages</h2><p>
+          </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10"></a><h2>Receiving messages</h2><p>
       Messages are received by the peer with the
       <code class="constant">BUS1_CMD_RECV</code> ioctl. The bus file descriptor supports
       <code class="function">poll()/epoll()/select()</code>; when new messages
-      are available to be recevied, <code class="constant">POLLIN</code> is reported.
-      However, if only silent messages are queued the peer is not woken up. For
+      are available to be recevied, <code class="constant">POLLIN</code> is reported. For
       compatibility reasons, <code class="constant">POLLOUT</code> is always reported as
       well. Note, however, that the latter does not guarantee that a message
       can in fact be sent, as that depends on the available quota.
@@ -133,11 +135,15 @@ struct bus1_cmd_recv {
   };
 };
     </pre><p>The fields in this struct are described below.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">flags</code></span></dt><dd><p>Flags to control the receive command.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">BUS1_RECV_FLAG_PEEK</code></span></dt><dd><p>
-                  Just return the location of the next message. Do not install
-                  file descriptors or handles.
+                  Just return the next message or notification on the queue, but
+                  do not dequeue it, and do not install file descriptors or
+                  handles.
+                </p></dd><dt><span class="term"><code class="constant">BUS1_RECV_FLAG_SEED</code></span></dt><dd><p>
+                  Return the current seed of the peer.
                 </p></dd></dl></div></dd><dt><span class="term"><code class="varname">type</code></span></dt><dd><p>Type of embedded message.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">BUS1_MSG_NONE</code></span></dt><dd><p>
-                  The field must be initialized to this value, and it will never
-                  be returned.
+                  The field must be initialized to this value, and it will only
+                  be returned if <code class="constant">n_dropped</code> is set (see
+                  below).
                 </p></dd><dt><span class="term"><code class="constant">BUS1_MSG_DATA</code></span></dt><dd><p>
                   The embedded message is a <span class="type">struct bus1_msg_data</span>
                   (see below).
@@ -150,7 +156,6 @@ struct bus1_cmd_recv {
           be queued on a peer the 'n_dropped' counter of the peer is
           incremented. On the next RECV ioctl, the 'n_dropped' field is copied
           into the ioctl struct and cleared on the peer.
-          
         </p></dd><dt><span class="term"><code class="varname">data</code></span></dt><dd><p>
             Embedded struct containing information about the received message.
           </p><pre class="programlisting">
@@ -166,9 +171,8 @@ struct bus1_msg_data {
   __u64 n_fds;
 };
           </pre><p>The fields in this structure are described below</p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="varname">destination</code></span></dt><dd><p>
-                  The handle id referencing the destination node. Note that
-                  this is always the handle id given when first creating the
-                  node, even if that has since been released.
+                  The handle id referencing the destination node. This is
+                  guaranteed to still be valid at the time of delivery.
                 </p></dd><dt><span class="term"><code class="varname">uid</code></span></dt><dd><p>
                   The <code class="varname">uid</code> of the sending peer, at the time of
                   sending.
@@ -203,34 +207,43 @@ struct bus1_msg_data {
                   boundary). When dequeuing this message, the file descriptors
                   are installed.
                 </p></dd></dl></div></dd><dt><span class="term"><code class="varname">node_destroy</code></span></dt><dd><p>
-            Embedded struct containing the handle number to a node that was
-            destroyed. When dequeueing this message the handle becomes invalid.
+            Embedded struct containing the handle number whose underlying node
+            has been destroyed. When dequeueing this message the handle becomes
+            invalid.
           </p><pre class="programlisting">
 struct bus1_msg_node_destroy {
   __u64 handle;
 };
-          </pre></dd></dl></div></div><div class="refsect1"><a name="id-1.10"></a><h2>Return value</h2><p>
+          </pre></dd><dt><span class="term"><code class="varname">handle_release</code></span></dt><dd><p>
+            Embedded struct containing the handle number to a node all of whose
+            handles have been released. When dequeueing this message it is
+            guaranteed that no one holds a handle to the node, including the
+            owner of the node. However, the owner of the node can still pass out
+            new handles in the future.
+          </p><pre class="programlisting">
+struct bus1_msg_node_release {
+  __u64 handle;
+};
+          </pre></dd></dl></div></div><div class="refsect1"><a name="id-1.11"></a><h2>Return value</h2><p>
       On success, all mentioned ioctl commands return <span class="errorcode">0</span>;
       on error, <span class="errorcode">-1</span> is returned, and
       <code class="varname">errno</code> is set to indicate the error. See
       <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       for a list of possible error codes, in addition to the ones listed below.
-    </p><div class="refsect2"><a name="id-1.10.3"></a><h3>
+    </p><div class="refsect2"><a name="id-1.11.3"></a><h3>
         <code class="constant">BUS1_CMD_RECV</code> may fail with the following
         errors
       </h3><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">EAGAIN</code></span></dt><dd><p>
             No message is ready to be dequeued.
-          </p></dd></dl></div></div><div class="refsect2"><a name="id-1.10.4"></a><h3>
+          </p></dd></dl></div></div><div class="refsect2"><a name="id-1.11.4"></a><h3>
         <code class="constant">BUS1_CMD_SEND</code> may fail with the following
         errors
       </h3><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">EHOSTUNREACH</code></span></dt><dd><p>
-            The destination node has been destroyed. In particular, the message
-            being sent would be received after the destruction notification
-            for the destination node.
+            The destination node has been destroyed and the message being sent
+            would be received after the destruction notification for the
+            destination node.
           </p></dd><dt><span class="term"><code class="constant">EDQUOT</code></span></dt><dd><p>
             User exceeded their quota for destination peer.
-          </p></dd><dt><span class="term"><code class="constant">ETOOMANYREFS</code></span></dt><dd><p>
-            User has too many in-flight file-descriptors.
           </p></dd><dt><span class="term"><code class="constant">EXFULL</code></span></dt><dd><p>
             Target memory pool is full.
           </p></dd><dt><span class="term"><code class="constant">ENXIO</code></span></dt><dd><p>
@@ -240,7 +253,7 @@ struct bus1_msg_node_destroy {
           </p></dd><dt><span class="term"><code class="constant">EOPNOTSUPP</code></span></dt><dd><p>
             Passed file-descriptor has unsupported type. Passing bus1 or UDS
             file-descriptors is not supported.
-          </p></dd></dl></div></div></div><div class="refsect1"><a name="id-1.11"></a><h2>See Also</h2><span class="simplelist">
+          </p></dd></dl></div></div></div><div class="refsect1"><a name="id-1.12"></a><h2>See Also</h2><span class="simplelist">
         <a href="bus1.html"><span class="citerefentry"><span class="refentrytitle">bus1</span>(7)</span></a>
       , 
         <a href="bus1.peer.html"><span class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>

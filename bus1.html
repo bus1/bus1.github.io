@@ -51,7 +51,7 @@
         for more details.
       </p></div><div class="refsect2"><a name="id-1.6.6"></a><h3>Message</h3><p>
         Peers can exchange messages with other peers by addressing the peers
-        with handles to their nodes. A message consists of a logical byte stream
+        by handles to their nodes. A message consists of a logical byte stream
         of arbitrary size. Messages can carry additional file descriptors or
         handles to nodes to be passed from one peer to another, just like
         passing file descriptors over UNIX domain sockets. See
@@ -81,8 +81,6 @@
             Out of kernel memory.
           </p></dd><dt><span class="term"><code class="constant">ESHUTDOWN</code></span></dt><dd><p>
             Local peer was already disconnected.
-          </p></dd><dt><span class="term"><code class="constant">ENOTCONN</code></span></dt><dd><p>
-            Local peer is not initialized.
           </p></dd><dt><span class="term"><code class="constant">EINVAL</code></span></dt><dd><p>
             Invalid ioctl parameters.
           </p></dd><dt><span class="term"><code class="constant">EFAULT</code></span></dt><dd><p>
