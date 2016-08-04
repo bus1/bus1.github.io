@@ -93,42 +93,42 @@ The bus1 peer file descriptor supports the following operations:
           </span></dt><dd><p>
 TBD
             </p></dd><dt><span class="term">
-            <a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>
+            <a href="http://linux.die.net/man/2/poll"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>
           , </span><span class="term">
-            <a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>
+            <a href="http://linux.die.net/man/2/select"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>
           , </span><span class="term">(and similar)</span></dt><dd><p>
 The file descriptor supports
-<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>
+<a href="http://linux.die.net/man/2/poll"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>
 (and analogously
-<a href="epoll.html"><span class="citerefentry"><span class="refentrytitle">epoll</span>(7)</span></a>) and
-<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>, as follows:
+<a href="http://linux.die.net/man/7/epoll"><span class="citerefentry"><span class="refentrytitle">epoll</span>(7)</span></a>) and
+<a href="http://linux.die.net/man/2/select"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>, as follows:
             </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
 The file descriptor is readable (the <code class="varname">readfds</code> argument of
-<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
+<a href="http://linux.die.net/man/2/select"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
 the <code class="constant">POLLIN</code> flag of
-<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
+<a href="http://linux.die.net/man/2/poll"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
 if one or more messages are ready to be dequeued.
                 </p></li><li class="listitem"><p>
 The file descriptor is writable (the <code class="varname">writefds</code> argument of
-<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
+<a href="http://linux.die.net/man/2/select"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
 the <code class="constant">POLLOUT</code> flag of
-<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
+<a href="http://linux.die.net/man/2/poll"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
 if the peer has not been shut down, yet (i.e., the peer can be used to send
 messages).
                 </p></li><li class="listitem"><p>
 The file descriptor signals a hang-up (overloaded on the
 <code class="varname">readfds</code> argument of
-<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
+<a href="http://linux.die.net/man/2/select"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
 the <code class="constant">POLLHUP</code> flag of
-<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
+<a href="http://linux.die.net/man/2/poll"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
 if the peer has been shut down. Note that currently peer shutdown cannot be
 triggered explicitly, but only by releasing all file descriptors to the peer.
 Hence, you will not see a hang-up under normal operation.
                 </p></li></ul></div><p>
 The bus1 peer file descriptor also supports the other file descriptor
 multiplexing APIs:
-<a href="pselect.html"><span class="citerefentry"><span class="refentrytitle">pselect</span>(2)</span></a>, and
-<a href="ppoll.html"><span class="citerefentry"><span class="refentrytitle">ppoll</span>(2)</span></a>.
+<a href="http://linux.die.net/man/2/pselect"><span class="citerefentry"><span class="refentrytitle">pselect</span>(2)</span></a>, and
+<a href="http://linux.die.net/man/2/ppoll"><span class="citerefentry"><span class="refentrytitle">ppoll</span>(2)</span></a>.
             </p></dd><dt><span class="term">
             <a href="http://linux.die.net/man/2/mmap"><span class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
           </span></dt><dd><p>
@@ -202,10 +202,10 @@ struct bus1_cmd_recv {
 };
 </pre><p>
                   </p></dd></dl></div></dd><dt><span class="term">
-            <a href="close.html"><span class="citerefentry"><span class="refentrytitle">close</span>(2)</span></a>
+            <a href="http://linux.die.net/man/2/close"><span class="citerefentry"><span class="refentrytitle">close</span>(2)</span></a>
           </span></dt><dd><p>
 A call to
-<a href="close.html"><span class="citerefentry"><span class="refentrytitle">close</span>(2)</span></a>
+<a href="http://linux.die.net/man/2/close"><span class="citerefentry"><span class="refentrytitle">close</span>(2)</span></a>
 releases the passed file descriptor. When all file descriptors associated with
 the same peer context have been closed, the peer is shut down. This destroys all
 nodes of that peer, releases all handles, flushes its queue and pool, and
