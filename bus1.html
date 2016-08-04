@@ -1,93 +1,245 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>bus1</title><link rel="stylesheet" type="text/css" href="bus1.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="icon" href="bus1.png" type="image/png"><script>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>bus1</title><link rel="stylesheet" type="text/css" href="bus1.css"><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="icon" href="bus1.png" type="image/png"><script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-75729104-1', 'auto');
       ga('send', 'pageview');
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:64px;height:64px;"></a><span class="version">Version 1</span></header><div class="refentry"><a name="bus1"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1 — Kernel Message Bus</p></div><div class="refsect1"><a name="id-1.4"></a><h2>Synopsis</h2><p>
-      bus1 is an inter-process communication bus system controlled by the
-      kernel. It provides user-space with an API to create peers and send
-      unicast and multicast messages between them. It does not enforce any
-      layout on the transmitted data, but only provides the transport layer used
-      for message interchange between peers.
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:64px;height:64px;"></a><span class="version">Version 1</span></header><div class="refentry"><a name="bus1"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1 — Kernel Message Bus</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><pre class="funcsynopsisinfo">#include &lt;linux/bus1.h&gt;</pre></div></div><div class="refsect1"><a name="id-1.5"></a><h2>Description</h2><p>
+The Bus1 Kernel Message Bus defines and implements a distributed object model.
+It allows local processes to send messages to objects owned by remote processes,
+as well as share their own objects with others. Object ownership is static and
+cannot be transferred. Access to remote objects is prohibited, unless it was
+explicitly granted. Processes can transmit messages to a remote object via the
+message bus, transferring a data payload, object access rights, file
+descriptors, or other auxiliary data.
     </p><p>
-      This set of man-pages gives a comprehensive overview of the kernel-level
-      API, with all ioctl commands, associated structs and bit masks. However,
-      most people will not use this API level directly, but rather let one of
-      the high-level abstraction libraries help them integrate bus functionality
-      into their applications.
-    </p></div><div class="refsect1"><a name="id-1.5"></a><h2>Description</h2><p>
-      bus1 provides a character device at <code class="filename">/dev/bus1</code>. Any
-      advanced operations are done via <code class="function">ioctl()</code> on this
-      file.
-    </p></div><div class="refsect1"><a name="id-1.6"></a><h2>Terminology</h2><div class="refsect2"><a name="id-1.6.2"></a><h3>Peer</h3><p>
-        A peer is a client on the bus that can send or receive messages. A peer
-        is represented by a file-descriptor created by opening
-        <code class="filename">/dev/bus1</code> or by cloning an existing peer. See
-        <a href="bus1.peer.html"><span class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
-        for more details.
-      </p></div><div class="refsect2"><a name="id-1.6.3"></a><h3>Node</h3><p>
-        A node is a representation of a generic object owend by a peer. A peer
-        may own several nodes and their primary function is to be the recipient
-        of messages. See
-        <a href="bus1.node.html"><span class="citerefentry"><span class="refentrytitle">bus1.node</span>(7)</span></a>
-        for more details.
-      </p></div><div class="refsect2"><a name="id-1.6.4"></a><h3>Handle</h3><p>
-        A handle is a reference to a node. A peer may hold several handles, both
-        to nodes owned by itself and nodes owned by other peers. The destination
-        of a message is always a handle, meaning the message will be delivered
-        to the owner of the node the handle is referencing. A handle is local to
-        its holder, but a copy of a handle may be passed from one peer to
-        another along with a message. See
-        <a href="bus1.node.html"><span class="citerefentry"><span class="refentrytitle">bus1.node</span>(7)</span></a>
-        for more details.
-      </p></div><div class="refsect2"><a name="id-1.6.5"></a><h3>Pool</h3><p>
-        Each peer allocates a piece of shmem-backed memory that is used to
-        receive messages. It is never used for sending. In order to access that
-        memory, an application must <code class="function">mmap()</code> it into its
-        address space. See
-        <a href="bus1.pool.html"><span class="citerefentry"><span class="refentrytitle">bus1.pool</span>(7)</span></a>
-        for more details.
-      </p></div><div class="refsect2"><a name="id-1.6.6"></a><h3>Message</h3><p>
-        Peers can exchange messages with other peers by addressing the peers
-        by handles to their nodes. A message consists of a logical byte stream
-        of arbitrary size. Messages can carry additional file descriptors or
-        handles to nodes to be passed from one peer to another, just like
-        passing file descriptors over UNIX domain sockets. See
-        <a href="bus1.message.html"><span class="citerefentry"><span class="refentrytitle">bus1.message</span>(7)</span></a>
-        for more details.
-      </p></div></div><div class="refsect1"><a name="id-1.7"></a><h2>The ioctl interface</h2><p>
-       As stated in the 'synopsis' section above, application developers are
-       strongly encouraged to use bus1 through a the high-level abstraction
-       library, rather than using the low-level API directly.
+To participate on the message bus, a peer context must be created. Peer contexts
+are kernel objects, identified by a file descriptor. They are not bound to any
+process, but can be shared freely. The peer context provides a message queue to
+store all incoming messages, a registry for all locally owned objects, and
+tracks access rights to remote objects. A peer context never serves as
+routing entity, but merely as anchor for peer-owned resources. Any message on
+the bus is always destined at an object, and the bus takes care to transfer a
+message into the message queue of the peer context that owns this object.
     </p><p>
-      bus1 on the kernel level exposes its functions exclusively through
-      <a href="http://linux.die.net/man/2/ioctl"><span class="citerefentry"><span class="refentrytitle">ioctl</span>(2)</span></a>,
-      employed on file descriptors returned by
-      <a href="http://linux.die.net/man/2/open"><span class="citerefentry"><span class="refentrytitle">open</span>(2)</span></a>
-      on <code class="filename">/dev/bus1</code> or by the
-      <code class="constant">BUS1_CMD_PEER_CLONE</code> ioctl described below.
-    </p><p>
-      Following is a list of all the ioctls, along with the command structs they
-      must be used with.
-    </p><div class="informaltable"><table border="0"><colgroup><col><col></colgroup><thead><tr><th>command</th><th>transported struct</th></tr></thead><tbody><tr><td><code class="constant">BUS1_CMD_PEER_INIT</code></td><td><span class="type">struct bus1_cmd_peer_init *</span></td></tr><tr><td><code class="constant">BUS1_CMD_PEER_QUERY</code></td><td><span class="type">struct bus1_cmd_peer_init *</span></td></tr><tr><td><code class="constant">BUS1_CMD_PEER_RESET</code></td><td><span class="type">struct bus1_cmd_peer_reset *</span></td></tr><tr><td><code class="constant">BUS1_CMD_PEER_CLONE</code></td><td><span class="type">struct bus1_cmd_peer_clone *</span></td></tr><tr><td><code class="constant">BUS1_CMD_NODE_DESTROY</code></td><td><span class="type">__u64</span></td></tr><tr><td><code class="constant">BUS1_CMD_HANDLE_RELEASE</code></td><td><span class="type">__u64</span></td></tr><tr><td><code class="constant">BUS1_CMD_SLICE_RELEASE</code></td><td><span class="type">__u64</span></td></tr><tr><td><code class="constant">BUS1_CMD_SEND</code></td><td><span class="type">struct bus1_cmd_send *</span></td></tr><tr><td><code class="constant">BUS1_CMD_RECV</code></td><td><span class="type">struct bus1_cmd_recv *</span></td></tr></tbody></table></div><p>
-      These ioctls, along with the structs they transport, are explained in
-      detail in the other documents linked to in the "See Also" section below.
-    </p></div><div class="refsect1"><a name="id-1.8"></a><h2>Return values</h2><p>
-      On success, all bus1 ioctls return an integer greater than, or equal to,
-      <span class="errorcode">0</span>. On failure, a negative error code is returned.
-    </p><div class="refsect2"><a name="id-1.8.3"></a><h3>Common error codes</h3><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">ENOMEM</code></span></dt><dd><p>
-            Out of kernel memory.
-          </p></dd><dt><span class="term"><code class="constant">ESHUTDOWN</code></span></dt><dd><p>
-            Local peer was already disconnected.
-          </p></dd><dt><span class="term"><code class="constant">EINVAL</code></span></dt><dd><p>
-            Invalid ioctl parameters.
-          </p></dd><dt><span class="term"><code class="constant">EFAULT</code></span></dt><dd><p>
-            Cannot acces ioctl parameters.
-          </p></dd><dt><span class="term"><code class="constant">ENOTTY</code></span></dt><dd><p>
-            Unknown ioctl.
-          </p></dd></dl></div></div></div><div class="refsect1"><a name="id-1.9"></a><h2>See Also</h2><span class="simplelist">
+The message bus manages object access based on capability-based security. That
+is, by default only the owner of an object is granted access rights. No other
+peer can access the object, nor are they aware of the existance of the
+object. However, access rights can be transmitted as auxiliary data with any
+message, effectively granting them to the receiver of the message. This even
+works transitively, that is, any peer that was granted access to an object
+can pass on those rights, even if they do not own the object. But mind that no
+access rights can ever be revoked, besides the owner destroying the object.
+    </p><div class="refsect2"><a name="id-1.5.5"></a><h3>Nodes and Handles</h3><p>
+Each peer context comes with a registry of owned objects, which in bus1
+terminology are called <span class="emphasis"><em>nodes</em></span>. A peer is always the
+exclusive owner of all nodes created by them. Ownership cannot be transferred.
+Furthermore, initially, the node owner is the only peer with access
+to a newly created node. The message bus manages access rights to nodes as a set
+of <span class="emphasis"><em>handles</em></span> on each peer. For each node a peer has access
+to, whether it is a local or remote node, the message bus keeps a handle on the
+peer. Those handles are local to each peer, but can be transmitted as auxiliary
+data with any message, effectively allocating a new handle to the same node in
+the destination peer. This works transitively, and each peer with access rights
+can pass them on further, or deliberately drop them again. As long as a peer has
+access rights to a node it can send messages to it. However, a node owner can,
+at any time, decide to destroy a node. This causes all further message
+transactions to this node to fail, and all peers holding access rights to the
+node (i.e., they own a handle for that node) are notified of the destruction.
+      </p><p>
+Handles are the only way to refer to nodes, both local nodes or remote nodes.
+For each handle allocated on a peer, a 64bit ID is assigned to identify this
+particular handle on this particular peer. This ID is only valid locally on this
+peer. It cannot be used by remote peers to address this handle (in other words,
+the ID namespace is tied to each peer and does not define global entities).
+Furthermore, an assigned ID is never reused, even if a handle is dropped. The
+kernel keeps a user-reference count for each handle. Everytime a handle is
+exposed to a peer, the user-reference count of that handle is incremented by
+one. This is <span class="emphasis"><em>never</em></span> done asynchronously, but only
+synchronously when an ioctl is called <span class="emphasis"><em>by the affected peer</em></span>.
+Therefore, a peer can reliable deduce the current user-reference count of all
+its handles, regardless of any ongoing message transaction. References can be
+explicitly dropped by a peer. Once the counter of a handle hits zero, it is
+destroyed, its ID becomes invalid, and will not be reused again. Note that a
+peer can never have multiple <span class="emphasis"><em>different</em></span> handles to the same
+node, but the kernel always coalesces them into a single handle, using the
+user-reference counter to track it. However, if a handle is fully released, but
+the peer later acquires a handle to the same node again, its ID will be
+different (remember: IDs are never reused). A concept of soft-references is not
+supported.
+      </p><p>
+When allocating a new node, the node owner implicitly also gets a handle to that
+node. As long as the node is valid, the kernel will pin a single user-reference
+to the owner's handle. This guarantees that a node owner always retains access
+to their node, until they explicitly destroy it (which will also implicitly
+release that pinned user-reference on the handle). Otherwise, a handle to a
+local node behaves just like any other handle, that is, user-references are
+acquired and released according to its use. However, whenever the overall sum of
+all user-references on all handles to a node drops to 1 (which implies that only
+the pinned reference of the owner is left), a notification is queued on the node
+owner. If the counter is incremented again, any such notification is flushed, if
+not already dequeued.
+      </p></div><div class="refsect2"><a name="id-1.5.6"></a><h3>Message Transactions</h3><p>
+
+To be defined.
+      </p></div><div class="refsect2"><a name="id-1.5.7"></a><h3>Global Ordering</h3><p>
+
+To be defined.
+      </p></div><div class="refsect2"><a name="id-1.5.8"></a><h3>Operating on a bus1 file descriptor</h3><p>
+The bus1 peer file descriptor supports the following operations:
+      </p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+            <a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>
+          , </span><span class="term">
+            <a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>
+          , </span><span class="term">(and similar)</span></dt><dd><p>
+The file descriptor supports
+<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>
+(and analogously
+<a href="epoll.html"><span class="citerefentry"><span class="refentrytitle">epoll</span>(7)</span></a>) and
+<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>, as follows:
+            </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+The file descriptor is readable (the <code class="varname">readfds</code> argument of
+<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
+the <code class="constant">POLLIN</code> flag of
+<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
+if one or more messages are ready to be dequeued.
+                </p></li><li class="listitem"><p>
+The file descriptor is writable (the <code class="varname">writefds</code> argument of
+<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
+the <code class="constant">POLLOUT</code> flag of
+<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
+if the peer has not been shut down, yet (i.e., the peer can be used to send
+messages).
+                </p></li><li class="listitem"><p>
+The file descriptor signals a hang-up (overloaded on the
+<code class="varname">readfds</code> argument of
+<a href="select.html"><span class="citerefentry"><span class="refentrytitle">select</span>(2)</span></a>;
+the <code class="constant">POLLHUP</code> flag of
+<a href="poll.html"><span class="citerefentry"><span class="refentrytitle">poll</span>(2)</span></a>)
+if the peer has been shut down. Note that currently peer shutdown cannot be
+triggered explicitly, but only by releasing all file descriptors to the peer.
+Hence, you will not see a hang-up under normal operation.
+                </p></li></ul></div><p>
+The bus1 peer file descriptor also supports the other file descriptor
+multiplexing APIs:
+<a href="pselect.html"><span class="citerefentry"><span class="refentrytitle">pselect</span>(2)</span></a>, and
+<a href="ppoll.html"><span class="citerefentry"><span class="refentrytitle">ppoll</span>(2)</span></a>.
+            </p></dd><dt><span class="term">
+            <a href="http://linux.die.net/man/2/mmap"><span class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
+          </span></dt><dd><p>
+A call to
+<a href="http://linux.die.net/man/2/mmap"><span class="citerefentry"><span class="refentrytitle">mmap</span>(2)</span></a>
+installs a memory mapping to the message pool of the peer into the caller's
+address-space. No writable mappings are allowed. Furthermore, the pool has no
+fixed size, but grows dynamically with the demands of the peer.
+            </p></dd><dt><span class="term">
+            <a href="http://linux.die.net/man/2/ioctl"><span class="citerefentry"><span class="refentrytitle">ioctl</span>(2)</span></a>
+          </span></dt><dd><p>
+The following bus1-specific commands are supported:
+            </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">BUS1_CMD_PEER_RESET</code></span></dt><dd><p>
+This command resets a peer context to its initial state. It does not take an
+argument, so the <code class="varname">arg</code> parameter of the call to
+<a href="http://linux.die.net/man/2/ioctl"><span class="citerefentry"><span class="refentrytitle">ioctl</span>(2)</span></a>
+must be 0. All nodes owned by this peer context are destroyed atomically,
+followed by a release of all owned handles. Lastly, all remaining slices are
+flushed from the pool. Only the node destruction is atomic. The remaining
+cleanup is not. This means, if another command is executed in parallel, it
+might be partially affected by the ongoing reset.
+                  </p><p>
+Any node marked as persistent, as well as the seed message, are preserved and
+will survive a reset operation.
+                  </p></dd><dt><span class="term"><code class="constant">BUS1_CMD_HANDLE_TRANSFER</code></span></dt><dd><p>
+</p><pre class="programlisting">
+struct bus1_cmd_handle_transfer {
+        __u64 flags;
+        __u64 src_handle;
+        __u64 dst_fd;
+        __u64 dst_handle;
+};
+</pre><p>
+                  </p></dd><dt><span class="term"><code class="constant">BUS1_CMD_HANDLE_RELEASE</code></span></dt><dd><p>
+TBD
+                  </p></dd><dt><span class="term"><code class="constant">BUS1_CMD_NODE_DESTROY</code></span></dt><dd><p>
+TBD
+                  </p></dd><dt><span class="term"><code class="constant">BUS1_CMD_SLICE_RELEASE</code></span></dt><dd><p>
+TBD
+                  </p></dd><dt><span class="term"><code class="constant">BUS1_CMD_SEND</code></span></dt><dd><p>
+</p><pre class="programlisting">
+struct bus1_cmd_send {
+        __u64 flags;
+        __u64 ptr_destinations;
+        __u64 n_destinations;
+        __u64 ptr_vecs;
+        __u64 n_vecs;
+        __u64 ptr_handles;
+        __u64 n_handles;
+        __u64 ptr_fds;
+        __u64 n_fds;
+};
+</pre><p>
+                  </p></dd><dt><span class="term"><code class="constant">BUS1_CMD_RECV</code></span></dt><dd><p>
+</p><pre class="programlisting">
+struct bus1_cmd_recv {
+        __u64 flags;
+        __u64 n_dropped;
+        struct {
+                __u64 type;
+                __u64 destination;
+                __u32 uid;
+                __u32 gid;
+                __u32 pid;
+                __u32 tid;
+                __u64 offset;
+                __u64 n_bytes;
+                __u64 n_handles;
+                __u64 n_fds;
+        } msg;
+};
+</pre><p>
+                  </p></dd></dl></div></dd><dt><span class="term">
+            <a href="close.html"><span class="citerefentry"><span class="refentrytitle">close</span>(2)</span></a>
+          </span></dt><dd><p>
+A call to
+<a href="close.html"><span class="citerefentry"><span class="refentrytitle">close</span>(2)</span></a>
+releases the passed file descriptor. When all file descriptors associated with
+the same peer context have been closed, the peer is shut down. This destroys all
+nodes of that peer, releases all handles, flushes its queue and pool, and
+deallocates all related resources. Messages that have been sent by the peer and
+are still queued on destination queues, are unaffected by this.
+            </p></dd></dl></div></div></div><div class="refsect1"><a name="id-1.6"></a><h2>Return value</h2><p>
+All bus1 operations return zero on success. On failure, a negative error code is
+returned.
+    </p></div><div class="refsect1"><a name="id-1.7"></a><h2>Errors</h2><p>
+These are all standard errors generated by the bus layer. See the description
+of each ioctl for details on their occurrence.
+    </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="constant">EAGAIN</code></span></dt><dd><p>
+No messages ready to be read.
+        </p></dd><dt><span class="term"><code class="constant">EBADF</code></span></dt><dd><p>
+Invalid file descriptor.
+        </p></dd><dt><span class="term"><code class="constant">EDQUOT</code></span></dt><dd><p>
+Resource quota exceeded.
+        </p></dd><dt><span class="term"><code class="constant">EFAULT</code></span></dt><dd><p>
+Cannot read, or write, ioctl parameters.
+        </p></dd><dt><span class="term"><code class="constant">EHOSTUNREACH</code></span></dt><dd><p>
+The destination object is no longer available.
+        </p></dd><dt><span class="term"><code class="constant">EINVAL</code></span></dt><dd><p>
+Invalid ioctl parameters.
+        </p></dd><dt><span class="term"><code class="constant">EMSGSIZE</code></span></dt><dd><p>
+The message to be sent exceeds its allowed resource limits.
+        </p></dd><dt><span class="term"><code class="constant">ENOMEM</code></span></dt><dd><p>
+Out of kernel memory.
+        </p></dd><dt><span class="term"><code class="constant">ENOTTY</code></span></dt><dd><p>
+Unknown ioctl.
+        </p></dd><dt><span class="term"><code class="constant">ENXIO</code></span></dt><dd><p>
+Unknown object.
+        </p></dd><dt><span class="term"><code class="constant">EOPNOTSUPP</code></span></dt><dd><p>
+Operation not supported.
+        </p></dd><dt><span class="term"><code class="constant">EPERM</code></span></dt><dd><p>
+Permission denied.
+        </p></dd><dt><span class="term"><code class="constant">ESHUTDOWN</code></span></dt><dd><p>
+Local peer was already shut down.
+        </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8"></a><h2>See Also</h2><span class="simplelist">
         <a href="bus1.peer.html"><span class="citerefentry"><span class="refentrytitle">bus1.peer</span>(7)</span></a>
       , 
         <a href="bus1.node.html"><span class="citerefentry"><span class="refentrytitle">bus1.node</span>(7)</span></a>
