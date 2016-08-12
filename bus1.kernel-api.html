@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>The Internal Bus1 API</title><link rel="stylesheet" type="text/css" href="bus1.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="icon" href="bus1.png" type="image/png"><script>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>The Internal Bus1 API</title><link rel="stylesheet" type="text/css" href="bus1.css"><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="icon" href="bus1.png" type="image/png"><script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -19,10 +19,10 @@
   allocate new peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-free"><span class="phrase">bus1_peer_free</span></a></span><span class="refpurpose"> — 
      destroy peer
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-disconnect"><span class="phrase">bus1_peer_disconnect</span></a></span><span class="refpurpose"> — 
-     disconnect peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-connect"><span class="phrase">bus1_peer_connect</span></a></span><span class="refpurpose"> — 
      connect peer
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-disconnect"><span class="phrase">bus1_peer_disconnect</span></a></span><span class="refpurpose"> — 
+     disconnect peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-ioctl"><span class="phrase">bus1_peer_ioctl</span></a></span><span class="refpurpose"> — 
      handle peer ioctl
  </span></dt></dl></dd><dt><span class="chapter"><a href="#message">3. Bus1 Message</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-message"><span class="phrase">struct bus1_message</span></a></span><span class="refpurpose"> — 
@@ -35,14 +35,12 @@
      acquire message reference
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-unref"><span class="phrase">bus1_message_unref</span></a></span><span class="refpurpose"> — 
      release message reference
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-flush"><span class="phrase">bus1_message_flush</span></a></span><span class="refpurpose"> — 
-     flush pinned resources
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-allocate"><span class="phrase">bus1_message_allocate</span></a></span><span class="refpurpose"> — 
-     allocate pool slice for message payload
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-deallocate"><span class="phrase">bus1_message_deallocate</span></a></span><span class="refpurpose"> — 
-     deallocate pool slice for discarded message
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-dequeue"><span class="phrase">bus1_message_dequeue</span></a></span><span class="refpurpose"> — 
-     deallocate pool slice for dequeued message
+     allocate message resources
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-pin"><span class="phrase">bus1_message_pin</span></a></span><span class="refpurpose"> — 
+     pin message resources
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-unpin"><span class="phrase">bus1_message_unpin</span></a></span><span class="refpurpose"> — 
+     release pinned message resources
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-install"><span class="phrase">bus1_message_install</span></a></span><span class="refpurpose"> — 
      install message payload into target process
  </span></dt></dl></dd><dt><span class="chapter"><a href="#transaction">4. Bus1 Transaction</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#id-1.6.4">
@@ -57,8 +55,6 @@
      instantiate a message
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit"><span class="phrase">bus1_transaction_commit</span></a></span><span class="refpurpose"> — 
      commit a transaction
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-for-id"><span class="phrase">bus1_transaction_commit_for_id</span></a></span><span class="refpurpose"> — 
-     instantiate and commit unicast
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-seed"><span class="phrase">bus1_transaction_commit_seed</span></a></span><span class="refpurpose"> — 
      instantiate and commit seed
  </span></dt></dl></dd><dt><span class="chapter"><a href="#handle">5. Bus1 Handle</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-handle-dest"><span class="phrase">struct bus1_handle_dest</span></a></span><span class="refpurpose"> — 
@@ -107,8 +103,6 @@
      destroy handle transfer context
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-transfer-import"><span class="phrase">bus1_handle_transfer_import</span></a></span><span class="refpurpose"> — 
      import handles for transfer
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-transfer-install"><span class="phrase">bus1_handle_transfer_install</span></a></span><span class="refpurpose"> — 
-     install new nodes of transfer context
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-transfer-export"><span class="phrase">bus1_handle_transfer_export</span></a></span><span class="refpurpose"> — 
      publish new nodes of transfer context
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-inflight-init"><span class="phrase">bus1_handle_inflight_init</span></a></span><span class="refpurpose"> — 
@@ -131,8 +125,10 @@
      quota statistics between a user and a peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-user-quota"><span class="phrase">struct bus1_user_quota</span></a></span><span class="refpurpose"> — 
      quota handling
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-exit"><span class="phrase">bus1_user_exit</span></a></span><span class="refpurpose"> — 
+  clean up global resources of user accounting
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-ref-by-uid"><span class="phrase">bus1_user_ref_by_uid</span></a></span><span class="refpurpose"> — 
-  get a user object for a uid
+     get a user object for a uid
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-ref"><span class="phrase">bus1_user_ref</span></a></span><span class="refpurpose"> — 
      acquire reference
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-unref"><span class="phrase">bus1_user_unref</span></a></span><span class="refpurpose"> — 
@@ -147,12 +143,12 @@
      discharge a user
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-quota-commit"><span class="phrase">bus1_user_quota_commit</span></a></span><span class="refpurpose"> — 
      commit a quota charge
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-quota-release-slices"><span class="phrase">bus1_user_quota_release_slices</span></a></span><span class="refpurpose"> — 
-     deaccount the resources used by a slice
  </span></dt></dl></dd><dt><span class="chapter"><a href="#pool">7. Bus1 Pool</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-pool-slice"><span class="phrase">struct bus1_pool_slice</span></a></span><span class="refpurpose"> — 
   pool slice
  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-pool"><span class="phrase">struct bus1_pool</span></a></span><span class="refpurpose"> — 
      client pool
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-pool-slice-is-public"><span class="phrase">bus1_pool_slice_is_public</span></a></span><span class="refpurpose"> — 
+     check whether a slice is public
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-pool-create-internal"><span class="phrase">bus1_pool_create_internal</span></a></span><span class="refpurpose"> — 
   create memory pool
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-pool-destroy"><span class="phrase">bus1_pool_destroy</span></a></span><span class="refpurpose"> — 
@@ -171,10 +167,10 @@
      copy user memory to a slice
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-pool-write-kvec"><span class="phrase">bus1_pool_write_kvec</span></a></span><span class="refpurpose"> — 
      copy kernel memory to a slice
- </span></dt></dl></dd><dt><span class="chapter"><a href="#queue">8. Bus1 Queue</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue"><span class="phrase">struct bus1_queue</span></a></span><span class="refpurpose"> — 
-  message queue
- </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue-node"><span class="phrase">struct bus1_queue_node</span></a></span><span class="refpurpose"> — 
-     node into message queue
+ </span></dt></dl></dd><dt><span class="chapter"><a href="#queue">8. Bus1 Queue</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue-node"><span class="phrase">struct bus1_queue_node</span></a></span><span class="refpurpose"> — 
+  node into message queue
+ </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue"><span class="phrase">struct bus1_queue</span></a></span><span class="refpurpose"> — 
+     message queue
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-tick"><span class="phrase">bus1_queue_tick</span></a></span><span class="refpurpose"> — 
      increment queue clock
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-sync"><span class="phrase">bus1_queue_sync</span></a></span><span class="refpurpose"> — 
@@ -183,10 +179,22 @@
      check whether a queue is readable
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-xchg-seed"><span class="phrase">bus1_queue_xchg_seed</span></a></span><span class="refpurpose"> — 
      change seed message of a queue
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-compare"><span class="phrase">bus1_queue_compare</span></a></span><span class="refpurpose"> — 
+     comparator for queue ordering
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-get-type"><span class="phrase">bus1_queue_node_get_type</span></a></span><span class="refpurpose"> — 
   query node type
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-get-timestamp"><span class="phrase">bus1_queue_node_get_timestamp</span></a></span><span class="refpurpose"> — 
      query node timestamp
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-init"><span class="phrase">bus1_queue_node_init</span></a></span><span class="refpurpose"> — 
+     initialize queue node
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-destroy"><span class="phrase">bus1_queue_node_destroy</span></a></span><span class="refpurpose"> — 
+     destroy queue node
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-queued"><span class="phrase">bus1_queue_node_is_queued</span></a></span><span class="refpurpose"> — 
+     check whether a node is queued
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-committed"><span class="phrase">bus1_queue_node_is_committed</span></a></span><span class="refpurpose"> — 
+     check whether a node is committed
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-staging"><span class="phrase">bus1_queue_node_is_staging</span></a></span><span class="refpurpose"> — 
+     check whether a node is marked staging
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-init"><span class="phrase">bus1_queue_init</span></a></span><span class="refpurpose"> — 
      initialize queue
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-destroy"><span class="phrase">bus1_queue_destroy</span></a></span><span class="refpurpose"> — 
@@ -203,25 +211,17 @@
      remove entry from queue
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-peek"><span class="phrase">bus1_queue_peek</span></a></span><span class="refpurpose"> — 
      peek first available entry
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-init"><span class="phrase">bus1_queue_node_init</span></a></span><span class="refpurpose"> — 
-     initialize queue node
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-destroy"><span class="phrase">bus1_queue_node_destroy</span></a></span><span class="refpurpose"> — 
-     destroy queue node
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-queued"><span class="phrase">bus1_queue_node_is_queued</span></a></span><span class="refpurpose"> — 
-     check whether a node is queued
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-committed"><span class="phrase">bus1_queue_node_is_committed</span></a></span><span class="refpurpose"> — 
-     check whether a node is committed
  </span></dt></dl></dd></dl></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="intro"></a>Chapter 1. Bus1 Overview</h1></div></div></div><p>
    </p><p>
-   The bus1.ko module is a local IPC technology which provides a decentralized
-   infrastructure to share objects between local peers. The main building
-   blocks are nodes and handles. Nodes represent objects of a local peer,
-   while handles represent descriptors that point to a node. Nodes can be
-   created and destroyed by any peer, and they will always remain owned by
-   their respective creator. Handles, on the other hand, are used to refer to
-   nodes and can be passed around with messages as auxiliary data. Whenever a
-   handle is transferred, the receiver will get its own handle allocated,
-   pointing to the same node as the original handle.
+   bus1 is a local IPC system, which provides a decentralized infrastructure to
+   share objects between local peers. The main building blocks are nodes and
+   handles. Nodes represent objects of a local peer, while handles represent
+   descriptors that point to a node. Nodes can be created and destroyed by any
+   peer, and they will always remain owned by their respective creator. Handles,
+   on the other hand, are used to refer to nodes and can be passed around with
+   messages as auxiliary data. Whenever a handle is transferred, the receiver
+   will get its own handle allocated, pointing to the same node as the original
+   handle.
    </p><p>
    Any peer can send messages directed at one of their handles. This will
    transfer the message to the owner of the node the handle points to. If a
@@ -235,12 +235,11 @@
    destruction.
    </p><p>
    Unlike nodes and handles, peers cannot be addressed directly. In fact, peers
-   are completely disconnected entities in bus1.ko. A peer is merely an anchor
-   of a set of nodes and handles, including an incoming message queue for any
-   of those. Whether multiple nodes are all part of the same set (and as such
-   the same peer), or part of different sets, does not affect the remote view
-   of those. Peers solely exist as management entity and command dispatcher to
-   local processes.
+   are completely disconnected entities. A peer is merely an anchor of a set of
+   nodes and handles, including an incoming message queue for any of those.
+   Whether multiple nodes are all part of the same peer, or part of different
+   peers does not affect the remote view of those. Peers solely exist as
+   management entity and command dispatcher to local processes.
    </p><p>
    The set of actors on a system is completely decentralized. There is no
    global component involved that provides a central registry or discovery
@@ -262,10 +261,10 @@
   allocate new peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-free"><span class="phrase">bus1_peer_free</span></a></span><span class="refpurpose"> — 
      destroy peer
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-disconnect"><span class="phrase">bus1_peer_disconnect</span></a></span><span class="refpurpose"> — 
-     disconnect peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-connect"><span class="phrase">bus1_peer_connect</span></a></span><span class="refpurpose"> — 
      connect peer
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-disconnect"><span class="phrase">bus1_peer_disconnect</span></a></span><span class="refpurpose"> — 
+     disconnect peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-peer-ioctl"><span class="phrase">bus1_peer_ioctl</span></a></span><span class="refpurpose"> — 
      handle peer ioctl
  </span></dt></dl></div><p>
@@ -286,9 +285,6 @@ struct bus1_peer_info {
   struct rb_root map_handles_by_node;
   struct seqcount seqcount;
   u64 handle_ids;
-  size_t n_slices;
-  size_t n_handles;
-  size_t n_fds;
 };  </pre></div><div class="refsect1"><a name="id-1.4.4.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">{unnamed_union}</span></dt><dd><p>
 anonymous
       </p></dd><dt><span class="term">cred</span></dt><dd><p>
@@ -311,12 +307,6 @@ map of owned handles, by node pointer
 sequence counter
       </p></dd><dt><span class="term">handle_ids</span></dt><dd><p>
 handle ID allocator
-      </p></dd><dt><span class="term">n_slices</span></dt><dd><p>
-remaining quota for owned slices
-      </p></dd><dt><span class="term">n_handles</span></dt><dd><p>
-remaining quota for owned handles
-      </p></dd><dt><span class="term">n_fds</span></dt><dd><p>
-remaining quota for inflight FDs
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-struct-bus1-peer"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_peer — 
      peer handle
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
@@ -353,8 +343,8 @@ struct bus1_peer {
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * <b class="fsfunc">bus1_peer_release </b>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.4.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      handle to release, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.4.7.6"></a><h2>Description</h2><p>
-   This releases an active reference to a peer, acquired previously via one
-   of the lookup functions.
+   This releases an active reference to a peer, acquired previously via
+   <code class="function">bus1_peer_acquire</code>.
    </p><p>
 
    If NULL is passed, this is a no-op.
@@ -401,11 +391,23 @@ struct bus1_peer {
    If NULL is passed, this is a no-op.
 </p></div><div class="refsect1"><a name="id-1.4.10.7"></a><h2>Return</h2><p>
    NULL is returned.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-peer-disconnect"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_disconnect — 
-     disconnect peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_peer_disconnect </b>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.4.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-peer-connect"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_connect — 
+     connect peer
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_peer_connect </b>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.4.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      peer to operate on
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.4.11.6"></a><h2>Description</h2><p>
+   This connects a peer. It first creates the linked peer_info object and then
+   markes the peer as active.
+   </p><p>
+
+   The caller must make sure this function is called only once.
+</p></div><div class="refsect1"><a name="id-1.4.11.7"></a><h2>Return</h2><p>
+   0 on success, negative error code if already torn down.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-peer-disconnect"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_disconnect — 
+     disconnect peer
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_peer_disconnect </b>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.4.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+     peer to operate on
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.4.12.6"></a><h2>Description</h2><p>
    This tears down a peer synchronously. It first marks the peer as deactivated,
    waits for all outstanding operations to finish, and eventually releases the
    linked peer_info object.
@@ -414,18 +416,6 @@ struct bus1_peer {
    It is perfectly safe to call this function multiple times, even in parallel.
    It is guaranteed to block *until* the peer is fully torn down, regardless
    whether this was the call to tear it down, or not.
-</p></div><div class="refsect1"><a name="id-1.4.11.7"></a><h2>Return</h2><p>
-   0 on success, negative error code if already torn down.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-peer-connect"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_connect — 
-     connect peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_peer_connect </b>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.4.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
-     peer to operate on
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.4.12.6"></a><h2>Description</h2><p>
-   This connects a peer. It first creates the linked peer_info object and then
-   markes the peer as active.
-   </p><p>
-
-   The caller must make sure this function is called only once.
 </p></div><div class="refsect1"><a name="id-1.4.12.7"></a><h2>Return</h2><p>
    0 on success, negative error code if already torn down.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-peer-ioctl"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_ioctl — 
@@ -443,10 +433,6 @@ struct bus1_peer {
    hold an active reference to <em class="parameter"><code>peer</code></em>.
    </p><p>
 
-   This only handles the runtime ioctls. Setup and teardown must be called
-   directly.
-   </p><p>
-
    Multiple ioctls can be called in parallel just fine. No locking is needed.
 </p></div><div class="refsect1"><a name="id-1.4.13.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
@@ -460,14 +446,12 @@ struct bus1_peer {
      acquire message reference
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-unref"><span class="phrase">bus1_message_unref</span></a></span><span class="refpurpose"> — 
      release message reference
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-flush"><span class="phrase">bus1_message_flush</span></a></span><span class="refpurpose"> — 
-     flush pinned resources
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-allocate"><span class="phrase">bus1_message_allocate</span></a></span><span class="refpurpose"> — 
-     allocate pool slice for message payload
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-deallocate"><span class="phrase">bus1_message_deallocate</span></a></span><span class="refpurpose"> — 
-     deallocate pool slice for discarded message
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-dequeue"><span class="phrase">bus1_message_dequeue</span></a></span><span class="refpurpose"> — 
-     deallocate pool slice for dequeued message
+     allocate message resources
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-pin"><span class="phrase">bus1_message_pin</span></a></span><span class="refpurpose"> — 
+     pin message resources
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-unpin"><span class="phrase">bus1_message_unpin</span></a></span><span class="refpurpose"> — 
+     release pinned message resources
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-install"><span class="phrase">bus1_message_install</span></a></span><span class="refpurpose"> — 
      install message payload into target process
  </span></dt></dl></div><p>
@@ -477,16 +461,31 @@ struct bus1_peer {
   message
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
 struct bus1_message {
+  u64 destination;
+  uid_t uid;
+  gid_t gid;
+  pid_t pid;
+  pid_t tid;
   struct bus1_queue_node qnode;
-  struct bus1_msg_data data;
   struct bus1_user * user;
   struct bus1_pool_slice * slice;
   struct file ** files;
+  size_t n_bytes;
+  size_t n_files;
+  size_t n_accounted_handles;
   struct bus1_handle_inflight handles;
-};  </pre></div><div class="refsect1"><a name="id-1.5.4.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">qnode</span></dt><dd><p>
+};  </pre></div><div class="refsect1"><a name="id-1.5.4.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">destination</span></dt><dd><p>
+destination ID
+      </p></dd><dt><span class="term">uid</span></dt><dd><p>
+sender UID
+      </p></dd><dt><span class="term">gid</span></dt><dd><p>
+sender GID
+      </p></dd><dt><span class="term">pid</span></dt><dd><p>
+sender PID
+      </p></dd><dt><span class="term">tid</span></dt><dd><p>
+sender TID
+      </p></dd><dt><span class="term">qnode</span></dt><dd><p>
 embedded queue node
-      </p></dd><dt><span class="term">data</span></dt><dd><p>
-message data
 <em class="parameter"><code>transaction</code></em>.next:		message list (during transactions)
 <em class="parameter"><code>transaction</code></em>.dest:		pinned destination (during transactions)
       </p></dd><dt><span class="term">user</span></dt><dd><p>
@@ -495,6 +494,12 @@ sending user
 actual message data
       </p></dd><dt><span class="term">files</span></dt><dd><p>
 passed file descriptors
+      </p></dd><dt><span class="term">n_bytes</span></dt><dd><p>
+number of user-bytes transmitted
+      </p></dd><dt><span class="term">n_files</span></dt><dd><p>
+number of files transmitted
+      </p></dd><dt><span class="term">n_accounted_handles</span></dt><dd><p>
+number of accounted handles
       </p></dd><dt><span class="term">handles</span></dt><dd><p>
 passed handles
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-from-node"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_from_node — 
@@ -541,55 +546,60 @@ passed handles
    attached, anymore (by flushing it beforehand, if required).
 </p></div><div class="refsect1"><a name="id-1.5.8.7"></a><h2>Return</h2><p>
    NULL is returned.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-flush"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_flush — 
-     flush pinned resources
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_message_flush </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
-     message to flush
-    </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
-     owning peer
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.9.6"></a><h2>Description</h2><p>
-   This flushes all pinned resources of the message. This might require locking
-   the owning peer.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-allocate"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_allocate — 
-     allocate pool slice for message payload
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_message_allocate </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
-     message to allocate slice for
+     allocate message resources
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_message_allocate </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+     message to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
-     destination peer
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.10.6"></a><h2>Description</h2><p>
+     owning peer of the message
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.9.6"></a><h2>Description</h2><p>
    Allocate a pool slice for the given message, and charge the quota of the
    given user for all the associated in-flight resources.
-</p></div><div class="refsect1"><a name="id-1.5.10.7"></a><h2>Return</h2><p>
+   </p><p>
+
+   This returns the message resources pinned. Use <code class="function">bus1_message_unpin</code> to
+   realease them again.
+</p></div><div class="refsect1"><a name="id-1.5.9.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-deallocate"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_deallocate — 
-     deallocate pool slice for discarded message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_message_deallocate </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
-     message to deallocate slice for
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-pin"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_pin — 
+     pin message resources
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * <b class="fsfunc">bus1_message_pin </b>(</code>struct bus1_message * <var class="pdparam">message</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+     message to pin, or NULL
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.10.6"></a><h2>Description</h2><p>
+   Pin the resources of the given message. The caller must have them already
+   pinned, this just increments the pin-counter.
+   </p><p>
+
+   If NULL is passed, this is a no-op.
+</p></div><div class="refsect1"><a name="id-1.5.10.7"></a><h2>Return</h2><p>
+   <em class="parameter"><code>message</code></em> is returned.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-unpin"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_unpin — 
+     release pinned message resources
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_message * <b class="fsfunc">bus1_message_unpin </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+     message to unpin, or NULL
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
-     destination peer
+     owner of the message
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.11.6"></a><h2>Description</h2><p>
-   If allocated, deallocate the slice for the given peer and discharge the
-   associated user quota.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-dequeue"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_dequeue — 
-     deallocate pool slice for dequeued message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_message_dequeue </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
-     message to deallocate slice for
-    </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
-     destination peer
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.12.6"></a><h2>Description</h2><p>
-   Deallocate the slice for the given peer and commit the associated user quota.
-   The peer_info lock must be held by the caller, and the slice must have been
-   allocated.
+   This unpins the resources of the message. If this was the last pin, the
+   resources are deallocated and flushed.
+   </p><p>
+
+   If NULL is passed, this is a no-op.
+</p></div><div class="refsect1"><a name="id-1.5.11.7"></a><h2>Return</h2><p>
+   NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-message-install"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_message_install — 
      install message payload into target process
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_message_install </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_message_install </b>(</code>struct bus1_message * <var class="pdparam">message</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_cmd_recv * <var class="pdparam">param</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.5.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>message</code></em></span></dt><dd><p>
      message to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      calling peer
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.13.6"></a><h2>Description</h2><p>
+    </p></dd><dt><span class="term"><em class="parameter"><code>param</code></em></span></dt><dd><p>
+     -- undescribed --
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.5.12.6"></a><h2>Description</h2><p>
    This installs the payload FDs and handles of <em class="parameter"><code>message</code></em> into <em class="parameter"><code>peer_info</code></em> and
-   the calling process.
-</p></div><div class="refsect1"><a name="id-1.5.13.7"></a><h2>Return</h2><p>
+   the calling process. Handles are always installed, FDs are only installed if
+   explicitly requested via <em class="parameter"><code>inst_fds</code></em>.
+</p></div><div class="refsect1"><a name="id-1.5.12.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="transaction"></a>Chapter 4. Bus1 Transaction</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#id-1.6.4">
    ipc/bus1/transaction.h
@@ -603,8 +613,6 @@ passed handles
      instantiate a message
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit"><span class="phrase">bus1_transaction_commit</span></a></span><span class="refpurpose"> — 
      commit a transaction
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-for-id"><span class="phrase">bus1_transaction_commit_for_id</span></a></span><span class="refpurpose"> — 
-     instantiate and commit unicast
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-transaction-commit-seed"><span class="phrase">bus1_transaction_commit_seed</span></a></span><span class="refpurpose"> — 
      instantiate and commit seed
  </span></dt></dl></div><p>
@@ -708,26 +716,15 @@ passed handles
    silently ignored.
 </p></div><div class="refsect1"><a name="id-1.6.8.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-commit-for-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit_for_id — 
-     instantiate and commit unicast
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_for_id </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var>, u64 __user * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
-     transaction to use
-    </p></dd><dt><span class="term"><em class="parameter"><code>idp</code></em></span></dt><dd><p>
-     user-space pointer with destination ID
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.9.6"></a><h2>Description</h2><p>
-   This is a fast-path for unicast messages. It is equivalent to calling
-   <code class="function">bus1_transaction_instantiate_for_id</code>, followed by <code class="function">bus1_transaction_commit</code>.
-</p></div><div class="refsect1"><a name="id-1.6.9.7"></a><h2>Return</h2><p>
-   0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-transaction-commit-seed"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_transaction_commit_seed — 
      instantiate and commit seed
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_seed </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_transaction_commit_seed </b>(</code>struct bus1_transaction * <var class="pdparam">transaction</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transaction</code></em></span></dt><dd><p>
      transaction to use
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.10.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.9.6"></a><h2>Description</h2><p>
    This instantiates a new message with the given transaction, and commits it
    as new seed on the owner-peer of the transaction. Any existing seed is
    deallocated and freed.
-</p></div><div class="refsect1"><a name="id-1.6.10.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.6.9.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="handle"></a>Chapter 5. Bus1 Handle</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-handle-dest"><span class="phrase">struct bus1_handle_dest</span></a></span><span class="refpurpose"> — 
   destination context
@@ -775,8 +772,6 @@ passed handles
      destroy handle transfer context
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-transfer-import"><span class="phrase">bus1_handle_transfer_import</span></a></span><span class="refpurpose"> — 
      import handles for transfer
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-transfer-install"><span class="phrase">bus1_handle_transfer_install</span></a></span><span class="refpurpose"> — 
-     install new nodes of transfer context
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-transfer-export"><span class="phrase">bus1_handle_transfer_export</span></a></span><span class="refpurpose"> — 
      publish new nodes of transfer context
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-handle-inflight-init"><span class="phrase">bus1_handle_inflight_init</span></a></span><span class="refpurpose"> — 
@@ -795,12 +790,13 @@ passed handles
      commit inflight context
  </span></dt></dl></div><p>
    </p><p>
-   The object system on a bus is based on nodes and handles. Any peer can
-   allocate new, local objects at any time. They automatically become the sole
-   owner of the object. Those objects can be passed as payload of messages. The
-   recipient will thus gain a reference to the object as well. Additionally, an
-   object can be the destination of a message, in which case the message is
-   always sent to the original creator (and thus the owner) of the object.
+   The object system on a bus is based on 'nodes' and 'handles'. Any peer can
+   allocate new, local objects at any time. The creator automatically becomes
+   the sole owner of the object. References to objects can be passed as payload
+   of messages. The recipient will then gain their own reference to the object
+   as well. Additionally, an object can be the destination of a message, in
+   which case the message is always sent to the original creator (and thus the
+   owner) of the object.
    </p><p>
    Internally, objects are called 'nodes'. A reference to an object is a
    'handle'. Whenever a new node is created, the owner implicitly gains an
@@ -809,47 +805,37 @@ passed handles
    </p><p>
    Whenever a handle is passed as payload of a message, the target peer will
    gain a handle linked to the same underlying node. This works regardless
-   whether the sender is the owner of the underlying node, or not.
+   of whether the sender is the owner of the underlying node, or not.
    </p><p>
    Each peer can identify all its handles (both owned and un-owned) by a 64bit
    integer. The namespace is local to each peer, and the numbers cannot be
    compared with the numbers of other peers (in fact, they will be very likely
    to clash, but might still have *different* underlying nodes). However, if a
    peer receives a reference to the same node multiple times, the resulting
-   handle will be the same. The kernel keeps count how often each peer owns a
+   handle will be the same. The kernel keeps count of how often each peer owns a
    handle.
    </p><p>
-   If a peer no longer requires a specific handle, it must release it. If the
+   If a peer no longer requires a specific handle, it can release it. If the
    peer releases its last reference to a handle, the handle will be destroyed.
    </p><p>
-   The ID of an handle is (almost) never reused. That is, once a handle was
-   fully released, any new handle the peer receives will have a different ID.
-   The only scenario where an ID is reused, is if the peer gains a new handle
-   to an underlying node that it already owned a handle for earlier. This might
-   happen, for instance, if a message is inflight that carries a handle that
-   the peer was just about to release. Furthermore, the handle of the owner of
-   a node is internally pinned. As such, it is always reused if the owner gains
-   a handle to its own node again (this is required for explicit node
-   destruction).
-   Note that such ID-reuse is not guaranteed, though. If a peer used to own a
-   handle, dropped it and gains another one for the same underlying node, the
-   new ID might be completely different! The only guarantee here is: If the ID
-   is the same as a previously owned ID, then the underlying node is still the
-   same.
+   The ID of an handle is never reused. That is, once a handle was fully
+   released, any new handle the peer receives will have a different ID. Note,
+   however, that the handle of the owner of a node is internally pinned. As
+   such, it is always reused if the owner gains a handle to its own node again
+   (this is required for explicit node destruction).
    </p><p>
-   Once all handles to a specific node have been released, the node is
-   unreferenced and is automatically destroyed. The owner of the node is
-   notified of this, so it can destroy any linked state. Note that the owner of
-   a node owns a handle themself, so it needs to release it as well to trigger
-   the destruction of the node.
-   Additionally, the owner of a node (and *only* the owner) can trigger
-   destruction of a node manually (even if other peers still own handles). In
-   this case, all peers that own a handle are notified by this.
+   The owner of a node (and *only* the owner) can trigger the destruction of a
+   node (even if other peers still own handles to it). In this case, all peers
+   that own a handle are notified of this fact.
+   Once all handles to a specific node have been released (except for the handle
+   internally pinned in the node itself), the owner of the node is notified of
+   this, so it can potentianlly destroy both any linked state and the node
+   itself.
    </p><p>
    Node destruction is fully synchronized with any transaction. That is, a node
    and all its handles are valid in every message that is transmitted *before*
    the notification of its destruction. Furthermore, no message after this
-   notification will carry the ID of such a destructed node.
+   notification will carry the ID of such a destroyed node.
    Note that message transactions are fully async. That is, there is no unique
    point in time that a message is synchronized with another message. Hence,
    whether a specific handle passed with a message is still valid or not,
@@ -1158,34 +1144,48 @@ struct bus1_node {
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-release-by-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_release_by_id — 
      release a user handle
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_release_by_id </b>(</code>struct bus1_peer * <var class="pdparam">peer</var>, u64 * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_release_by_id </b>(</code>struct bus1_peer * <var class="pdparam">peer</var>, u64 <var class="pdparam">id</var>, size_t * <var class="pdparam">n_handlesp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      -- undescribed --
-    </p></dd><dt><span class="term"><em class="parameter"><code>idp</code></em></span></dt><dd><p>
-     pointer to handle ID
+    </p></dd><dt><span class="term"><em class="parameter"><code>id</code></em></span></dt><dd><p>
+     handle ID
+    </p></dd><dt><span class="term"><em class="parameter"><code>n_handlesp</code></em></span></dt><dd><p>
+     output-var to store number of released handles, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.23.6"></a><h2>Description</h2><p>
    This releases a *user* visible reference to the handle with the given ID.
    The usual allocation rules for <em class="parameter"><code>idp</code></em> apply. If <em class="parameter"><code>idp</code></em> was modified, 1 is
    returned. If <em class="parameter"><code>idp</code></em> was not modified, 0 is returned. On error, a negative
    error code is returned.
+   </p><p>
+
+   For each handle of which the last user-refcount is dropped, this increments
+   <em class="parameter"><code>n_handlesp</code></em> by one (usually this means either 0 or 1).
 </p></div><div class="refsect1"><a name="id-1.7.23.7"></a><h2>Return</h2><p>
    &gt;=0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-node-destroy-by-id"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_node_destroy_by_id — 
      destroy a node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_node_destroy_by_id </b>(</code>struct bus1_peer * <var class="pdparam">peer</var>, u64 * <var class="pdparam">idp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_node_destroy_by_id </b>(</code>struct bus1_peer * <var class="pdparam">peer</var>, u64 * <var class="pdparam">idp</var>, size_t * <var class="pdparam">n_handlesp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      -- undescribed --
     </p></dd><dt><span class="term"><em class="parameter"><code>idp</code></em></span></dt><dd><p>
      pointer to handle ID
+    </p></dd><dt><span class="term"><em class="parameter"><code>n_handlesp</code></em></span></dt><dd><p>
+     output-var to store number of released handles, or NULL
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.24.6"></a><h2>Description</h2><p>
    This destroys the underlying node of the handle with the given ID. The usual
    allocation rules for <em class="parameter"><code>idp</code></em> apply. If <em class="parameter"><code>idp</code></em> was modified, 1 is returned. If
    <em class="parameter"><code>idp</code></em> was not modified, 0 is returned. On error, a negative error code is
    returned.
+   </p><p>
+
+   For each handle of which the last user-refcount is dropped, this increments
+   <em class="parameter"><code>n_handlesp</code></em> by one (usually this means either 0 or 1).
 </p></div><div class="refsect1"><a name="id-1.7.24.7"></a><h2>Return</h2><p>
    &gt;=0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-flush-all"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_flush_all — 
      flush all nodes and handles of a peer
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_flush_all </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, bool <var class="pdparam">final</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_flush_all </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, size_t * <var class="pdparam">n_handlesp</var>, bool <var class="pdparam">final</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer to operate on
+    </p></dd><dt><span class="term"><em class="parameter"><code>n_handlesp</code></em></span></dt><dd><p>
+     output-var to store number of released handles, or NULL
     </p></dd><dt><span class="term"><em class="parameter"><code>final</code></em></span></dt><dd><p>
      whether to flush persistent nodes
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.25.6"></a><h2>Description</h2><p>
@@ -1193,6 +1193,10 @@ struct bus1_node {
    peer. Note that the destruction is atomic in all regards, but the handle
    release is only atomic in regard to the holding peer. That is, the possible
    effect on any remote node is not atomic, but done sequentially afterwards.
+   </p><p>
+
+   For each handle of which the last user-refcount is dropped, this increments
+   <em class="parameter"><code>n_handlesp</code></em> by one.
    </p><p>
 
    If <em class="parameter"><code>final</code></em> is false, persistent nodes are left untouched, otherwise, even
@@ -1250,15 +1254,8 @@ struct bus1_node {
      whether to commit the node
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.29.6"></a><h2>Description</h2><p>
    If a node was created as the destination of a transaction, we have to publish
-   a single user reference to the node and provide it back to the caller. This
-   function acquires the ID and optionally publishes the user-ref for it. Either
-   way the ID is returned, and it is up to the caller to copy it back to
-   userspcae.
-   </p><p>
-
-   When committing the handle, this call releases the handles after it has been
-   processed. Hence, committing the destination must be the last operation on a
-   destination object, before it is destroyed.
+   a its handle ID back to the caller. This function acquires the ID, and it is
+   up to the caller to copy it back to userspace.
    </p><p>
 
    The caller must hold the peer lock of <em class="parameter"><code>peer_info</code></em>.
@@ -1321,51 +1318,32 @@ struct bus1_node {
    the size used with <code class="function">bus1_handle_transfer_init</code>.
 </p></div><div class="refsect1"><a name="id-1.7.33.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-transfer-install"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_transfer_install — 
-     install new nodes of transfer context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_transfer_install </b>(</code>struct bus1_handle_transfer * <var class="pdparam">transfer</var>, struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.34.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
-     transfer context
-    </p></dd><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
-     owning peer of <em class="parameter"><code>transfer</code></em>
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.34.6"></a><h2>Description</h2><p>
-   After a transfer-context is imported, all the newly instantiated nodes must
-   be installed in the caller process. This function installs them and marks
-   them as done. It must be called *before* any derived inflight object is
-   installed.
-   </p><p>
-
-   The caller must hold the peer-lock of <em class="parameter"><code>peer</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-transfer-export"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_transfer_export — 
      publish new nodes of transfer context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_transfer_export </b>(</code>struct bus1_handle_transfer * <var class="pdparam">transfer</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, u64 __user * <var class="pdparam">ids</var>, size_t <var class="pdparam">n_ids</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.35.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_transfer_export </b>(</code>struct bus1_handle_transfer * <var class="pdparam">transfer</var>, struct bus1_peer * <var class="pdparam">peer</var>, u64 __user * <var class="pdparam">ids</var>, size_t <var class="pdparam">n_ids</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.34.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
      transfer context
-    </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+    </p></dd><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
      owning peer of <em class="parameter"><code>transfer</code></em>
     </p></dd><dt><span class="term"><em class="parameter"><code>ids</code></em></span></dt><dd><p>
      user pointer to store IDs to
     </p></dd><dt><span class="term"><em class="parameter"><code>n_ids</code></em></span></dt><dd><p>
      number of IDs
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.35.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.34.6"></a><h2>Description</h2><p>
    For every node that is created as part of an handle transfer, we have to
-   publish a single user reference to the node and provide it back to the
-   caller. This function both publishes those user-refs *and* directly copies
-   them over into the user-provided buffers.
-   </p><p>
-
-   This calls releases all handles after they have been processes. Hence, this
-   must be the last operation on a transfer object, before it is destroyed.
+   publish the handle ID back to the caller. This function acquires the hande
+   IDs *and* directly copies them over into the user-provided buffers.
    </p><p>
 
    The caller must hold the peer lock of <em class="parameter"><code>peer_info</code></em>.
-</p></div><div class="refsect1"><a name="id-1.7.35.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.7.34.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-inflight-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_init — 
      initialize inflight context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_init </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, size_t <var class="pdparam">n_entries</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.36.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_init </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, size_t <var class="pdparam">n_entries</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.35.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to initialize
     </p></dd><dt><span class="term"><em class="parameter"><code>n_entries</code></em></span></dt><dd><p>
      number of entries to store in this context
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.36.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.35.6"></a><h2>Description</h2><p>
    This initializes an inflight-context to carry <em class="parameter"><code>n_entries</code></em> handles. An
    inflight-context is used to instantiate and commit the handles a peer
    *receives* via a transaction. That is, it is created once for each
@@ -1377,29 +1355,29 @@ struct bus1_node {
    via <code class="function">bus1_handle_batch_inline_size</code>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-inflight-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_destroy — 
      destroy inflight-context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_destroy </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.37.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_destroy </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.36.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to destroy
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.37.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.36.6"></a><h2>Description</h2><p>
    This destroys the inflight context. The caller must make sure to flush the
    context before destroying it, in case any handles were imported.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-inflight-flush"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_flush — 
      flush pinned resources
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_flush </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.38.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_flush </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.37.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to flush
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      owning peer
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.38.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.37.6"></a><h2>Description</h2><p>
    This releases all handles that were pinned on the inflight context. This
    might require locking the owning peer.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-inflight-import"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_import — 
      import inflight context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_inflight_import </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_handle_transfer * <var class="pdparam">transfer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.39.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_handle_inflight_import </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_handle_transfer * <var class="pdparam">transfer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.38.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to instantiate
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer info to instantiate for
     </p></dd><dt><span class="term"><em class="parameter"><code>transfer</code></em></span></dt><dd><p>
      transfer object to instantiate from
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.39.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.38.6"></a><h2>Description</h2><p>
    Instantiate an inflight-context from an existing transfer-context. Import
    each pinned handle from the transfer-context into the peer <em class="parameter"><code>peer_info</code></em>,
    creating new handles if required. All the handles are pinned in the inflight
@@ -1408,26 +1386,27 @@ struct bus1_node {
 
    This must only be called once per inflight object. Furthermore, the number
    of handles must match the number of handles of the transfer-context.
-</p></div><div class="refsect1"><a name="id-1.7.39.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.7.38.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-inflight-install"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_install — 
      install inflight handles
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_install </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer * <var class="pdparam">dst</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.40.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_install </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer * <var class="pdparam">dst</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.39.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      instantiated inflight context
     </p></dd><dt><span class="term"><em class="parameter"><code>dst</code></em></span></dt><dd><p>
      peer <em class="parameter"><code>inflight</code></em> is for
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.40.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.39.6"></a><h2>Description</h2><p>
    After an inflight context was successfully instantiated, this will install
-   the handles into the peer <em class="parameter"><code>dst</code></em>. The caller must provide the used transfer
-   context and the origin peer as <em class="parameter"><code>transfer</code></em> and <em class="parameter"><code>src</code></em>.
+   the handles into the peer <em class="parameter"><code>dst</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-inflight-walk"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_walk — 
      walk all handle IDs
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <b class="fsfunc">bus1_handle_inflight_walk </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, size_t * <var class="pdparam">pos</var>, void ** <var class="pdparam">iter</var>, u64 * <var class="pdparam">ids</var>, u64 <var class="pdparam">timestamp</var>, unsigned long <var class="pdparam">sender</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.41.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <b class="fsfunc">bus1_handle_inflight_walk </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, size_t * <var class="pdparam">pos</var>, size_t * <var class="pdparam">new</var>, void ** <var class="pdparam">iter</var>, u64 * <var class="pdparam">ids</var>, u64 <var class="pdparam">timestamp</var>, unsigned long <var class="pdparam">sender</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.40.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to walk
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer info of inflight owner
     </p></dd><dt><span class="term"><em class="parameter"><code>pos</code></em></span></dt><dd><p>
      current iterator position
+    </p></dd><dt><span class="term"><em class="parameter"><code>new</code></em></span></dt><dd><p>
+     counts new handle installs
     </p></dd><dt><span class="term"><em class="parameter"><code>iter</code></em></span></dt><dd><p>
      opaque iterator
     </p></dd><dt><span class="term"><em class="parameter"><code>ids</code></em></span></dt><dd><p>
@@ -1436,7 +1415,7 @@ struct bus1_node {
      timestamp of the transaction
     </p></dd><dt><span class="term"><em class="parameter"><code>sender</code></em></span></dt><dd><p>
      -- undescribed --
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.41.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.40.6"></a><h2>Description</h2><p>
    This walks over all stored handles of <em class="parameter"><code>inflight</code></em>, returning their IDs in
    blocks to the caller, instantiating them if necessary. If a given handle will
    be invalid at <em class="parameter"><code>timestamp</code></em>, BUS1_HANDLE_INVALID is returned instead. The caller
@@ -1447,15 +1426,16 @@ struct bus1_node {
    On each call, this function advances <em class="parameter"><code>pos</code></em> and <em class="parameter"><code>iter</code></em> to keep track of the
    iteration, and updates <em class="parameter"><code>ids</code></em> with the handle IDs of the current block. It
    returns the size of the current block, which is at most
-   BUS1_HANDLE_BATCH_SIZE.
+   BUS1_HANDLE_BATCH_SIZE. For each newly to-be-installed user-space, it
+   increases <em class="parameter"><code>new</code></em> by one.
    </p><p>
 
    Once this returns 0, the iteration is finished.
-</p></div><div class="refsect1"><a name="id-1.7.41.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.7.40.7"></a><h2>Return</h2><p>
    Number of IDs in the next block, 0 if done.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-inflight-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_inflight_commit — 
      commit inflight context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_commit </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, u64 <var class="pdparam">timestamp</var>, unsigned long <var class="pdparam">sender</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.42.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_handle_inflight_commit </b>(</code>struct bus1_handle_inflight * <var class="pdparam">inflight</var>, struct bus1_peer_info * <var class="pdparam">peer_info</var>, u64 <var class="pdparam">timestamp</var>, unsigned long <var class="pdparam">sender</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.7.41.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>inflight</code></em></span></dt><dd><p>
      inflight context to commit
     </p></dd><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      -- undescribed --
@@ -1463,7 +1443,7 @@ struct bus1_node {
      -- undescribed --
     </p></dd><dt><span class="term"><em class="parameter"><code>sender</code></em></span></dt><dd><p>
      -- undescribed --
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.42.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.7.41.6"></a><h2>Description</h2><p>
    This commits a fully installed inflight context, given the timestamp of a
    transaction. This will make sure to only transfer the actual handle if it is
    ordered *before* the handle destruction.
@@ -1478,8 +1458,10 @@ struct bus1_node {
      quota statistics between a user and a peer
  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-user-quota"><span class="phrase">struct bus1_user_quota</span></a></span><span class="refpurpose"> — 
      quota handling
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-exit"><span class="phrase">bus1_user_exit</span></a></span><span class="refpurpose"> — 
+  clean up global resources of user accounting
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-ref-by-uid"><span class="phrase">bus1_user_ref_by_uid</span></a></span><span class="refpurpose"> — 
-  get a user object for a uid
+     get a user object for a uid
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-ref"><span class="phrase">bus1_user_ref</span></a></span><span class="refpurpose"> — 
      acquire reference
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-unref"><span class="phrase">bus1_user_unref</span></a></span><span class="refpurpose"> — 
@@ -1494,8 +1476,6 @@ struct bus1_node {
      discharge a user
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-quota-commit"><span class="phrase">bus1_user_quota_commit</span></a></span><span class="refpurpose"> — 
      commit a quota charge
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-user-quota-release-slices"><span class="phrase">bus1_user_quota_release_slices</span></a></span><span class="refpurpose"> — 
-     deaccount the resources used by a slice
  </span></dt></dl></div><p>
    </p><p>
    Different users can communicate via bus1, and many resources are shared
@@ -1529,32 +1509,56 @@ struct bus1_node {
   resource accounting for users
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
 struct bus1_user {
+  union {unnamed_union};
   struct kref ref;
   unsigned int id;
   kuid_t uid;
-  union {unnamed_union};
-};  </pre></div><div class="refsect1"><a name="id-1.8.6.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">ref</span></dt><dd><p>
+  atomic_t n_slices;
+  atomic_t n_handles;
+  atomic_t n_inflight_bytes;
+  atomic_t n_inflight_fds;
+  atomic_t max_slices;
+  atomic_t max_handles;
+  atomic_t max_bytes;
+  atomic_t max_fds;
+};  </pre></div><div class="refsect1"><a name="id-1.8.6.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">{unnamed_union}</span></dt><dd><p>
+anonymous
+      </p></dd><dt><span class="term">ref</span></dt><dd><p>
 reference counter
       </p></dd><dt><span class="term">id</span></dt><dd><p>
 internal index of this user
       </p></dd><dt><span class="term">uid</span></dt><dd><p>
 UID of the user
-      </p></dd><dt><span class="term">{unnamed_union}</span></dt><dd><p>
-anonymous
+      </p></dd><dt><span class="term">n_slices</span></dt><dd><p>
+number of remaining quota for owned slices
+      </p></dd><dt><span class="term">n_handles</span></dt><dd><p>
+number of remaining quota for owned handles
+      </p></dd><dt><span class="term">n_inflight_bytes</span></dt><dd><p>
+number of remaining quota for inflight bytes
+      </p></dd><dt><span class="term">n_inflight_fds</span></dt><dd><p>
+number of remaining quota for inflight FDs
+      </p></dd><dt><span class="term">max_slices</span></dt><dd><p>
+maximum number of owned slices
+      </p></dd><dt><span class="term">max_handles</span></dt><dd><p>
+maximum number of owned handles
+      </p></dd><dt><span class="term">max_bytes</span></dt><dd><p>
+maximum number of inflight bytes
+      </p></dd><dt><span class="term">max_fds</span></dt><dd><p>
+maximum number of inflight FDs
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-struct-bus1-user-stats"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_user_stats — 
      quota statistics between a user and a peer
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
 struct bus1_user_stats {
-  u32 n_bytes;
   u16 n_slices;
   u16 n_handles;
+  u32 n_bytes;
   u16 n_fds;
-};  </pre></div><div class="refsect1"><a name="id-1.8.7.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">n_bytes</span></dt><dd><p>
-   memory in bytes used by queued messages
-      </p></dd><dt><span class="term">n_slices</span></dt><dd><p>
+};  </pre></div><div class="refsect1"><a name="id-1.8.7.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">n_slices</span></dt><dd><p>
    number of queued slices
       </p></dd><dt><span class="term">n_handles</span></dt><dd><p>
    number of queued handles
+      </p></dd><dt><span class="term">n_bytes</span></dt><dd><p>
+   memory in bytes used by queued messages
       </p></dd><dt><span class="term">n_fds</span></dt><dd><p>
    number of queued fds
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-struct-bus1-user-quota"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_user_quota — 
@@ -1567,50 +1571,64 @@ struct bus1_user_quota {
    number of allocated user entries
       </p></dd><dt><span class="term">stats</span></dt><dd><p>
    user entries
-      </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-ref-by-uid"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_ref_by_uid — 
-  get a user object for a uid
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <b class="fsfunc">bus1_user_ref_by_uid </b>(</code>kuid_t <var class="pdparam">uid</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>uid</code></em></span></dt><dd><p>
-     uid of the user
+      </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-exit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_exit — 
+  clean up global resources of user accounting
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_exit </b>(</code> <var class="pdparam">void</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>void</code></em></span></dt><dd><p>
+     no arguments
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.9.6"></a><h2>Description</h2><p>
+   </p><p>
+
+   This function cleans up any remaining global resources that were allocated
+   by the user accounting helpers. The caller must make sure that no user
+   object is referenced anymore, before calling this. This function just clears
+   caches and verifies nothing is leaked.
+   </p><p>
+
+   This is meant to be called on module-exit.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-ref-by-uid"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_ref_by_uid — 
+     get a user object for a uid
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <b class="fsfunc">bus1_user_ref_by_uid </b>(</code>kuid_t <var class="pdparam">uid</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>uid</code></em></span></dt><dd><p>
+     uid of the user
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.10.6"></a><h2>Description</h2><p>
    Find and return the user object for the uid if it exists, otherwise create
    it first. This function may take the bus1_user_lock.
-</p></div><div class="refsect1"><a name="id-1.8.9.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.8.10.7"></a><h2>Return</h2><p>
    A user object for the given uid, ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-ref"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_ref — 
      acquire reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <b class="fsfunc">bus1_user_ref </b>(</code>struct bus1_user * <var class="pdparam">user</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <b class="fsfunc">bus1_user_ref </b>(</code>struct bus1_user * <var class="pdparam">user</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to acquire, or NULL
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.10.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.11.6"></a><h2>Description</h2><p>
    Acquire an additional reference to a user-object. The caller must already
    own a reference.
    </p><p>
 
    If NULL is passed, this is a no-op.
-</p></div><div class="refsect1"><a name="id-1.8.10.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.8.11.7"></a><h2>Return</h2><p>
    <em class="parameter"><code>user</code></em> is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-unref"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_unref — 
      release reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <b class="fsfunc">bus1_user_unref </b>(</code>struct bus1_user * <var class="pdparam">user</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_user * <b class="fsfunc">bus1_user_unref </b>(</code>struct bus1_user * <var class="pdparam">user</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to release, or NULL
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.11.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.12.6"></a><h2>Description</h2><p>
    Release a reference to a user-object. This function may take the
    bus1_user_lock.
    </p><p>
 
    If NULL is passed, this is a no-op.
-</p></div><div class="refsect1"><a name="id-1.8.11.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.8.12.7"></a><h2>Return</h2><p>
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-quota-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_init — 
      initialize quota object
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_init </b>(</code>struct bus1_user_quota * <var class="pdparam">quota</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_init </b>(</code>struct bus1_user_quota * <var class="pdparam">quota</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
      quota object to initialize
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.12.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.13.6"></a><h2>Description</h2><p>
    Initialize all fields of a quota object.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-quota-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_destroy — 
      destroy quota object
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_destroy </b>(</code>struct bus1_user_quota * <var class="pdparam">quota</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_destroy </b>(</code>struct bus1_user_quota * <var class="pdparam">quota</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>quota</code></em></span></dt><dd><p>
      quota object to destroy, or NULL
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.13.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.14.6"></a><h2>Description</h2><p>
    Destroy and deallocate a quota object. All linked resources are freed, and
    the object is ready for re-use.
    </p><p>
@@ -1618,7 +1636,7 @@ struct bus1_user_quota {
    If NULL is passed, this is a no-op.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-quota-charge"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_charge — 
      try charging a user
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_user_quota_charge </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">n_bytes</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_user_quota_charge </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">n_bytes</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.15.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer with quota to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to charge
@@ -1628,7 +1646,7 @@ struct bus1_user_quota {
      number of handles to charge
     </p></dd><dt><span class="term"><em class="parameter"><code>n_fds</code></em></span></dt><dd><p>
      number of FDs to charge
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.14.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.15.6"></a><h2>Description</h2><p>
    This charges <em class="parameter"><code>user</code></em> for the given resources on <em class="parameter"><code>peer_info</code></em>. If the charge would
    exceed the given quotas at this time, the function fails without making any
    charge. If the charge is successful, the available resources are adjusted
@@ -1637,11 +1655,11 @@ struct bus1_user_quota {
 
    This charges for _one_ message with a size of <em class="parameter"><code>n_bytes</code></em>, carrying
    <em class="parameter"><code>n_handles</code></em> handles and <em class="parameter"><code>n_fds</code></em> file descriptors as payload.
-</p></div><div class="refsect1"><a name="id-1.8.14.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.8.15.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-quota-discharge"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_discharge — 
      discharge a user
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_discharge </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">n_bytes</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.15.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_discharge </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">n_bytes</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer with quota to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to discharge
@@ -1651,13 +1669,13 @@ struct bus1_user_quota {
      number of handles to discharge
     </p></dd><dt><span class="term"><em class="parameter"><code>n_fds</code></em></span></dt><dd><p>
      number of FDs to discharge
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.15.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.16.6"></a><h2>Description</h2><p>
    This reverts a single charge done via <code class="function">bus1_user_quota_charge</code>. It
    discharges a single message with a slice of size <em class="parameter"><code>n_bytes</code></em>, <em class="parameter"><code>n_handles</code></em> handles
    and <em class="parameter"><code>n_fds</code></em> file-descriptors.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-quota-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_commit — 
      commit a quota charge
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_commit </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">n_bytes</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_commit </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, struct bus1_user * <var class="pdparam">user</var>, size_t <var class="pdparam">n_bytes</var>, size_t <var class="pdparam">n_handles</var>, size_t <var class="pdparam">n_fds</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
      peer with quota to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>user</code></em></span></dt><dd><p>
      user to commit for
@@ -1667,23 +1685,16 @@ struct bus1_user_quota {
      number of handles to commit
     </p></dd><dt><span class="term"><em class="parameter"><code>n_fds</code></em></span></dt><dd><p>
      number of FDs to commit
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.16.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.17.6"></a><h2>Description</h2><p>
    Commit a quota charge to the receiving peer. This de-accounts the in-flight
    charges, but keeps the actual object charges on the receiver. The caller must
    make sure the actual objects are de-accounted once they are destructed.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-user-quota-release-slices"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_user_quota_release_slices — 
-     deaccount the resources used by a slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_user_quota_release_slices </b>(</code>struct bus1_peer_info * <var class="pdparam">peer_info</var>, size_t <var class="pdparam">n_slices</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.8.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer_info</code></em></span></dt><dd><p>
-     peer with quota to operate on
-    </p></dd><dt><span class="term"><em class="parameter"><code>n_slices</code></em></span></dt><dd><p>
-     number of slices to release
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.8.17.6"></a><h2>Description</h2><p>
-   De-account the resources used by a slice, must be called after the slice is
-   released by the local peer.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="pool"></a>Chapter 7. Bus1 Pool</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-pool-slice"><span class="phrase">struct bus1_pool_slice</span></a></span><span class="refpurpose"> — 
   pool slice
  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-pool"><span class="phrase">struct bus1_pool</span></a></span><span class="refpurpose"> — 
      client pool
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-pool-slice-is-public"><span class="phrase">bus1_pool_slice_is_public</span></a></span><span class="refpurpose"> — 
+     check whether a slice is public
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-pool-create-internal"><span class="phrase">bus1_pool_create_internal</span></a></span><span class="refpurpose"> — 
   create memory pool
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-pool-destroy"><span class="phrase">bus1_pool_destroy</span></a></span><span class="refpurpose"> — 
@@ -1755,15 +1766,12 @@ link to busy/free rb-tree
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
 struct bus1_pool {
   struct file * f;
-  size_t size;
   size_t allocated_size;
   struct list_head slices;
   struct rb_root slices_busy;
   struct rb_root slices_free;
 };  </pre></div><div class="refsect1"><a name="id-1.9.9.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">f</span></dt><dd><p>
    backing shmem file
-      </p></dd><dt><span class="term">size</span></dt><dd><p>
-   size of the file
       </p></dd><dt><span class="term">allocated_size</span></dt><dd><p>
    currently allocated memory in bytes
       </p></dd><dt><span class="term">slices</span></dt><dd><p>
@@ -1772,28 +1780,39 @@ struct bus1_pool {
    tree of allocated slices
       </p></dd><dt><span class="term">slices_free</span></dt><dd><p>
    tree of free slices
-      </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-create-internal"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_create_internal — 
-  create memory pool
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_pool_create_internal </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">size</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
-     (uninitialized) pool to operate on
-    </p></dd><dt><span class="term"><em class="parameter"><code>size</code></em></span></dt><dd><p>
-     size of the pool
+      </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-slice-is-public"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_slice_is_public — 
+     check whether a slice is public
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_pool_slice_is_public </b>(</code>struct bus1_pool_slice * <var class="pdparam">slice</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
+     slice to check
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.10.6"></a><h2>Description</h2><p>
-   Initialize a new pool object. This allocates a backing shmem object with the
-   given name and size.
+   This checks whether <em class="parameter"><code>slice</code></em> is public. That is, <code class="function">bus1_pool_publish</code> has been
+   called and the user has not released their reference, yet.
+   </p><p>
+
+   Note that if you need reliable results, you better make sure this cannot
+   race calls to <code class="function">bus1_pool_publish</code> (or <code class="function">bus1_pool_release_user</code>,
+   respectively). IOW, keep the owning peer locked.
+</p></div><div class="refsect1"><a name="id-1.9.10.7"></a><h2>Return</h2><p>
+   True if public, false if not.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-create-internal"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_create_internal — 
+  create memory pool
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_pool_create_internal </b>(</code>struct bus1_pool * <var class="pdparam">pool</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+     (uninitialized) pool to operate on
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.11.6"></a><h2>Description</h2><p>
+   Initialize a new pool object.
    </p><p>
 
    Note that all pools must be embedded into a parent bus1_peer_info object. The
    code works fine, if you don't, but the lockdep-annotations will fail
    horribly. They rely on <code class="function">container_of</code> to be valid on every pool. Use the
    <code class="function">bus1_pool_create_for_peer</code> macro to make sure you never violate this rule.
-</p></div><div class="refsect1"><a name="id-1.9.10.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.9.11.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_destroy — 
      pool to destroy
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_pool_destroy </b>(</code>struct bus1_pool * <var class="pdparam">pool</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_pool_destroy </b>(</code>struct bus1_pool * <var class="pdparam">pool</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to destroy, or NULL
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.11.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.12.6"></a><h2>Description</h2><p>
    This destroys a pool that was previously create via <code class="function">bus1_pool_create</code>. If
    NULL is passed, or if <em class="parameter"><code>pool</code></em>-&gt;f is NULL (i.e., the pool was initialized to 0
    but not created via <code class="function">bus1_pool_create</code>, yet), then this is a no-op.
@@ -1803,11 +1822,11 @@ struct bus1_pool {
    pending user-space reference to any slice is dropped by this function.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-alloc"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_alloc — 
      allocate memory
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * <b class="fsfunc">bus1_pool_alloc </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">size</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * <b class="fsfunc">bus1_pool_alloc </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">size</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to allocate memory from
     </p></dd><dt><span class="term"><em class="parameter"><code>size</code></em></span></dt><dd><p>
      number of bytes to allocate
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.12.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.13.6"></a><h2>Description</h2><p>
    This allocates a new slice of <em class="parameter"><code>size</code></em> bytes from the memory pool at <em class="parameter"><code>pool</code></em>. The
    slice must be released via <code class="function">bus1_pool_release_kernel</code> by the caller. All
    slices are aligned to 8 bytes (both offset and size).
@@ -1825,39 +1844,41 @@ struct bus1_pool {
    A slice is only actually freed if neither reference exists, anymore. Hence,
    pool-slice can be held by both, the kernel and user-space, and both can rely
    on it staying around as long as they wish.
-</p></div><div class="refsect1"><a name="id-1.9.12.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.9.13.7"></a><h2>Return</h2><p>
    Pointer to new slice, or ERR_PTR on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-release-kernel"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_release_kernel — 
      release kernel-owned slice reference
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * <b class="fsfunc">bus1_pool_release_kernel </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_pool_slice * <b class="fsfunc">bus1_pool_release_kernel </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to free memory on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to release
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.13.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.14.6"></a><h2>Description</h2><p>
    This releases the kernel-reference to a slice that was previously allocated
    via <code class="function">bus1_pool_alloc</code>. This only releases the kernel reference to the slice.
    If the slice was already published to user-space, then their reference is
    left untouched. Once both references are gone, the memory is actually freed.
-</p></div><div class="refsect1"><a name="id-1.9.13.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.9.14.7"></a><h2>Return</h2><p>
    NULL is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-publish"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_publish — 
      publish a slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_pool_publish </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_pool_publish </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.15.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to publish
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.14.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.15.6"></a><h2>Description</h2><p>
    Publish a pool slice to user-space, so user-space can get access to it via
    the mapped pool memory. If the slice was already published, this is a no-op.
    Otherwise, the slice is marked as public and will only get freed once both
    the user-space reference *and* kernel-space reference are released.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-release-user"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_release_user — 
      release a public slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_pool_release_user </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">offset</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.15.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_pool_release_user </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t <var class="pdparam">offset</var>, size_t * <var class="pdparam">n_slicesp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>offset</code></em></span></dt><dd><p>
      offset of slice to release
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.15.6"></a><h2>Description</h2><p>
+    </p></dd><dt><span class="term"><em class="parameter"><code>n_slicesp</code></em></span></dt><dd><p>
+     output variable to store number of released slices, or NULL
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.16.6"></a><h2>Description</h2><p>
    Release the user-space reference to a pool-slice, specified via the offset
    of the slice. If both, the user-space reference *and* the kernel-space
    reference to the slice are gone, the slice will be actually freed.
@@ -1865,20 +1886,20 @@ struct bus1_pool {
 
    If no slice exists with the given offset, or if there is no user-space
    reference to the specified slice, an error is returned.
-</p></div><div class="refsect1"><a name="id-1.9.15.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.9.16.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-flush"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_flush — 
      flush all user references
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_pool_flush </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t * <var class="pdparam">n_slicesp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.16.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_pool_flush </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, size_t * <var class="pdparam">n_slicesp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to flush
     </p></dd><dt><span class="term"><em class="parameter"><code>n_slicesp</code></em></span></dt><dd><p>
-     pointer to number of flushed slices
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.16.6"></a><h2>Description</h2><p>
+     output variable to store number of released slices, or NULL
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.17.6"></a><h2>Description</h2><p>
    This flushes all user-references to any slice in <em class="parameter"><code>pool</code></em>. Kernel references
    are left untouched.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-write-iovec"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_write_iovec — 
      copy user memory to a slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t <b class="fsfunc">bus1_pool_write_iovec </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var>, loff_t <var class="pdparam">offset</var>, struct iovec * <var class="pdparam">iov</var>, size_t <var class="pdparam">n_iov</var>, size_t <var class="pdparam">total_len</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.17.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t <b class="fsfunc">bus1_pool_write_iovec </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var>, loff_t <var class="pdparam">offset</var>, struct iovec * <var class="pdparam">iov</var>, size_t <var class="pdparam">n_iov</var>, size_t <var class="pdparam">total_len</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.18.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to write to
@@ -1890,14 +1911,14 @@ struct bus1_pool {
      number of elements in <em class="parameter"><code>iov</code></em>
     </p></dd><dt><span class="term"><em class="parameter"><code>total_len</code></em></span></dt><dd><p>
      total number of bytes to copy
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.17.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.18.6"></a><h2>Description</h2><p>
    This copies the memory pointed to by <em class="parameter"><code>iov</code></em> into the memory slice <em class="parameter"><code>slice</code></em> at
    relative offset <em class="parameter"><code>offset</code></em> (relative to begin of slice).
-</p></div><div class="refsect1"><a name="id-1.9.17.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.9.18.7"></a><h2>Return</h2><p>
    Numbers of bytes copied, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-pool-write-kvec"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_pool_write_kvec — 
      copy kernel memory to a slice
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t <b class="fsfunc">bus1_pool_write_kvec </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var>, loff_t <var class="pdparam">offset</var>, struct kvec * <var class="pdparam">iov</var>, size_t <var class="pdparam">n_iov</var>, size_t <var class="pdparam">total_len</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.18.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">ssize_t <b class="fsfunc">bus1_pool_write_kvec </b>(</code>struct bus1_pool * <var class="pdparam">pool</var>, struct bus1_pool_slice * <var class="pdparam">slice</var>, loff_t <var class="pdparam">offset</var>, struct kvec * <var class="pdparam">iov</var>, size_t <var class="pdparam">n_iov</var>, size_t <var class="pdparam">total_len</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.9.19.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>pool</code></em></span></dt><dd><p>
      pool to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>slice</code></em></span></dt><dd><p>
      slice to write to
@@ -1909,15 +1930,15 @@ struct bus1_pool {
      number of elements in <em class="parameter"><code>iov</code></em>
     </p></dd><dt><span class="term"><em class="parameter"><code>total_len</code></em></span></dt><dd><p>
      total number of bytes to copy
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.18.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.19.6"></a><h2>Description</h2><p>
    This copies the memory pointed to by <em class="parameter"><code>iov</code></em> into the memory slice <em class="parameter"><code>slice</code></em> at
    relative offset <em class="parameter"><code>offset</code></em> (relative to begin of slice).
-</p></div><div class="refsect1"><a name="id-1.9.18.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.9.19.7"></a><h2>Return</h2><p>
    Numbers of bytes copied, negative error code on failure.
-</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="queue"></a>Chapter 8. Bus1 Queue</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue"><span class="phrase">struct bus1_queue</span></a></span><span class="refpurpose"> — 
-  message queue
- </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue-node"><span class="phrase">struct bus1_queue_node</span></a></span><span class="refpurpose"> — 
-     node into message queue
+</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="queue"></a>Chapter 8. Bus1 Queue</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue-node"><span class="phrase">struct bus1_queue_node</span></a></span><span class="refpurpose"> — 
+  node into message queue
+ </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-queue"><span class="phrase">struct bus1_queue</span></a></span><span class="refpurpose"> — 
+     message queue
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-tick"><span class="phrase">bus1_queue_tick</span></a></span><span class="refpurpose"> — 
      increment queue clock
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-sync"><span class="phrase">bus1_queue_sync</span></a></span><span class="refpurpose"> — 
@@ -1926,10 +1947,22 @@ struct bus1_pool {
      check whether a queue is readable
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-xchg-seed"><span class="phrase">bus1_queue_xchg_seed</span></a></span><span class="refpurpose"> — 
      change seed message of a queue
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-compare"><span class="phrase">bus1_queue_compare</span></a></span><span class="refpurpose"> — 
+     comparator for queue ordering
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-get-type"><span class="phrase">bus1_queue_node_get_type</span></a></span><span class="refpurpose"> — 
   query node type
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-get-timestamp"><span class="phrase">bus1_queue_node_get_timestamp</span></a></span><span class="refpurpose"> — 
      query node timestamp
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-init"><span class="phrase">bus1_queue_node_init</span></a></span><span class="refpurpose"> — 
+     initialize queue node
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-destroy"><span class="phrase">bus1_queue_node_destroy</span></a></span><span class="refpurpose"> — 
+     destroy queue node
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-queued"><span class="phrase">bus1_queue_node_is_queued</span></a></span><span class="refpurpose"> — 
+     check whether a node is queued
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-committed"><span class="phrase">bus1_queue_node_is_committed</span></a></span><span class="refpurpose"> — 
+     check whether a node is committed
+ </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-staging"><span class="phrase">bus1_queue_node_is_staging</span></a></span><span class="refpurpose"> — 
+     check whether a node is marked staging
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-init"><span class="phrase">bus1_queue_init</span></a></span><span class="refpurpose"> — 
      initialize queue
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-destroy"><span class="phrase">bus1_queue_destroy</span></a></span><span class="refpurpose"> — 
@@ -1946,14 +1979,6 @@ struct bus1_pool {
      remove entry from queue
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-peek"><span class="phrase">bus1_queue_peek</span></a></span><span class="refpurpose"> — 
      peek first available entry
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-init"><span class="phrase">bus1_queue_node_init</span></a></span><span class="refpurpose"> — 
-     initialize queue node
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-destroy"><span class="phrase">bus1_queue_node_destroy</span></a></span><span class="refpurpose"> — 
-     destroy queue node
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-queued"><span class="phrase">bus1_queue_node_is_queued</span></a></span><span class="refpurpose"> — 
-     check whether a node is queued
- </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-queue-node-is-committed"><span class="phrase">bus1_queue_node_is_committed</span></a></span><span class="refpurpose"> — 
-     check whether a node is committed
  </span></dt></dl></div><p>
    </p><p>
    (You are highly encouraged to read up on 'Lamport Timestamps', the
@@ -2029,8 +2054,24 @@ struct bus1_pool {
    the first entry in the queue is ready to be dequeued (that is, it has an
    even timestamp). If the first entry is not ready to be dequeued, or if the
    queue is empty, the front pointer is NULL.
-</p><div class="refentry"><a name="API-struct-bus1-queue"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_queue — 
-  message queue
+</p><div class="refentry"><a name="API-struct-bus1-queue-node"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_queue_node — 
+  node into message queue
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
+struct bus1_queue_node {
+  union {unnamed_union};
+  struct kref ref;
+  unsigned long sender;
+  u64 timestamp_and_type;
+};  </pre></div><div class="refsect1"><a name="id-1.10.16.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">{unnamed_union}</span></dt><dd><p>
+anonymous
+      </p></dd><dt><span class="term">ref</span></dt><dd><p>
+reference counter
+      </p></dd><dt><span class="term">sender</span></dt><dd><p>
+sender tag
+      </p></dd><dt><span class="term">timestamp_and_type</span></dt><dd><p>
+message timestamp and type of parent object
+      </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-struct-bus1-queue"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_queue — 
+     message queue
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
 struct bus1_queue {
   u64 clock;
@@ -2038,38 +2079,22 @@ struct bus1_queue {
   wait_queue_head_t * waitq;
   struct bus1_queue_node * seed;
   struct rb_root messages;
-  struct mutex qlock;
+  struct mutex lock;
   atomic_t n_dropped;
-};  </pre></div><div class="refsect1"><a name="id-1.10.16.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">clock</span></dt><dd><p>
-local clock (used for Lamport Timestamps)
+};  </pre></div><div class="refsect1"><a name="id-1.10.17.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">clock</span></dt><dd><p>
+   local clock (used for Lamport Timestamps)
       </p></dd><dt><span class="term">front</span></dt><dd><p>
-cached front entry
+   cached front entry
       </p></dd><dt><span class="term">waitq</span></dt><dd><p>
-pointer to wait-queue to use for wake-ups
+   pointer to wait-queue to use for wake-ups
       </p></dd><dt><span class="term">seed</span></dt><dd><p>
-seed message
+   seed message
       </p></dd><dt><span class="term">messages</span></dt><dd><p>
-queued messages
-      </p></dd><dt><span class="term">qlock</span></dt><dd><p>
-data lock
+   queued messages
+      </p></dd><dt><span class="term">lock</span></dt><dd><p>
+   data lock
       </p></dd><dt><span class="term">n_dropped</span></dt><dd><p>
-number of dropped messages since last report
-      </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-struct-bus1-queue-node"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_queue_node — 
-     node into message queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
-struct bus1_queue_node {
-  union {unnamed_union};
-  struct kref ref;
-  unsigned long sender;
-  u64 timestamp_and_type;
-};  </pre></div><div class="refsect1"><a name="id-1.10.17.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">{unnamed_union}</span></dt><dd><p>
-   anonymous
-      </p></dd><dt><span class="term">ref</span></dt><dd><p>
-   reference counter
-      </p></dd><dt><span class="term">sender</span></dt><dd><p>
-   sender tag
-      </p></dd><dt><span class="term">timestamp_and_type</span></dt><dd><p>
-   message timestamp and type of parent object
+   number of dropped messages since last report
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-tick"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_tick — 
      increment queue clock
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <b class="fsfunc">bus1_queue_tick </b>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.18.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
@@ -2081,7 +2106,7 @@ struct bus1_queue_node {
    caller.
    </p><p>
 
-   The caller must hold the peer qlock.
+   The caller must hold the queue lock.
 </p></div><div class="refsect1"><a name="id-1.10.18.7"></a><h2>Return</h2><p>
    New clock value is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-sync"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_sync — 
@@ -2099,7 +2124,7 @@ struct bus1_queue_node {
    The passed in timestamp must be even.
    </p><p>
 
-   The caller must hold the peer qlock.
+   The caller must hold the queue lock.
 </p></div><div class="refsect1"><a name="id-1.10.19.7"></a><h2>Return</h2><p>
    New clock value is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-is-readable"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_is_readable — 
@@ -2133,39 +2158,110 @@ struct bus1_queue_node {
    is returned to the caller for destruction.
 </p></div><div class="refsect1"><a name="id-1.10.21.7"></a><h2>Return</h2><p>
    The old seed is returned, or NULL if none was set.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-compare"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_compare — 
+     comparator for queue ordering
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_queue_compare </b>(</code>u64 <var class="pdparam">a_ts</var>, unsigned long <var class="pdparam">a_sender</var>, u64 <var class="pdparam">b_ts</var>, unsigned long <var class="pdparam">b_sender</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.22.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>a_ts</code></em></span></dt><dd><p>
+     timestamp of first node to compare
+    </p></dd><dt><span class="term"><em class="parameter"><code>a_sender</code></em></span></dt><dd><p>
+     sender tag of first node to compare
+    </p></dd><dt><span class="term"><em class="parameter"><code>b_ts</code></em></span></dt><dd><p>
+     timestamp of second node to compare against
+    </p></dd><dt><span class="term"><em class="parameter"><code>b_sender</code></em></span></dt><dd><p>
+     sender tag of second node to compare against
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.22.6"></a><h2>Description</h2><p>
+   Messages on a message queue are ordered. This function implements the
+   comparator used for all message ordering in queues. Two tags are used for
+   ordering, the timestamp and the sender-tag of a node. Both must be passed to
+   this function.
+   </p><p>
+
+   This compares the tuples (<em class="parameter"><code>a_ts</code></em>, <em class="parameter"><code>a_sender</code></em>) and (<em class="parameter"><code>b_ts</code></em>, <em class="parameter"><code>b_sender</code></em>).
+</p></div><div class="refsect1"><a name="id-1.10.22.7"></a><h2>Return</h2><p>
+   &lt;0 if (<em class="parameter"><code>a_ts</code></em>, <em class="parameter"><code>a_sender</code></em>) is ordered before, 0 if the same, &gt;0 if
+   ordered after.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-get-type"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_get_type — 
   query node type
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">unsigned int <b class="fsfunc">bus1_queue_node_get_type </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.22.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">unsigned int <b class="fsfunc">bus1_queue_node_get_type </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to query
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.22.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.23.6"></a><h2>Description</h2><p>
    This queries the node type that was provided via the node constructor. A
    node never changes its type during its entire lifetime.
-   The caller must hold the peer qlock or own the queue-node.
-</p></div><div class="refsect1"><a name="id-1.10.22.7"></a><h2>Return</h2><p>
+   The caller must hold the queue lock or own the queue-node.
+</p></div><div class="refsect1"><a name="id-1.10.23.7"></a><h2>Return</h2><p>
    Type of <em class="parameter"><code>node</code></em> is returned.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-get-timestamp"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_get_timestamp — 
      query node timestamp
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <b class="fsfunc">bus1_queue_node_get_timestamp </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.23.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <b class="fsfunc">bus1_queue_node_get_timestamp </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      node to query
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.23.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.24.6"></a><h2>Description</h2><p>
    This queries the node timestamp that is currently set on this node. The
-   caller must hold the peer qlock or own the queue-node.
-</p></div><div class="refsect1"><a name="id-1.10.23.7"></a><h2>Return</h2><p>
+   caller must hold the queue lock or own the queue-node.
+</p></div><div class="refsect1"><a name="id-1.10.24.7"></a><h2>Return</h2><p>
    Timestamp of <em class="parameter"><code>node</code></em> is returned.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_init — 
+     initialize queue node
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_node_init </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var>, unsigned int <var class="pdparam">type</var>, unsigned long <var class="pdparam">sender</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+     node to initialize
+    </p></dd><dt><span class="term"><em class="parameter"><code>type</code></em></span></dt><dd><p>
+     message type
+    </p></dd><dt><span class="term"><em class="parameter"><code>sender</code></em></span></dt><dd><p>
+     sender tag
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.25.6"></a><h2>Description</h2><p>
+   This initializes a previously unused node, and prepares it for use with a
+   message queue. The initial ref-count is set to 1.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_destroy — 
+     destroy queue node
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_node_destroy </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.26.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+     node to destroy, or NULL
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.26.6"></a><h2>Description</h2><p>
+   This destroys a previously initialized queue node. This is a no-op and only
+   serves as debugger, testing whether the node was properly unqueued before.
+   This must not be called if there are still references left to the node. That
+   is, this function should rather be called from your <code class="function">kref_put</code> callback.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-is-queued"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_is_queued — 
+     check whether a node is queued
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_queue_node_is_queued </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.27.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+     node to query, or NULL
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.27.6"></a><h2>Description</h2><p>
+   This checks whether a node is currently queued in a message queue. That is,
+   the node was linked via <code class="function">bus1_queue_stage</code> and as not been dequeued, yet
+   (both via <code class="function">bus1_queue_remove</code> or <code class="function">bus1_queue_flush</code>).
+</p></div><div class="refsect1"><a name="id-1.10.27.7"></a><h2>Return</h2><p>
+   True if <em class="parameter"><code>node</code></em> is currently queued.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-is-committed"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_is_committed — 
+     check whether a node is committed
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_queue_node_is_committed </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.28.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+     node to query, or NULL
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.28.6"></a><h2>Description</h2><p>
+   This checks whether a given node was already committed. In this case, the
+   queue node is owned by the queue. In all other cases, the node is usually
+   owned by an ongoing transaction or some other ongoing operation.
+</p></div><div class="refsect1"><a name="id-1.10.28.7"></a><h2>Return</h2><p>
+   True if <em class="parameter"><code>node</code></em> is committed.
+</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-is-staging"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_is_staging — 
+     check whether a node is marked staging
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_queue_node_is_staging </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.29.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
+     node to query, or NULL
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.29.6"></a><h2>Description</h2><p>
+   This checks whether a given node is queued, but still marked staging. That
+   means, the node has been put on the queue but there is still a transaction
+   that pins it to commit it later.
+</p></div><div class="refsect1"><a name="id-1.10.29.7"></a><h2>Return</h2><p>
+   True if <em class="parameter"><code>node</code></em> is queued as staging entry.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_init — 
      initialize queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_init </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, wait_queue_head_t * <var class="pdparam">waitq</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.24.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_init </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, wait_queue_head_t * <var class="pdparam">waitq</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.30.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to initialize
     </p></dd><dt><span class="term"><em class="parameter"><code>waitq</code></em></span></dt><dd><p>
      wait queue to use for wake-ups
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.24.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.30.6"></a><h2>Description</h2><p>
    This initializes a new queue. The queue memory is considered uninitialized,
    any previous content is lost unrecoverably.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_destroy — 
      destroy queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_destroy </b>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.25.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_destroy </b>(</code>struct bus1_queue * <var class="pdparam">queue</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.31.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to destroy
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.25.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.31.6"></a><h2>Description</h2><p>
    This destroys a queue that was previously initialized via <code class="function">bus1_queue_init</code>.
    The caller must make sure the queue is empty before calling this.
    </p><p>
@@ -2178,13 +2274,13 @@ struct bus1_queue_node {
    rcu-delayed manner.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-flush"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_flush — 
      flush message queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_flush </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct list_head * <var class="pdparam">list</var>, bool <var class="pdparam">final</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.26.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_flush </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct list_head * <var class="pdparam">list</var>, bool <var class="pdparam">final</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.32.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to flush
     </p></dd><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
      list to put flushed messages to
     </p></dd><dt><span class="term"><em class="parameter"><code>final</code></em></span></dt><dd><p>
      whether this is the final flush
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.26.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.32.6"></a><h2>Description</h2><p>
    This flushes all entries from <em class="parameter"><code>queue</code></em> and puts them into <em class="parameter"><code>list</code></em> (no particular
    order) for the caller to clean up. All the entries returned in <em class="parameter"><code>list</code></em> must be
    unref'ed by the caller.
@@ -2193,13 +2289,13 @@ struct bus1_queue_node {
    If <em class="parameter"><code>final</code></em> is true, this will flush everything, even persistent state.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-stage"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_stage — 
      stage queue entry with fresh timestamp
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <b class="fsfunc">bus1_queue_stage </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.27.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <b class="fsfunc">bus1_queue_stage </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.33.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      queue entry to stage
     </p></dd><dt><span class="term"><em class="parameter"><code>timestamp</code></em></span></dt><dd><p>
      minimum timestamp for <em class="parameter"><code>node</code></em>
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.27.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.33.6"></a><h2>Description</h2><p>
    Link a queue entry with a new timestamp. The staging entry blocks all
    messages with timestamps synced on this queue in the future, as well as any
    messages with a timestamp greater than <em class="parameter"><code>timestamp</code></em>. However, it does not block
@@ -2212,17 +2308,17 @@ struct bus1_queue_node {
 
    The queue owns its own reference to the node, so the caller retains their
    reference after this call returns.
-</p></div><div class="refsect1"><a name="id-1.10.27.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.33.7"></a><h2>Return</h2><p>
    The timestamp used.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-commit-staged"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_commit_staged — 
      commit staged queue entry with new timestamp
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_queue_commit_staged </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.28.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_queue_commit_staged </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var>, u64 <var class="pdparam">timestamp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.34.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      queue entry to commit
     </p></dd><dt><span class="term"><em class="parameter"><code>timestamp</code></em></span></dt><dd><p>
      new timestamp for <em class="parameter"><code>node</code></em>
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.28.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.34.6"></a><h2>Description</h2><p>
    Update a queue entry according to <em class="parameter"><code>timestamp</code></em>. If the queue entry is already
    staged on the queue, it is updated and sorted according to <em class="parameter"><code>timestamp</code></em>.
    Otherwise, nothing is done.
@@ -2239,15 +2335,15 @@ struct bus1_queue_node {
 
    The queue owns its own reference to the node, so the caller retains their
    reference after this call returns.
-</p></div><div class="refsect1"><a name="id-1.10.28.7"></a><h2>Returns</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.34.7"></a><h2>Returns</h2><p>
    True if the entry was committed, false otherwise.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-commit-unstaged"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_commit_unstaged — 
      commit unstaged queue entry with new timestamp
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_commit_unstaged </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.29.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_commit_unstaged </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.35.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      queue entry to commit
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.29.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.35.6"></a><h2>Description</h2><p>
    Directly commit an unstaged queue entry to the destination queue. If the
    queue entry is already, nothing is done.
    </p><p>
@@ -2260,11 +2356,11 @@ struct bus1_queue_node {
    reference after this call returns.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-remove"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_remove — 
      remove entry from queue
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_remove </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.30.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_remove </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.36.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
      queue entry to remove
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.30.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.36.6"></a><h2>Description</h2><p>
    This unlinks <em class="parameter"><code>node</code></em> and fully removes it from the queue <em class="parameter"><code>queue</code></em>. You must
    never reuse that node again, once removed.
    </p><p>
@@ -2280,11 +2376,11 @@ struct bus1_queue_node {
    returns.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-peek"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_peek — 
      peek first available entry
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_queue_node * <b class="fsfunc">bus1_queue_peek </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, bool <var class="pdparam">seed</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.31.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_queue_node * <b class="fsfunc">bus1_queue_peek </b>(</code>struct bus1_queue * <var class="pdparam">queue</var>, bool <var class="pdparam">seed</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.37.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>queue</code></em></span></dt><dd><p>
      queue to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>seed</code></em></span></dt><dd><p>
      whether to peek at seed
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.31.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.37.6"></a><h2>Description</h2><p>
    This returns a reference to the first available entry in the given queue, or
    NULL if there is none. The queue stays unmodified and the returned entry
    remains on the queue.
@@ -2296,46 +2392,6 @@ struct bus1_queue_node {
 
    If <em class="parameter"><code>seed</code></em> is true, this will fetch the currently set seed rather than look at
    the message queue.
-</p></div><div class="refsect1"><a name="id-1.10.31.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.37.7"></a><h2>Return</h2><p>
    Reference to first available entry, NULL if none available.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_init — 
-     initialize queue node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_node_init </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var>, unsigned int <var class="pdparam">type</var>, unsigned long <var class="pdparam">sender</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.32.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
-     node to initialize
-    </p></dd><dt><span class="term"><em class="parameter"><code>type</code></em></span></dt><dd><p>
-     message type
-    </p></dd><dt><span class="term"><em class="parameter"><code>sender</code></em></span></dt><dd><p>
-     sender tag
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.32.6"></a><h2>Description</h2><p>
-   This initializes a previously unused node, and prepares it for use with a
-   message queue. The initial ref-count is set to 1.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-destroy"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_destroy — 
-     destroy queue node
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_queue_node_destroy </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.33.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
-     node to destroy, or NULL
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.33.6"></a><h2>Description</h2><p>
-   This destroys a previously initialized queue node. This is a no-op and only
-   serves as debugger, testing whether the node was properly unqueued before.
-   This must not be called if there are still references left to the node. That
-   is, this function should rather be called from your <code class="function">kref_put</code> callback.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-is-queued"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_is_queued — 
-     check whether a node is queued
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_queue_node_is_queued </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.34.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
-     node to query, or NULL
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.34.6"></a><h2>Description</h2><p>
-   This checks whether a node is currently queued in a message queue. That is,
-   the node was linked via <code class="function">bus1_queue_stage</code> and as not been dequeued, yet
-   (both via <code class="function">bus1_queue_remove</code> or <code class="function">bus1_queue_flush</code>).
-</p></div><div class="refsect1"><a name="id-1.10.34.7"></a><h2>Return</h2><p>
-   True if <em class="parameter"><code>node</code></em> is currently queued.
-</p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-queue-node-is-committed"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_queue_node_is_committed — 
-     check whether a node is committed
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_queue_node_is_committed </b>(</code>struct bus1_queue_node * <var class="pdparam">node</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.35.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>node</code></em></span></dt><dd><p>
-     node to query, or NULL
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.35.6"></a><h2>Description</h2><p>
-   This checks whether a given node was already committed. In this case, the
-   queue node is owned by the queue. In all other cases, the node is usually
-   owned by an ongoing transaction or some other ongoing operation.
-</p></div><div class="refsect1"><a name="id-1.10.35.7"></a><h2>Return</h2><p>
-   True if <em class="parameter"><code>node</code></em> is committed.
 </p></div></div></div></div></body></html>
