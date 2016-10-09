@@ -1,14 +1,16 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Bus1</title><link rel="stylesheet" type="text/css" href="bus1.css"><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"><link rel="icon" href="bus1.png" type="image/png"><script>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Bus1</title><link rel="stylesheet" type="text/css" href="bus1.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="icon" href="bus1.png" type="image/png"><script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-75729104-1', 'auto');
       ga('send', 'pageview');
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:64px;height:64px;"></a><span class="version">Version 1</span></header><div class="index"><div class="titlepage"><div><div><h2 class="title"><a name="id-1"></a>Bus1</h2></div></div></div><p>Friendly IPC for Linux</p><div class="indexdiv"><h3 class="title">Overview</h3><p>Bus1 is a subsystem to provide object-oriented Inter-Process Communication
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><header><a href="index.html"><img src="bus1.svg" alt="bus1" style="width:64px;height:64px;"></a><span class="version">Version 1</span></header><div class="index"><div class="titlepage"><div><div><h2 class="title"><a name="id-1"></a>Bus1</h2></div></div></div><p>Capability-based IPC for Linux</p><div class="indexdiv"><h3 class="title">Overview</h3><p>Bus1 is a subsystem to provide object-oriented Inter-Process Communication
     on Linux. It is a lightweight and scalable way for services and operating system
     tasks to share signals, data and resources; while at the same time allowing
-    modularization, privilege separation, information hiding and isolation.</p><p>Bus1 uses lightweight handles to represent objects. It supports single-copy
+    modularization, privilege separation, information hiding and isolation.</p><p>Bus1 services communicate over well-defined interfaces with a strongly-typed
+    language. They allow a programming-language independent way to use objects in
+    environments different from where they were created.</p><p>Bus1 uses lightweight handles to represent objects. It supports single-copy
     data transfer, message multicast and gives global-order guarantees.</p><p>Bus1 itself does not maintain any globally shared state, all references to
     objects need to be explicitely handed out to be visible to a peer.</p><dl><dt>
         <a class="ulink" href="https://github.com/bus1" target="_top">Git repositories</a>
