@@ -163,11 +163,7 @@
      acquire lockdep reader
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-active-lockdep-released"><span class="phrase">bus1_active_lockdep_released</span></a></span><span class="refpurpose"> — 
      release lockdep reader
- </span></dt></dl></dd><dt><span class="chapter"><a href="#flist">8. Bus1 Fixed List</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#id-1.10.2">
-   ipc/bus2/util/flist.h
-  </a></span><span class="refpurpose"> — 
-   Document generation inconsistency
-  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-flist"><span class="phrase">struct bus1_flist</span></a></span><span class="refpurpose"> — 
+ </span></dt></dl></dd><dt><span class="chapter"><a href="#flist">8. Bus1 Fixed List</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-struct-bus1-flist"><span class="phrase">struct bus1_flist</span></a></span><span class="refpurpose"> — 
   fixed list
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-flist-inline-size"><span class="phrase">bus1_flist_inline_size</span></a></span><span class="refpurpose"> — 
      calculate required inline size
@@ -1843,11 +1839,7 @@ lockdep annotations
     </p></dd></dl></div></div><div class="refsect1"><a name="id-1.9.22.6"></a><h2>Description</h2><p>
    This is the counterpart of <code class="function">bus1_active_lockdep_acquired</code>. See its
    documentation for details.
-</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="flist"></a>Chapter 8. Bus1 Fixed List</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#id-1.10.2">
-   ipc/bus2/util/flist.h
-  </a></span><span class="refpurpose"> — 
-   Document generation inconsistency
-  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-flist"><span class="phrase">struct bus1_flist</span></a></span><span class="refpurpose"> — 
+</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="flist"></a>Chapter 8. Bus1 Fixed List</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-flist"><span class="phrase">struct bus1_flist</span></a></span><span class="refpurpose"> — 
   fixed list
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-flist-inline-size"><span class="phrase">bus1_flist_inline_size</span></a></span><span class="refpurpose"> — 
      calculate required inline size
@@ -1865,31 +1857,40 @@ lockdep annotations
      allocate new flist
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-flist-free"><span class="phrase">bus1_flist_free</span></a></span><span class="refpurpose"> — 
      free flist
- </span></dt></dl></div><div class="refentry"><a name="id-1.10.2"></a><div class="titlepage"></div><div class="refnamediv"><p>
-   ipc/bus2/util/flist.h
-   — 
-   Document generation inconsistency
-  </p></div><div class="refsect1"><a name="id-1.10.2.2"></a><h2>
-   Oops
-  </h2><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
-    The template for this document tried to insert
-    the structured comment from the file
-    <code class="filename">ipc/bus2/util/flist.h</code> at this point,
-    but none was found.
-    This dummy section is inserted to allow
-    generation to continue.
-   </p></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-struct-bus1-flist"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_flist — 
+ </span></dt></dl></div><p>
+   </p><p>
+   This implements a fixed-size list called bus1_flist. The size of the list
+   must be constant over the lifetime of the list. The list can hold one
+   arbitrary pointer per node.
+   </p><p>
+   Fixed lists are a combination of a linked list and a static array. That is,
+   fixed lists behave like linked lists (no random access, but arbitrary size),
+   but compare in speed with arrays (consequetive accesses are fast). Unlike
+   fixed arrays, fixed lists can hold huge number of elements without requiring
+   <code class="function">vmalloc</code>, but solely relying on small-size <code class="function">kmalloc</code> allocations.
+   </p><p>
+   Internally, fixed lists are a singly-linked list of static arrays. This
+   guarantees that iterations behave almost like on an array, except when
+   crossing a batch-border.
+   </p><p>
+   Fixed lists can replace fixed-size arrays whenever you need to support large
+   number of elements, but don't need random access. Fixed lists have ALMOST
+   the same memory requirements as fixed-size arrays, except one pointer of
+   state per 'BUS1_FLIST_BATCH' elements. If only a small size (i.e., it only
+   requires one batch) is stored in a fixed list, then its memory requirements
+   and iteration time are equivalent to fixed-size arrays.
+</p><div class="refentry"><a name="API-struct-bus1-flist"></a><div class="titlepage"></div><div class="refnamediv"><p>struct bus1_flist — 
   fixed list
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
 struct bus1_flist {
   union {unnamed_union};
-};  </pre></div><div class="refsect1"><a name="id-1.10.3.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">{unnamed_union}</span></dt><dd><p>
+};  </pre></div><div class="refsect1"><a name="id-1.10.7.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">{unnamed_union}</span></dt><dd><p>
 anonymous
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-inline-size"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_inline_size — 
      calculate required inline size
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <b class="fsfunc">bus1_flist_inline_size </b>(</code>size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.4.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <b class="fsfunc">bus1_flist_inline_size </b>(</code>size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
      number of entries
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.4.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.8.6"></a><h2>Description</h2><p>
    When allocating storage for an flist, this calculates the size of the
    initial array in bytes. Use <code class="function">bus1_flist_new</code> directly if you want to
    allocate an flist on the heap. This helper is only needed if you embed an
@@ -1909,15 +1910,15 @@ anonymous
    The inline-size of an flist is always bound to a fixed maximum. That is,
    regardless of <em class="parameter"><code>n</code></em>, this will always return a reasonable number that can be
    allocated via <code class="function">kmalloc</code>.
-</p></div><div class="refsect1"><a name="id-1.10.4.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.8.7"></a><h2>Return</h2><p>
    Size in bytes required for the initial batch of an flist.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_init — 
      initialize an flist
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_flist_init </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.5.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_flist_init </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
      flist to initialize
     </p></dd><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
      number of entries
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.5.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.9.6"></a><h2>Description</h2><p>
    This initializes an flist of size <em class="parameter"><code>n</code></em>. It does NOT preallocate the memory,
    but only initializes <em class="parameter"><code>list</code></em> in a way that <code class="function">bus1_flist_deinit</code> can be called
    on it. Use <code class="function">bus1_flist_populate</code> to populate the flist.
@@ -1928,21 +1929,21 @@ anonymous
    and avoid this dance.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-deinit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_deinit — 
      deinitialize an flist
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_flist_deinit </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_flist_deinit </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
      flist to deinitialize
     </p></dd><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
      number of entries
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.6.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.10.6"></a><h2>Description</h2><p>
    This deallocates an flist and releases all resources. If already
    deinitialized, this is a no-op. This is only needed if you called
    <code class="function">bus1_flist_populate</code>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-next"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_next — 
      flist iterator
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_flist * <b class="fsfunc">bus1_flist_next </b>(</code>struct bus1_flist * <var class="pdparam">iter</var>, size_t * <var class="pdparam">pos</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>iter</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_flist * <b class="fsfunc">bus1_flist_next </b>(</code>struct bus1_flist * <var class="pdparam">iter</var>, size_t * <var class="pdparam">pos</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>iter</code></em></span></dt><dd><p>
      iterator
     </p></dd><dt><span class="term"><em class="parameter"><code>pos</code></em></span></dt><dd><p>
      current position
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.7.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.11.6"></a><h2>Description</h2><p>
    This advances an flist iterator by one position. <em class="parameter"><code>iter</code></em> must point to the
    current position, and the new position is returned by this function. <em class="parameter"><code>pos</code></em>
    must point to a variable that contains the current index position. That is,
@@ -1966,11 +1967,11 @@ anonymous
    for (pos = 0, e = list; pos &lt; n; e = bus1_flist_next(e, <span class="structname">pos</span>)) {
    ... access e-&gt;ptr ...
    }
-</p></div><div class="refsect1"><a name="id-1.10.7.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.11.7"></a><h2>Return</h2><p>
    Next iterator position.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-walk"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_walk — 
      walk flist in batches
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <b class="fsfunc">bus1_flist_walk </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var>, struct bus1_flist ** <var class="pdparam">iter</var>, size_t * <var class="pdparam">pos</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">size_t <b class="fsfunc">bus1_flist_walk </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var>, struct bus1_flist ** <var class="pdparam">iter</var>, size_t * <var class="pdparam">pos</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.12.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
      list to walk
     </p></dd><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
      number of entries
@@ -1978,7 +1979,7 @@ anonymous
      iterator
     </p></dd><dt><span class="term"><em class="parameter"><code>pos</code></em></span></dt><dd><p>
      current position
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.8.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.12.6"></a><h2>Description</h2><p>
    This walks an flist in batches of size up to BUS1_FLIST_BATCH. It is
    normally used like this:
    </p><p>
@@ -1996,44 +1997,44 @@ anonymous
    ... invariant: z &lt;= BUS1_FLIST_BATCH
    ... invariant: e[i]-&gt;ptr == (<span class="structname">e</span>-&gt;ptr)[i]
    }
-</p></div><div class="refsect1"><a name="id-1.10.8.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.12.7"></a><h2>Return</h2><p>
    Size of batch at <em class="parameter"><code>iter</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-populate"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_populate — 
   populate an flist
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_flist_populate </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var>, gfp_t <var class="pdparam">gfp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">int <b class="fsfunc">bus1_flist_populate </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var>, gfp_t <var class="pdparam">gfp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.13.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
      flist to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
      number of elements
     </p></dd><dt><span class="term"><em class="parameter"><code>gfp</code></em></span></dt><dd><p>
      GFP to use for allocations
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.9.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.13.6"></a><h2>Description</h2><p>
    Populate an flist. This pre-allocates the backing memory for an flist that
    was statically initialized via <code class="function">bus1_flist_init</code>. This is NOT needed if the
    list was allocated via <code class="function">bus1_flist_new</code>.
-</p></div><div class="refsect1"><a name="id-1.10.9.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.13.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-new"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_new — 
      allocate new flist
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_flist * <b class="fsfunc">bus1_flist_new </b>(</code>size_t <var class="pdparam">n</var>, gfp_t <var class="pdparam">gfp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_flist * <b class="fsfunc">bus1_flist_new </b>(</code>size_t <var class="pdparam">n</var>, gfp_t <var class="pdparam">gfp</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.14.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
      number of elements
     </p></dd><dt><span class="term"><em class="parameter"><code>gfp</code></em></span></dt><dd><p>
      GFP to use for allocations
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.10.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.14.6"></a><h2>Description</h2><p>
    This allocates a new flist ready to store <em class="parameter"><code>n</code></em> elements.
-</p></div><div class="refsect1"><a name="id-1.10.10.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.14.7"></a><h2>Return</h2><p>
    Pointer to flist, NULL if out-of-memory.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-flist-free"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_flist_free — 
      free flist
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_flist * <b class="fsfunc">bus1_flist_free </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_flist * <b class="fsfunc">bus1_flist_free </b>(</code>struct bus1_flist * <var class="pdparam">list</var>, size_t <var class="pdparam">n</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.10.15.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>list</code></em></span></dt><dd><p>
      flist to operate on, or NULL
     </p></dd><dt><span class="term"><em class="parameter"><code>n</code></em></span></dt><dd><p>
      number of elements
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.11.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.10.15.6"></a><h2>Description</h2><p>
    This deallocates an flist previously created via <code class="function">bus1_flist_new</code>.
    </p><p>
 
    If NULL is passed, this is a no-op.
-</p></div><div class="refsect1"><a name="id-1.10.11.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.10.15.7"></a><h2>Return</h2><p>
    NULL is returned.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="pool"></a>Chapter 9. Bus1 Pool</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-struct-bus1-pool-slice"><span class="phrase">struct bus1_pool_slice</span></a></span><span class="refpurpose"> — 
   pool slice
