@@ -39,7 +39,11 @@
      stage message
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-message-install"><span class="phrase">bus1_message_install</span></a></span><span class="refpurpose"> — 
      install message payload into target process
- </span></dt></dl></dd><dt><span class="chapter"><a href="#transaction">4. Bus1 Transaction</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#API-enum-bus1-tx-bits"><span class="phrase">enum bus1_tx_bits</span></a></span><span class="refpurpose"> — 
+ </span></dt></dl></dd><dt><span class="chapter"><a href="#transaction">4. Bus1 Transaction</a></span></dt><dd><dl><dt><span class="refentrytitle"><a href="#id-1.6.2">
+   ipc/bus1/tx.h
+  </a></span><span class="refpurpose"> — 
+   Document generation inconsistency
+  </span></dt><dt><span class="refentrytitle"><a href="#API-enum-bus1-tx-bits"><span class="phrase">enum bus1_tx_bits</span></a></span><span class="refpurpose"> — 
   transaction flags
  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-tx"><span class="phrase">struct bus1_tx</span></a></span><span class="refpurpose"> — 
      transaction context
@@ -343,6 +347,7 @@ struct bus1_peer {
   wait_queue_head_t waitq;
   struct bus1_active active;
   struct dentry * debugdir;
+  struct local;
 };  </pre></div><div class="refsect1"><a name="id-1.4.7.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">id</span></dt><dd><p>
 peer ID
       </p></dd><dt><span class="term">flags</span></dt><dd><p>
@@ -361,14 +366,8 @@ peer wide wait queue
 active references
       </p></dd><dt><span class="term">debugdir</span></dt><dd><p>
 debugfs root of this peer, or NULL/ERR_PTR
-<em class="parameter"><code>data</code></em>.lock:			data lock
-<em class="parameter"><code>data</code></em>.pool:			data pool
-<em class="parameter"><code>data</code></em>.queue:			message queue
-<em class="parameter"><code>data</code></em>.limits:		resource limit counter
-<em class="parameter"><code>local</code></em>.lock:			local peer runtime lock
-<em class="parameter"><code>local</code></em>.seed:			pinned seed message
-<em class="parameter"><code>local</code></em>.map_handles:		map of owned handles (by handle ID)
-<em class="parameter"><code>local</code></em>.handle_ids:		handle ID allocator
+      </p></dd><dt><span class="term">local</span></dt><dd><p>
+handle ID allocator
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-peer-acquire"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_peer_acquire — 
      acquire active reference to peer
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">struct bus1_peer * <b class="fsfunc">bus1_peer_acquire </b>(</code>struct bus1_peer * <var class="pdparam">peer</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.4.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>peer</code></em></span></dt><dd><p>
@@ -696,7 +695,11 @@ struct bus1_message {
    installed if explicitly requested via <em class="parameter"><code>param</code></em>.
 </p></div><div class="refsect1"><a name="id-1.5.14.7"></a><h2>Return</h2><p>
    0 on success, negative error code on failure.
-</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="transaction"></a>Chapter 4. Bus1 Transaction</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-enum-bus1-tx-bits"><span class="phrase">enum bus1_tx_bits</span></a></span><span class="refpurpose"> — 
+</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="transaction"></a>Chapter 4. Bus1 Transaction</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#id-1.6.2">
+   ipc/bus1/tx.h
+  </a></span><span class="refpurpose"> — 
+   Document generation inconsistency
+  </span></dt><dt><span class="refentrytitle"><a href="#API-enum-bus1-tx-bits"><span class="phrase">enum bus1_tx_bits</span></a></span><span class="refpurpose"> — 
   transaction flags
  </span></dt><dt><span class="refentrytitle"><a href="#API-struct-bus1-tx"><span class="phrase">struct bus1_tx</span></a></span><span class="refpurpose"> — 
      transaction context
@@ -712,19 +715,25 @@ struct bus1_message {
      HIC SUNT DRACONES!
  </span></dt><dt><span class="refentrytitle"><a href="#API-bus1-tx-commit"><span class="phrase">bus1_tx_commit</span></a></span><span class="refpurpose"> — 
      commit transaction
- </span></dt></dl></div><p>
-   </p><p>
-   The transaction engine is an object that lives an the stack and is used to
-   stage and commit multicasts properly. Unlike unicasts, a multicast cannot
-   just be queued on each destination, but must be properly synchronized. This
-   requires us to first stage each message on their respective destination,
-   then sync and tick the clocks, and eventual commit all messages.
-</p><div class="refentry"><a name="API-enum-bus1-tx-bits"></a><div class="titlepage"></div><div class="refnamediv"><p>enum bus1_tx_bits — 
+ </span></dt></dl></div><div class="refentry"><a name="id-1.6.2"></a><div class="titlepage"></div><div class="refnamediv"><p>
+   ipc/bus1/tx.h
+   — 
+   Document generation inconsistency
+  </p></div><div class="refsect1"><a name="id-1.6.2.2"></a><h2>
+   Oops
+  </h2><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>
+    The template for this document tried to insert
+    the structured comment from the file
+    <code class="filename">ipc/bus1/tx.h</code> at this point,
+    but none was found.
+    This dummy section is inserted to allow
+    generation to continue.
+   </p></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-enum-bus1-tx-bits"></a><div class="titlepage"></div><div class="refnamediv"><p>enum bus1_tx_bits — 
   transaction flags
  </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="programlisting">
 enum bus1_tx_bits {
   BUS1_TX_BIT_SEALED
-};  </pre></div><div class="refsect1"><a name="id-1.6.4.5"></a><h2>Constants</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">BUS1_TX_BIT_SEALED</span></dt><dd><p>
+};  </pre></div><div class="refsect1"><a name="id-1.6.3.5"></a><h2>Constants</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">BUS1_TX_BIT_SEALED</span></dt><dd><p>
 The transaction is sealed, no new messages can
 be added to the transaction. The commit of all
 staged messages is ongoing.
@@ -739,7 +748,7 @@ struct bus1_tx {
   unsigned long flags;
   u64 timestamp;
   u64 async_ts;
-};  </pre></div><div class="refsect1"><a name="id-1.6.5.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">origin</span></dt><dd><p>
+};  </pre></div><div class="refsect1"><a name="id-1.6.4.5"></a><h2>Members</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">origin</span></dt><dd><p>
    origin of this transaction
       </p></dd><dt><span class="term">sync</span></dt><dd><p>
    unlocked list of staged messages
@@ -755,30 +764,30 @@ struct bus1_tx {
    locked timestamp cache of async list
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-tx-init"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_tx_init — 
      initialize transaction context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_init </b>(</code>struct bus1_tx * <var class="pdparam">tx</var>, struct bus1_peer * <var class="pdparam">origin</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_init </b>(</code>struct bus1_tx * <var class="pdparam">tx</var>, struct bus1_peer * <var class="pdparam">origin</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.5.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
      transaction context to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>origin</code></em></span></dt><dd><p>
      origin of this transaction
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.6.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.5.6"></a><h2>Description</h2><p>
    This initializes a transaction context. The initiating peer must be pinned
    by the caller for the entire lifetime of <em class="parameter"><code>tx</code></em> (until <code class="function">bus1_tx_deinit</code> is
    called) and given as <em class="parameter"><code>origin</code></em>.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-tx-deinit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_tx_deinit — 
      deinitialize transaction context
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_deinit </b>(</code>struct bus1_tx * <var class="pdparam">tx</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_deinit </b>(</code>struct bus1_tx * <var class="pdparam">tx</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.6.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
      transaction context to operate on
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.7.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.6.6"></a><h2>Description</h2><p>
    This deinitializes a transaction context previously created via
    <code class="function">bus1_tx_init</code>. This is merely for debugging, as no resources are pinned on
    the transaction. However, if any message was staged on the transaction, it
    must be committed via <code class="function">bus1_tx_commit</code> before it is deinitialized.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-tx-stage-sync"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_tx_stage_sync — 
   stage message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_stage_sync </b>(</code>struct bus1_tx * <var class="pdparam">tx</var>, struct bus1_queue_node * <var class="pdparam">qnode</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_stage_sync </b>(</code>struct bus1_tx * <var class="pdparam">tx</var>, struct bus1_queue_node * <var class="pdparam">qnode</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.7.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
      transaction to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>qnode</code></em></span></dt><dd><p>
      message to stage
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.8.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.7.6"></a><h2>Description</h2><p>
    This stages <em class="parameter"><code>qnode</code></em> on the transaction <em class="parameter"><code>tx</code></em>. It is an error to call this on a
    qnode that is already staged. The caller must set qnode-&gt;owner to the
    destination peer and acquire it. If it is NULL, it is assumed to be the same
@@ -792,11 +801,11 @@ struct bus1_tx {
    counts to make sure <em class="parameter"><code>qnode</code></em> does not vanish.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-tx-stage-later"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_tx_stage_later — 
      postpone message
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_stage_later </b>(</code>struct bus1_tx * <var class="pdparam">tx</var>, struct bus1_queue_node * <var class="pdparam">qnode</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">void <b class="fsfunc">bus1_tx_stage_later </b>(</code>struct bus1_tx * <var class="pdparam">tx</var>, struct bus1_queue_node * <var class="pdparam">qnode</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.8.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
      transaction to operate on
     </p></dd><dt><span class="term"><em class="parameter"><code>qnode</code></em></span></dt><dd><p>
      message to postpone
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.9.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.8.6"></a><h2>Description</h2><p>
    This queues <em class="parameter"><code>qnode</code></em> on <em class="parameter"><code>tx</code></em>, but does not stage it. It will be staged just
    before the transaction is committed. This can be used over
    <code class="function">bus1_tx_stage_sync</code> if no immediate staging is necessary, or if required
@@ -806,11 +815,11 @@ struct bus1_tx {
    It is a caller-error if <em class="parameter"><code>qnode</code></em> is already part of a transaction.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-tx-join"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_tx_join — 
      HIC SUNT DRACONES!
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_tx_join </b>(</code>struct bus1_queue_node * <var class="pdparam">whom</var>, struct bus1_queue_node * <var class="pdparam">qnode</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>whom</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">bool <b class="fsfunc">bus1_tx_join </b>(</code>struct bus1_queue_node * <var class="pdparam">whom</var>, struct bus1_queue_node * <var class="pdparam">qnode</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.9.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>whom</code></em></span></dt><dd><p>
      whom to join
     </p></dd><dt><span class="term"><em class="parameter"><code>qnode</code></em></span></dt><dd><p>
      who joins
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.10.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.9.6"></a><h2>Description</h2><p>
    This makes <em class="parameter"><code>qnode</code></em> join the on-going transaction of <em class="parameter"><code>whom</code></em>. That is, it is
    semantically equivalent of calling:
    </p><p>
@@ -838,17 +847,17 @@ struct bus1_tx {
    If this function returns <span class="quote">“<span class="quote">false</span>”</span>, you must settle on the transaction before
    visibly reacting to it. That is, user-space must not see that you failed to
    join the transaction before the transaction is settled!
-</p></div><div class="refsect1"><a name="id-1.6.10.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.6.9.7"></a><h2>Return</h2><p>
    True if successfull, false if too late.
 </p></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-tx-commit"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_tx_commit — 
      commit transaction
- </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <b class="fsfunc">bus1_tx_commit </b>(</code>struct bus1_tx * <var class="pdparam">tx</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.11.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
+ </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="funcsynopsis"><p><code class="funcdef">u64 <b class="fsfunc">bus1_tx_commit </b>(</code>struct bus1_tx * <var class="pdparam">tx</var><code>)</code>;</p></div></div><div class="refsect1"><a name="id-1.6.10.5"></a><h2>Arguments</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term"><em class="parameter"><code>tx</code></em></span></dt><dd><p>
      transaction to operate on
-    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.11.6"></a><h2>Description</h2><p>
+    </p></dd></dl></div></div><div class="refsect1"><a name="id-1.6.10.6"></a><h2>Description</h2><p>
    Commit a transaction. First all postponed entries are staged, then we commit
    all messages that belong to this transaction. This works with any number of
    messages.
-</p></div><div class="refsect1"><a name="id-1.6.11.7"></a><h2>Return</h2><p>
+</p></div><div class="refsect1"><a name="id-1.6.10.7"></a><h2>Return</h2><p>
    This returns the commit timestamp used.
 </p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="handle"></a>Chapter 5. Bus1 Handle</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="refentrytitle"><a href="#API-enum-bus1-handle-bits"><span class="phrase">enum bus1_handle_bits</span></a></span><span class="refpurpose"> — 
   node flags
@@ -994,10 +1003,6 @@ struct bus1_handle {
    current ID
       </p></dd><dt><span class="term">qnode</span></dt><dd><p>
    queue node for notifications
-   <em class="parameter"><code>node</code></em>.map_handles:			map of attached handles by peer
-   <em class="parameter"><code>node</code></em>.flags:				node flags
-   <em class="parameter"><code>node</code></em>.n_strong:			number of strong references
-   <em class="parameter"><code>remote</code></em>.rb_to_anchor:		rb-link into node by peer
       </p></dd><dt><span class="term">{unnamed_union}</span></dt><dd><p>
    anonymous
       </p></dd></dl></div></div></div><div class="refentry"><div class="refentry.separator"><hr></div><a name="API-bus1-handle-is-anchor"></a><div class="titlepage"></div><div class="refnamediv"><p>bus1_handle_is_anchor — 
